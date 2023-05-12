@@ -1,0 +1,15 @@
+.side-modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  right: 0;
+  padding: 18px 16px;
+  width: 400px;
+  min-height: 100%;
+  height: 100%;
+  z-index: 320;
+  overflow-y: scroll;
+  background: #fafbfc; // TODO: change from DS
+  filter: drop-shadow(0px 15px 50px rgba(0, 0, 0, 0.3));
+}

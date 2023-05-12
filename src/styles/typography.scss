@@ -1,0 +1,158 @@
+:root {
+  .typography-main {
+    font-family: 'SF Compact Display Medium';
+    font-size: 32px;
+    line-height: 52px;
+    letter-spacing: -1px;
+  }
+
+  .typography-main-number {
+    font-family: 'SF Compact Display Bold';
+    font-size: 36px;
+    line-height: 32px;
+    letter-spacing: -1px;
+  }
+
+
+  .typography-h1-heading {
+    font-family: 'SF Compact Display Medium';
+    font-size: 30px;
+    line-height: 32px;
+    letter-spacing: -1px;
+  }
+
+  .typography-h2-title {
+    font-family: 'SF Compact Display Bold';
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -0.2px;
+  }
+
+  //TODO ask Epi
+  .typography-h2-title-display {
+    font-family: 'SF Compact Display';
+    letter-spacing: -0.2px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .typography-h3-secondary-sub {
+    font-family: 'SF Compact Display Regular';
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+
+  .typography-h4-subtitle {
+    font-family: 'SF Compact Display Semibold';
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .typography-paragraph {
+    font-family: 'SF Compact Display Regular';
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .typography-paragraph-display {
+    font-family: 'SF Compact Display';
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+
+  .typography-paragraph-bold {
+    font-family: 'SF Compact Display Medium';
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .typography-input {
+    font-family: 'SF Compact Display Regular';
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  typography-h5 {
+    font-family: 'SF Compact Display';
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .typography-input-display {
+    font-family: 'SF Compact Display';
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+
+  .typography-h6 {
+    font-family: 'SF Compact Display Medium';
+    font-size: 12px;
+    line-height: 22px;
+  }
+
+  .typography-link {
+    font-family: 'SF Compact Display Regular';
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .typography-secondary {
+    font-family: 'SF Compact Display Regular';
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .typography-description {
+    font-family: 'SF Compact Display Light';
+    font-size: 12px;
+    line-height: 24px;
+  }
+
+  .typography-hebrew-h4 {
+    font-family: 'Assistant Bold';
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .typography-hebrew-text {
+    font-family: 'Assistant Regular';
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .typography-hebrew-bold-text {
+    font-family: 'Assistant Semibold';
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .typography-hebrew-details {
+    font-family: 'Assistant Regular';
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .typography-hebrew-doctor-name {
+    font-family: 'Assistant Semibold';
+    font-size: 12px;
+    line-height: 24px;
+  }
+
+  .typography-h6-heading {
+    font-family: 'Assistant Regular';
+    font-size: 12px;
+    line-height: 22px;
+  }
+
+  .typography-h5 {
+    font-family: 'SF Compact Display Medium';
+    font-size: 14px;
+    line-height: 22px;
+  }
+}

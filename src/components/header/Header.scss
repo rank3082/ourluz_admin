@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--primary);
+  align-items: center;
+  gap: 3px;
+  padding-block: 8px;
+  font-style: italic;
+  font-weight: bold;
+
+  .mainHeader {
+    color: var(--white);
+    font-size: 28px;
+  }
+
+  .secondaryHeader {
+    color: var(--wolf);
+    font-size: 20px;
+  }
+}
