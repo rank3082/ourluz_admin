@@ -21,7 +21,7 @@ export const MainPanel = () => {
             {isEventDetailPopupOpen && <EventDetails/>}
         <div className={"mainPanelBody"}>
             <div className={"addEventButtonWrapper"}>
-                <Button className={isEventDetailPopupOpen ? "addEventButtonSelected":"addEventButtonText" }
+                <Button className={isEventDetailPopupOpen ? "addEventButtonSelected":"addEventButtonNotSelected" }
                         onClick={UpdateAddEventPopup}>
                     {text.AddEventBtn}
                 </Button>

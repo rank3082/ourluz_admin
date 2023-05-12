@@ -14,6 +14,15 @@
     gap: 8px;
   }
   .exitIconWrapper{
+    align-items: center;
+    display: flex;
     cursor: pointer;
+    padding: 3px;
+    &:hover{
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      background-color: var(--grey-hover);
+      border-color: var(--wolf);
+    }
+
   }
 }

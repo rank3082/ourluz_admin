@@ -62,7 +62,7 @@ export const CalendarComponent = () => {
             event: DailyEventComponent,
         }
     };
-    const [currentView, setCurrentView] = useState(Views.MONTH);
+    const [currentView, setCurrentView] = useState(Views.WEEK);
     const handleViewChange = (view: string) => {
         setCurrentView(view);
     };
