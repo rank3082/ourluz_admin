@@ -3,20 +3,20 @@ import {GlobalSliceModel} from "../models/global-slice.model";
 
 
 const initialState: GlobalSliceModel = {
-  isWork:false
+  isEventDetailPopupOpen:true
 };
 export const globalSlice = createSlice({
   name: "global",
   initialState: initialState,
   reducers: {
-    setIsWork: (state, action: PayloadAction<boolean>) => {
-      state.isWork = action.payload;
+    setEventDetailPopupOpen: (state, action: PayloadAction<boolean>) => {
+      state.isEventDetailPopupOpen = action.payload;
     },
   },
 });
 
 export const {
-  setIsWork
+  setEventDetailPopupOpen
 } = globalSlice.actions;
 
 export default globalSlice.reducer;

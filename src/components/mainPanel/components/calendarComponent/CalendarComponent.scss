@@ -1,8 +1,17 @@
+.fullCalendarWidth{
+  width: 100%;
+}
+.notFullCalendarWidth{
+  width: calc(100% - 400px);
+}
+
 .month-calender-wrapper{
   height: 600px;
+  width: 100%;
 }
 .week-calender-wrapper{
   padding: 5%;
+  width: 100%;
 }
 .week-calender-wrapper .rbc-time-content {
   display: none;

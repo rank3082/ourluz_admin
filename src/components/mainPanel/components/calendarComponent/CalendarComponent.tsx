@@ -3,7 +3,10 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import {Calendar, momentLocalizer, Views} from "react-big-calendar";
 import moment from 'moment'
 import "./CalendarComponent.scss"
+import {useAppSelector} from "../../../../app/hooks";
 export const CalendarComponent = () => {
+    const {isEventDetailPopupOpen} = useAppSelector(state => state.global);
+
     type Event = {
         title: string; start: Date; end: Date; description: string; location: string; color: string,allDay?:boolean
     };
@@ -63,7 +66,11 @@ export const CalendarComponent = () => {
     const handleViewChange = (view: string) => {
         setCurrentView(view);
     };
-    return (<Calendar
+
+
+    return (
+        <div className={isEventDetailPopupOpen?"notFullCalendarWidth":"fullCalendarWidth"}>
+            <Calendar
                 events={events}
                 localizer={localTime}
                 components={views}
@@ -71,5 +78,7 @@ export const CalendarComponent = () => {
                 onView={handleViewChange}
                 className={currentView ===Views.WEEK ||currentView ===Views.DAY  ? "week-calender-wrapper":"month-calender-wrapper"}
             />
+        </div>
+
        )
 }

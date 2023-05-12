@@ -1,0 +1,19 @@
+.operation-details-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  --icon-color: var(--dark);
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--ui-grey);
+  margin-bottom: 20px;
+
+  .header-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .exitIconWrapper{
+    cursor: pointer;
+  }
+}

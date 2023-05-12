@@ -1,5 +1,5 @@
 
 
 export interface GlobalSliceModel {
-  isWork:boolean
+  isEventDetailPopupOpen:boolean
 }

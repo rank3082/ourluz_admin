@@ -13,15 +13,18 @@
       border-radius: 16px;
       padding: 16px;
       cursor: pointer;
+      border: solid 1px var(--wolf);
 
     }
-    .addEventButtonText:hover{
-      color: var(--white);
+
+    .addEventButtonSelected{
+      color: var(--dark-grey);
       background-color: var(--wolf);
       border-radius: 16px;
       padding: 16px;
       cursor: pointer;
-
+      border: solid 1px var(--dark-grey);
     }
   }
+
 }
