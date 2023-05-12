@@ -1,0 +1,27 @@
+.mainPanelContainer{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .mainPanelBody{
+    padding-inline: 5%;
+  }
+  .addEventButtonWrapper{
+    margin-block: 30px;
+    .addEventButtonText{
+      color: var(--white);
+      background-color: var(--primary);
+      border-radius: 16px;
+      padding: 16px;
+      cursor: pointer;
+
+    }
+    .addEventButtonText:hover{
+      color: var(--white);
+      background-color: var(--wolf);
+      border-radius: 16px;
+      padding: 16px;
+      cursor: pointer;
+
+    }
+  }
+}

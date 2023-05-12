@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import {Calendar, momentLocalizer} from "react-big-calendar";
+import {Calendar, momentLocalizer, Views} from "react-big-calendar";
 import moment from 'moment'
-
+import "./CalendarComponent.scss"
 export const CalendarComponent = () => {
     type Event = {
         title: string; start: Date; end: Date; description: string; location: string; color: string,allDay?:boolean
@@ -59,13 +59,17 @@ export const CalendarComponent = () => {
             event: DailyEventComponent,
         }
     };
-
-    return (<div style={{height: '500px'}}>
-            <Calendar
+    const [currentView, setCurrentView] = useState(Views.MONTH);
+    const handleViewChange = (view: string) => {
+        setCurrentView(view);
+    };
+    return (<Calendar
                 events={events}
                 localizer={localTime}
                 components={views}
                 defaultView="week"
+                onView={handleViewChange}
+                className={currentView ===Views.WEEK ||currentView ===Views.DAY  ? "week-calender-wrapper":"month-calender-wrapper"}
             />
-        </div>)
+       )
 }

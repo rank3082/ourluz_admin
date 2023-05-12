@@ -1,5 +1,5 @@
 import "./Header.scss"
-import {text} from "../../utils/dictionary-management";
+import {text} from "../../../../utils/dictionary-management";
 
 export const Header = () => {
     return <div className="container">
