@@ -5,50 +5,20 @@ import moment from 'moment'
 import "./CalendarComponent.scss"
 import {useAppSelector} from "../../../../app/hooks";
 export const CalendarComponent = () => {
-    const {isEventDetailPopupOpen} = useAppSelector(state => state.global);
+    const {eventList,isEventDetailPopupOpen} = useAppSelector(state => state.global);
 
     type Event = {
-        title: string; start: Date; end: Date; description: string; location: string; color: string,allDay?:boolean
+        start: Date; end: Date; description: string; location: string; color: string,allDay?:boolean
     };
-
-    const events: Event[] = [{
-        title: 'Event 3',
-        start: new Date(),
-        end: new Date(),
-        description: 'This is a longer description of event 2',
-        location: 'San Francisco',
-        color: "blue",
-        allDay: true
-    }, {
-        title: 'Event 4',
-        start: new Date("2023-05-13 12:00"),
-        end: new Date("2023-05-13 17:00"),
-        description: 'This is a longer description of event 2',
-        location: 'San Francisco',
-        color: "red",
-        allDay: true
-
-    },{
-        title: 'Event 5',
-        start: new Date("2023-05-13 20:00"),
-        end: new Date("2023-05-13 23:00"),
-        description: 'This is a longer description of event 2',
-        location: 'San Francisco',
-        color: "red"
-        // allDay: true
-
-    }];
-
 
     const localTime = momentLocalizer(moment);
     const DailyEventComponent: React.FC<{ event: Event }> = ({event}) => (<div style={{backgroundColor: event.color}}>
-            <div>{event.title}</div>
             <div>{event.description}</div>
             <div>{event.location}</div>
 
         </div>);
     const MonthlyEventComponent: React.FC<{ event: Event }> = ({event}) => (<div style={{backgroundColor: event.color}}>
-            <div>{event.title}</div>
+            <div>{event.description}</div>
         </div>);
 
     const views = {
@@ -62,7 +32,7 @@ export const CalendarComponent = () => {
             event: DailyEventComponent,
         }
     };
-    const [currentView, setCurrentView] = useState(Views.WEEK);
+    const [currentView, setCurrentView] = useState(Views.W);
     const handleViewChange = (view: string) => {
         setCurrentView(view);
     };
@@ -71,7 +41,7 @@ export const CalendarComponent = () => {
     return (
         <div className={isEventDetailPopupOpen?"notFullCalendarWidth":"fullCalendarWidth"}>
             <Calendar
-                events={events}
+                events={Object.values(eventList)}
                 localizer={localTime}
                 components={views}
                 defaultView="week"
