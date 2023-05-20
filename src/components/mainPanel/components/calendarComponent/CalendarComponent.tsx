@@ -4,20 +4,24 @@ import {Calendar, momentLocalizer, Views} from "react-big-calendar";
 import moment from 'moment'
 import "./CalendarComponent.scss"
 import {useAppSelector} from "../../../../app/hooks";
+import {useDispatch} from "react-redux";
+import {setSelectedEvent, setSelectedPopup} from "../../../../store/global.slice";
+import {EventModel} from "../../../../models/event.model";
+import {SelectedPopup} from "../../../../utils/enum.const";
+
 export const CalendarComponent = () => {
-    const {eventList,isEventDetailPopupOpen} = useAppSelector(state => state.global);
-
-    type Event = {
-        start: Date; end: Date; description: string; location: string; color: string,allDay?:boolean
-    };
-
+    const {selectedPopup,eventList} = useAppSelector(state => state.global);
+    const dispatch = useDispatch()
+    console.log(eventList,"eventList")
     const localTime = momentLocalizer(moment);
-    const DailyEventComponent: React.FC<{ event: Event }> = ({event}) => (<div style={{backgroundColor: event.color}}>
+    const DailyEventComponent: React.FC<{ event: EventModel }> = ({event}) => (
+        <div style={{backgroundColor: event.backgroundColor}}>
             <div>{event.description}</div>
             <div>{event.location}</div>
 
         </div>);
-    const MonthlyEventComponent: React.FC<{ event: Event }> = ({event}) => (<div style={{backgroundColor: event.color}}>
+    const MonthlyEventComponent: React.FC<{ event: EventModel }> = ({event}) => (
+        <div style={{backgroundColor: event.backgroundColor}}>
             <div>{event.description}</div>
         </div>);
 
@@ -38,17 +42,25 @@ export const CalendarComponent = () => {
     };
 
 
-    return (
-        <div className={isEventDetailPopupOpen?"notFullCalendarWidth":"fullCalendarWidth"}>
+    const handleSelectEvent = (event: EventModel) => {
+        dispatch(setSelectedPopup(SelectedPopup.EventDetail))
+        dispatch(setSelectedEvent(event))
+        console.log('Event clicked:', event);
+    }
+    return (<div
+            className={selectedPopup !== SelectedPopup.Close ? "notFullCalendarWidth" : "fullCalendarWidth"}>
             <Calendar
+                ampm={false}
                 events={Object.values(eventList)}
                 localizer={localTime}
                 components={views}
-                defaultView="week"
+                // defaultView="week"
                 onView={handleViewChange}
-                className={currentView ===Views.WEEK ||currentView ===Views.DAY  ? "week-calender-wrapper":"month-calender-wrapper"}
+                className={currentView === Views.WEEK || currentView === Views.DAY ? "week-calender-wrapper" : "month-calender-wrapper"}
+                formats={{timeGutterFormat: 'HH:mm'}}
+                onSelectEvent={handleSelectEvent}
             />
         </div>
 
-       )
+    )
 }

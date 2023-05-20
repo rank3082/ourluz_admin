@@ -1,7 +1,10 @@
 import {EventModel} from "./event.model";
+import {SelectedPopup} from "../utils/enum.const";
 
 
 export interface GlobalSliceModel {
-  isEventDetailPopupOpen:boolean,
-  eventList: { [key:string]: EventModel }
+  isEnglish:boolean
+  eventList: { [key:string]: EventModel },
+  selectedEvent:EventModel|undefined,
+  selectedPopup:SelectedPopup
 }

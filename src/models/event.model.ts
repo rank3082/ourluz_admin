@@ -1,8 +1,10 @@
 export interface EventModel {
+    id:number,
     description: string,
     start: Date,
     end: Date,
     location: string,
-    color: string,
+    backgroundColor: string,
     allDay: boolean
+    organizationId?:number
 }
