@@ -7,4 +7,5 @@ export interface GlobalSliceModel {
   eventList: { [key:string]: EventModel },
   selectedEvent:EventModel|undefined,
   selectedPopup:SelectedPopup
+  isMobile:boolean
 }

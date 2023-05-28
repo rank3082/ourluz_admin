@@ -1,8 +1,9 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import {globalSlice} from "../store/global.slice";
+import {authenticationSlice} from "../store/authentication.slice";
 
 export const store = configureStore({
-  reducer: { global: globalSlice.reducer },
+  reducer: { global: globalSlice.reducer ,authentication: authenticationSlice.reducer},
 });
 
 export type AppDispatch = typeof store.dispatch;

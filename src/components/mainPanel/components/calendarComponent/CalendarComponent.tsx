@@ -12,7 +12,6 @@ import {SelectedPopup} from "../../../../utils/enum.const";
 export const CalendarComponent = () => {
     const {selectedPopup,eventList} = useAppSelector(state => state.global);
     const dispatch = useDispatch()
-    console.log(eventList,"eventList")
     const localTime = momentLocalizer(moment);
     const DailyEventComponent: React.FC<{ event: EventModel }> = ({event}) => (
         <div style={{backgroundColor: event.backgroundColor}}>
@@ -45,11 +44,11 @@ export const CalendarComponent = () => {
     const handleSelectEvent = (event: EventModel) => {
         dispatch(setSelectedPopup(SelectedPopup.EventDetail))
         dispatch(setSelectedEvent(event))
-        console.log('Event clicked:', event);
     }
+    console.log(eventList,"eventList")
     return (<div
             className={selectedPopup !== SelectedPopup.Close ? "notFullCalendarWidth" : "fullCalendarWidth"}>
-            <Calendar
+        <Calendar
                 ampm={false}
                 events={Object.values(eventList)}
                 localizer={localTime}

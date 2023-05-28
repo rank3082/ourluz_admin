@@ -33,7 +33,8 @@ const initialState: GlobalSliceModel = {
     //         allDay: false
     //     }
     // },
-    selectedEvent:undefined
+    selectedEvent:undefined,
+    isMobile:false
 };
 export const globalSlice = createSlice({
     name: "global", initialState: initialState, reducers: {
@@ -49,6 +50,9 @@ export const globalSlice = createSlice({
         setSelectedPopup: (state, action: PayloadAction< SelectedPopup >) => {
             state.selectedPopup = action.payload;
         },
+        setIsMobile: (state, action: PayloadAction< boolean >) => {
+            state.isMobile = action.payload;
+        },
     },
 });
 
@@ -56,7 +60,8 @@ export const {
     setIsEnglish,
     setEventList,
     setSelectedEvent,
-    setSelectedPopup
+    setSelectedPopup,
+    setIsMobile
 } = globalSlice.actions;
 
 export default globalSlice.reducer;

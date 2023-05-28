@@ -12,6 +12,7 @@ export const text = {
     color:isEnglish?"color":"צבע",
     showWithoutOverlap:isEnglish?"show without overlap":"הצג ללא חפיפת אירועים",
     submit:isEnglish?"Submit":"עדכן פרטים",
+    delete:isEnglish?"Delete":"מחק אירוע",
     shiftManager:isEnglish?"shift manager":"נהל משמרות",
     selectEventForm:isEnglish?"select event":"נהל משמרות"
 

@@ -1,0 +1,40 @@
+.loginWrapper {
+  background-color: var(--primary);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+
+  .loginText {
+    color: var(--white);
+    font-size: 30px;
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  .formWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .inputWrapper {
+      display: flex;
+
+      .labelStyle {
+        color: var(--white);
+        font-size: 28px;
+        font-style: italic;
+        font-weight: 400;
+        width: 150px;
+        height: 30px;
+      }
+    }
+
+
+    .buttonStyle {
+      height: 35px;
+    }
+  }
+}

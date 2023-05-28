@@ -12,8 +12,14 @@
       width: 100%;
       gap: 15px;
     }
-    .submitButton{
-      margin-top: 20px;
+
+
+    .bottomButtonsWrapper{
+      display: flex;
+      justify-content: space-between;
+      .submitButton{
+        margin-top: 20px;
+      }
     }
   }
 }

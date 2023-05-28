@@ -14,29 +14,13 @@ import {getAllEventsByOrganization} from "../../utils/data-management";
 
 export const MainPanel = () => {
     const dispatch = useDispatch()
-    const {selectedPopup} = useAppSelector(state => state.global);
+
+    const {selectedPopup,isMobile} = useAppSelector(state => state.global);
     useEffect(() => {
         getAllEventsByOrganization().then()
     }, [])
 
     const UpdateAddEventPopup = () => {
-        // const startTime = new Date();
-        // startTime.setHours(8, 0, 0, 0);
-        //
-        // const endTime = new Date();
-        // endTime.setHours(10, 0, 0, 0);
-
-
-        // dispatch(setSelectedEvent({
-        //     description: "",
-        //     location: "",
-        //     start: startTime,
-        //     end: endTime,
-        //     backgroundColor: "#2B76E5",
-        //     allDay: true
-        // }
-        // ))
-
         dispatch(setSelectedPopup(SelectedPopup.EventDetail))
     }
     const UpdateShiftManagerPopup = () => {
