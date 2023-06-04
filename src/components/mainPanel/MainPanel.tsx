@@ -10,7 +10,7 @@ import {Button} from "@mui/material";
 import {EventDetails} from "../../modals/eventDetails/EventDetails";
 import {ShiftManager} from "../../modals/shiftManager/ShiftManager";
 import {SelectedPopup} from "../../utils/enum.const";
-import {getAllEventsByOrganization} from "../../utils/data-management";
+import {getAllEventsByOrganization, getAllRolesByOrganization} from "../../utils/data-management";
 
 export const MainPanel = () => {
     const dispatch = useDispatch()
@@ -18,6 +18,7 @@ export const MainPanel = () => {
     const {selectedPopup,isMobile} = useAppSelector(state => state.global);
     useEffect(() => {
         getAllEventsByOrganization().then()
+        getAllRolesByOrganization().then()
     }, [])
 
     const UpdateAddEventPopup = () => {

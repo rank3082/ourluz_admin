@@ -1,3 +1,5 @@
+import {CapacityModel} from "./capacity.model";
+
 export interface EventModel {
     id:number,
     description: string,
@@ -6,5 +8,6 @@ export interface EventModel {
     location: string,
     backgroundColor: string,
     allDay: boolean
-    organizationId?:number
+    organizationId?:number,
+    capacity:CapacityModel[]
 }

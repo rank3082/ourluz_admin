@@ -1,7 +1,7 @@
 import './EventDetails.scss'
 import {useDispatch} from "react-redux";
 import {setSelectedEvent, setSelectedPopup} from "../../store/global.slice";
-import React from "react";
+import React, {useState} from "react";
 import {text} from "../../utils/dictionary-management";
 import "../../styles/side-modals.scss"
 import {DesktopDateTimePicker} from '@mui/x-date-pickers/DesktopDateTimePicker';
@@ -15,12 +15,18 @@ import {EventModel} from "../../models/event.model";
 import {SelectedPopup} from "../../utils/enum.const";
 import {FormBody} from "../components/formBody/FormBody";
 import {createNewEvent, deleteEvent, updateEventById} from "../../utils/data-management";
+import {SubTitle} from "../components/subTitle/SubTitle";
+import {InputNumber} from "./components/inputNumber/InputNumber";
+import {CapacityModel} from "../../models/capacity.model";
+import {RollModel} from "../../models/roll.model";
+import {retry} from "@reduxjs/toolkit/query";
 
 export const EventDetails = () => {
     const dispatch = useDispatch()
-    const {eventList, isEnglish, selectedEvent} = useAppSelector(state => state.global)
+    const {eventList,rollList, isEnglish, selectedEvent} = useAppSelector(state => state.global)
 
     console.log(selectedEvent, "selectedEvent")
+    console.log(rollList, "rollList")
     const isNewEvent = selectedEvent === undefined
     const initEvent: EventModel = isNewEvent ? {
         id: 9999,
@@ -30,17 +36,21 @@ export const EventDetails = () => {
         location: "",
         backgroundColor: "#2B76E5",
         allDay: true,
-        organizationId: 1
+        organizationId: 1,
+        capacity:[]
     } : selectedEvent
 
-    const [description, setDescription] = React.useState<string>(initEvent.description)
-    const [location, setLocation] = React.useState<string>(initEvent.location)
-    const [startTime, setStartTime] = React.useState<dayjs.Dayjs | null>(dayjs(initEvent.start))
-    const [endTime, setEndTime] = React.useState<dayjs.Dayjs | null>(dayjs(initEvent.end))
-    const [color, setColor] = React.useState(initEvent.backgroundColor)
-    const [checkBoxValue, setCheckBoxValue] = React.useState(initEvent.allDay)
+    const [description, setDescription] = useState<string>(initEvent.description)
+    const [location, setLocation] = useState<string>(initEvent.location)
+    const [startTime, setStartTime] = useState<dayjs.Dayjs | null>(dayjs(initEvent.start))
+    const [endTime, setEndTime] = useState<dayjs.Dayjs | null>(dayjs(initEvent.end))
+    const [color, setColor] = useState(initEvent.backgroundColor)
+    const [checkBoxValue, setCheckBoxValue] = useState(initEvent.allDay)
 
-
+    const [capacity,setCapacity] = useState<CapacityModel[]>(rollList.map((r)=> {
+        return {roleId:r.id,eventId:initEvent.id,count:0}
+    }))
+    console.log(capacity,"capacity")
     const closeModal = () => {
         dispatch(setSelectedPopup(SelectedPopup.Close))
         dispatch(setSelectedEvent(undefined))
@@ -57,6 +67,7 @@ export const EventDetails = () => {
                 endDate: endTime?.toDate() as Date,
                 backgroundColor:color,
                 location: location
+                // capacity:capacity
             }).then()
         } else {
             updateEventById(initEvent.id,newList,{
@@ -65,20 +76,24 @@ export const EventDetails = () => {
                 endDate: endTime?.toDate() as Date,
                 backgroundColor:color,
                 location: location
+                // capacity:capacity
             }).then()
-            // newList[selectedEvent?.id] = newEvent
         }
-        // dispatch(setEventList(newList))
         closeModal()
     };
 
     const deleteEventFunction=()=>{
-        console.log("im here")
         console.log(newList,"newList")
         console.log(initEvent,"initEvent")
         deleteEvent(newList,initEvent.id).then()
     }
 
+    const updateCapacityArray = (rollId:number, newCount:number) => {
+        const updatedCapacityItem = capacity.map((c) =>
+            c.roleId === rollId ? { ...c, count: newCount } : c
+        );
+        setCapacity(updatedCapacityItem);
+    };
 
     return <div className="side-modal">
         <FormBody
@@ -113,6 +128,21 @@ export const EventDetails = () => {
                                        label={text.endAt} defaultValue={endTime} ampm={false}
                                        format={'DD/MM/YYYY HH:mm'}/>
             </LocalizationProvider>
+
+            <SubTitle title={"הגדרת תפקידים"}/>
+
+
+
+            {rollList.map((roll,index)=>{
+                const currentCapacity:CapacityModel|undefined = capacity.find((c)=>c.roleId === roll.id)
+
+
+                return currentCapacity && <InputNumber capacity={currentCapacity} setCapacityItems={(rollId:number, newCount:number)=>updateCapacityArray(rollId, newCount)} key={index} roll={roll}/>
+            })}
+
+
+
+            <SubTitle title={"הגדרת תצוגה"}/>
             <ColorPicker backgroundColor={color} setBackgroundColor={setColor}/>
 
             <div style={{

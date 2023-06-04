@@ -1,8 +1,10 @@
 import axios from "axios";
 import {store} from "../app/store";
-import {setEventList} from "../store/global.slice";
+import {setEventList, setRollList} from "../store/global.slice";
 import {mainPath} from "./variable.const";
 import {EventModel} from "../models/event.model";
+import {CapacityModel} from "../models/capacity.model";
+import {RollModel} from "../models/roll.model";
 
 const getToken = () => {
     return store.getState().authentication.token
@@ -27,7 +29,8 @@ export const getAllEventsByOrganization = async () => {
                     location: eventObj.location,
                     backgroundColor: `${eventObj.backgroundColor}`,
                     allDay: true,
-                    organizationId: eventObj.organizationId
+                    organizationId: eventObj.organizationId,
+                    capacity:eventObj.capacity
                 }
             })
             store.dispatch(setEventList(getEventList))
@@ -101,3 +104,24 @@ export const deleteEvent = async (newList: any, eventId: number) => {
         console.log(e, "error")
     }
 }
+
+
+export const getAllRolesByOrganization = async () => {
+    console.log(getToken(), "getToken")
+    axios.get(`${mainPath}yoman/roles`, {
+        headers: {
+            Authorization: `TOKEN ${getToken()}`
+        }
+    })
+        .then(response => {
+            const data = response.data.roles;
+            let rollList: RollModel[] = data
+            // data.forEach((rollObj: any) => {
+            //
+            // })
+            store.dispatch(setRollList(rollList))
+        })
+        .catch(error => {
+            console.error(error);
+        });
+};

@@ -1,5 +1,6 @@
 import {EventModel} from "./event.model";
 import {SelectedPopup} from "../utils/enum.const";
+import {RollModel} from "./roll.model";
 
 
 export interface GlobalSliceModel {
@@ -7,5 +8,6 @@ export interface GlobalSliceModel {
   eventList: { [key:string]: EventModel },
   selectedEvent:EventModel|undefined,
   selectedPopup:SelectedPopup
-  isMobile:boolean
+  isMobile:boolean,
+  rollList:RollModel[]
 }
