@@ -11,6 +11,7 @@ import {EventDetails} from "../../modals/eventDetails/EventDetails";
 import {ShiftManager} from "../../modals/shiftManager/ShiftManager";
 import {SelectedPopup} from "../../utils/enum.const";
 import {getAllEventsByOrganization, getAllRolesByOrganization} from "../../utils/data-management";
+import {RollManager} from "../../modals/rollManager/RollManager";
 
 export const MainPanel = () => {
     const dispatch = useDispatch()
@@ -28,21 +29,31 @@ export const MainPanel = () => {
         dispatch(setSelectedPopup(SelectedPopup.ShiftManager))
     }
 
+    const UpdatePopupManager = (popupManage : SelectedPopup) =>{
+        dispatch(setSelectedPopup(popupManage))
+    }
+
     return <div className="mainPanelContainer">
         <Header/>
         {selectedPopup === SelectedPopup.EventDetail && <EventDetails/>}
         {selectedPopup === SelectedPopup.ShiftManager && <ShiftManager/>}
+        {selectedPopup === SelectedPopup.RollManager && <RollManager/>}
         <div className={"mainPanelBody"}>
             <div className={"addEventButtonWrapper"}>
                 <Button
                     className={selectedPopup === SelectedPopup.EventDetail ? "addEventButtonSelected" : "addEventButtonNotSelected"}
-                    onClick={UpdateAddEventPopup}>
+                    onClick={()=>UpdatePopupManager(SelectedPopup.EventDetail)}>
                     {text.AddEventBtn}
                 </Button>
                 <Button
                     className={selectedPopup === SelectedPopup.ShiftManager ? "addEventButtonSelected" : "addEventButtonNotSelected"}
-                    onClick={UpdateShiftManagerPopup}>
+                    onClick={()=>UpdatePopupManager(SelectedPopup.ShiftManager)}>
                     {text.shiftManager}
+                </Button>
+                <Button
+                    className={selectedPopup === SelectedPopup.RollManager ? "addEventButtonSelected" : "addEventButtonNotSelected"}
+                    onClick={()=>UpdatePopupManager(SelectedPopup.RollManager)}>
+                {text.rollManager}
                 </Button>
             </div>
             <CalendarComponent/>

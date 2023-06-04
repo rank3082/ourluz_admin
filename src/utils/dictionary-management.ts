@@ -14,6 +14,7 @@ export const text = {
     submit:isEnglish?"Submit":"עדכן פרטים",
     delete:isEnglish?"Delete":"מחק אירוע",
     shiftManager:isEnglish?"shift manager":"נהל משמרות",
+    rollManager:isEnglish?"roles manager":"נהל תפקידים",
     selectEventForm:isEnglish?"select event":"נהל משמרות",
     amount:isEnglish?"amount":"כמות",
 };
