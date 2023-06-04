@@ -6,6 +6,7 @@ import {text} from "../../../../utils/dictionary-management";
 import {useAppSelector} from "../../../../app/hooks";
 import {CapacityModel} from "../../../../models/capacity.model";
 
+
 export const InputNumber: React.FC<{ key: number, roll: RollModel, capacity: CapacityModel, setCapacityItems: any }> = ({
                                                                                                                             roll,
                                                                                                                             key,
