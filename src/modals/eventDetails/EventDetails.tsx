@@ -47,9 +47,10 @@ export const EventDetails = () => {
     const [color, setColor] = useState(initEvent.backgroundColor)
     const [checkBoxValue, setCheckBoxValue] = useState(initEvent.allDay)
 
-    const [capacity,setCapacity] = useState<CapacityModel[]>(rollList.map((r)=> {
-        return {roleId:r.id,eventId:initEvent.id,count:0}
-    }))
+    const [capacity,setCapacity] = useState<CapacityModel[]>(initEvent.capacity)
+    // const [capacity,setCapacity] = useState<CapacityModel[]>(rollList.map((r)=> {
+    //     return {roleId:r.id,count:0}
+    // }))
     console.log(capacity,"capacity")
     const closeModal = () => {
         dispatch(setSelectedPopup(SelectedPopup.Close))
@@ -66,8 +67,8 @@ export const EventDetails = () => {
                 startDate:  startTime?.toDate() as Date,
                 endDate: endTime?.toDate() as Date,
                 backgroundColor:color,
-                location: location
-                // capacity:capacity
+                location: location,
+                capacity:capacity
             }).then()
         } else {
             updateEventById(initEvent.id,newList,{
@@ -75,8 +76,8 @@ export const EventDetails = () => {
                 startDate:  startTime?.toDate() as Date,
                 endDate: endTime?.toDate() as Date,
                 backgroundColor:color,
-                location: location
-                // capacity:capacity
+                location: location,
+                capacity:capacity
             }).then()
         }
         closeModal()

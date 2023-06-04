@@ -41,7 +41,7 @@ export const getAllEventsByOrganization = async () => {
 };
 
 export const updateEventById = async (eventId: number, newList: any, eventData: {
-    description: string, startDate: Date, endDate: Date, backgroundColor: string, location: string
+    description: string, startDate: Date, endDate: Date, backgroundColor: string, location: string,capacity:CapacityModel[]
 }) => {
     try {
         const response = await axios.put(`${mainPath}yoman/${eventId}`, {
@@ -49,7 +49,8 @@ export const updateEventById = async (eventId: number, newList: any, eventData: 
             startDate: eventData.startDate,
             endDate: eventData.endDate,
             backgroundColor: eventData.backgroundColor,
-            location: eventData.location
+            location: eventData.location,
+            capacity:eventData.capacity
         },{
             headers: {
                 Authorization: `TOKEN ${getToken()}`
@@ -62,7 +63,8 @@ export const updateEventById = async (eventId: number, newList: any, eventData: 
             startDate: eventData.startDate,
             endDate: eventData.endDate,
             backgroundColor: eventData.backgroundColor,
-            location: eventData.location
+            location: eventData.location,
+            capacity:eventData.capacity
         }
         store.dispatch(setEventList(newList))
         // setData(response.data);
@@ -72,7 +74,7 @@ export const updateEventById = async (eventId: number, newList: any, eventData: 
 }
 
 export const createNewEvent = async (newList: any, eventData: {
-    description: string, startDate: Date, endDate: Date, backgroundColor: string, location: string
+    description: string, startDate: Date, endDate: Date, backgroundColor: string, location: string,capacity:CapacityModel[]
 }) => {
     try {
         const response = await axios.post(`${mainPath}yoman/?organizationId=1`, {
@@ -80,7 +82,8 @@ export const createNewEvent = async (newList: any, eventData: {
             startDate: eventData.startDate,
             endDate: eventData.endDate,
             backgroundColor: eventData.backgroundColor,
-            location: eventData.location
+            location: eventData.location,
+            capacity:eventData.capacity
         },{
             headers: {
                 Authorization: `TOKEN ${getToken()}`

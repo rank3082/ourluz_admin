@@ -20,7 +20,7 @@ export const InputNumber: React.FC<{ key: number, roll: RollModel, capacity: Cap
                    id={`roll${key}`}
                    type={"number"}
                    label={text.amount}
-                   defaultValue={0}
+                   defaultValue={capacity.count}
                    variant="outlined"
                    dir={isEnglish ? "ltr" : "rtl"}
                    style={{width: "20%"}}
