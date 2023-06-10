@@ -1,0 +1,26 @@
+.selectRolesContainer{
+  color: var(--grey-text);
+
+.chooseRollsHeader{
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+}
+.select-dropdown{
+  margin-top: 10px;
+  display: flex;
+  gap: 5%;
+  flex-wrap: wrap;
+  justify-content: center;
+  border-bottom: 1px solid var(--light-wolf);
+  padding-bottom: 10px;
+
+
+  .select-dropdown-item{
+    width: 120px;
+    display: flex;
+    align-items: center;
+  }
+}
+}

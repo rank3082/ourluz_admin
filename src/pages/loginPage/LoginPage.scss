@@ -1,5 +1,6 @@
+.headerContainer{
+background-color: var(--primary);
 .loginWrapper {
-  background-color: var(--primary);
   height: 100vh;
   display: flex;
   align-items: center;
@@ -30,11 +31,28 @@
         width: 150px;
         height: 30px;
       }
-    }
 
+      .inputText {
+        border: 0;
+
+        &:hover {
+          box-shadow: 0 0 15px 4px var(--dark);
+        }
+
+        border-radius: 8px;
+        padding-inline: 8px;
+      }
+    }
 
     .buttonStyle {
       height: 35px;
+      border-radius: 8px;
+      border: 0;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: 0 0 15px 4px var(--dark);
+      }
     }
   }
-}
+}}

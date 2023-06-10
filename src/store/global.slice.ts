@@ -1,17 +1,20 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {GlobalSliceModel} from "../models/global-slice.model";
 import {EventModel} from "../models/event.model";
-import {SelectedPopup} from "../utils/enum.const";
+import {SelectedPage, SelectedPopup} from "../utils/enum.const";
 import {RollModel} from "../models/roll.model";
+import {UserModel} from "../models/user.model";
 
 
 const initialState: GlobalSliceModel = {
     isEnglish: false,
     selectedPopup:SelectedPopup.Close,
+    selectedPage:SelectedPage.MainPanel,
     eventList:{},
     rollList:[],
     selectedEvent:undefined,
-    isMobile:false
+    isMobile:false,
+    userList:[]
 };
 export const globalSlice = createSlice({
     name: "global", initialState: initialState, reducers: {
@@ -27,11 +30,17 @@ export const globalSlice = createSlice({
         setSelectedPopup: (state, action: PayloadAction< SelectedPopup >) => {
             state.selectedPopup = action.payload;
         },
+        setSelectedPage: (state, action: PayloadAction< SelectedPage >) => {
+            state.selectedPage = action.payload;
+        },
         setIsMobile: (state, action: PayloadAction< boolean >) => {
             state.isMobile = action.payload;
         },
         setRollList: (state, action: PayloadAction<RollModel[] >) => {
             state.rollList = action.payload;
+        },
+        setUserList: (state, action: PayloadAction<UserModel[] >) => {
+            state.userList = action.payload;
         },
     },
 });
@@ -41,8 +50,10 @@ export const {
     setEventList,
     setSelectedEvent,
     setSelectedPopup,
+    setSelectedPage,
     setIsMobile,
-    setRollList
+    setRollList,
+    setUserList
 } = globalSlice.actions;
 
 export default globalSlice.reducer;

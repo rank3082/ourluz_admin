@@ -3,14 +3,14 @@ import {Header} from "./components/header/Header";
 import {CalendarComponent} from "./components/calendarComponent/CalendarComponent";
 import React, {useEffect} from "react";
 import {text} from "../../utils/dictionary-management";
-import {setSelectedPopup} from "../../store/global.slice";
+import {setSelectedPage, setSelectedPopup} from "../../store/global.slice";
 import {useAppSelector} from "../../app/hooks";
 import {useDispatch} from "react-redux";
 import {Button} from "@mui/material";
 import {EventDetails} from "../../modals/eventDetails/EventDetails";
 import {ShiftManager} from "../../modals/shiftManager/ShiftManager";
-import {SelectedPopup} from "../../utils/enum.const";
-import {getAllEventsByOrganization, getAllRolesByOrganization} from "../../utils/data-management";
+import {SelectedPage, SelectedPopup} from "../../utils/enum.const";
+import {getAllEventsByOrganization, getAllRolesByOrganization, getAllUsers} from "../../utils/data-management";
 import {RollManager} from "../../modals/rollManager/RollManager";
 
 export const MainPanel = () => {
@@ -20,17 +20,15 @@ export const MainPanel = () => {
     useEffect(() => {
         getAllEventsByOrganization().then()
         getAllRolesByOrganization().then()
+        getAllUsers().then()
     }, [])
 
-    const UpdateAddEventPopup = () => {
-        dispatch(setSelectedPopup(SelectedPopup.EventDetail))
-    }
-    const UpdateShiftManagerPopup = () => {
-        dispatch(setSelectedPopup(SelectedPopup.ShiftManager))
-    }
-
     const UpdatePopupManager = (popupManage : SelectedPopup) =>{
+        if (selectedPopup === popupManage){
+            dispatch(setSelectedPopup(SelectedPopup.Close, ))
+        }else {
         dispatch(setSelectedPopup(popupManage))
+        }
     }
 
     return <div className="mainPanelContainer">
@@ -54,6 +52,11 @@ export const MainPanel = () => {
                     className={selectedPopup === SelectedPopup.RollManager ? "addEventButtonSelected" : "addEventButtonNotSelected"}
                     onClick={()=>UpdatePopupManager(SelectedPopup.RollManager)}>
                 {text.rollManager}
+                </Button>
+                <Button
+                    className={"addEventButtonNotSelected"}
+                    onClick={()=>dispatch(setSelectedPage(SelectedPage.EmployeePage))}>
+                {text.employeeList}
                 </Button>
             </div>
             <CalendarComponent/>

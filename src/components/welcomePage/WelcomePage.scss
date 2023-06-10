@@ -1,0 +1,36 @@
+.welcomePage{
+  height: 100vh;
+  background-color: var(--primary);
+  padding: 3%;
+.welcomePageHeader{
+  display: flex;
+  justify-content: space-between;
+}
+  .signUpWrapper{
+    color: var(--white);
+    font-size: 20px;
+    display: flex;
+    gap: 10px;
+
+    .selectedButton{
+      background-color: var(--white);
+      color: var(--primary);
+      box-shadow: 0 0 15px 4px var(--dark);
+      cursor: pointer;
+      border-radius: 16px;
+      border :1px solid var(--white);
+      padding: 10px;
+    }
+
+
+    .signUpText{
+      cursor: pointer;
+      border-radius: 16px;
+      border :1px solid var(--white);
+      padding: 10px;
+      &:hover{
+        box-shadow: 0 0 15px 4px var(--dark);
+      }
+    }
+  }
+}

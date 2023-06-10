@@ -1,14 +1,118 @@
 import axios from "axios";
 import {store} from "../app/store";
-import {setEventList, setRollList} from "../store/global.slice";
+import {setEventList, setRollList, setUserList} from "../store/global.slice";
 import {mainPath} from "./variable.const";
 import {EventModel} from "../models/event.model";
 import {CapacityModel} from "../models/capacity.model";
 import {RollModel} from "../models/roll.model";
+import {UserModel} from "../models/user.model";
 
 const getToken = () => {
     return store.getState().authentication.token
 }
+const getAllUsersRedux = () => {
+    return store.getState().global.userList
+}
+
+
+
+export const deleteUser = async (userId: number) => {
+    const allUsers = getAllUsersRedux()
+    try {
+        await axios.delete(`${mainPath}yoman/users/${userId}`,{ headers: {
+                Authorization: `TOKEN ${getToken()}`
+            }});
+     const newUsersList:UserModel[] = []
+         allUsers.forEach((u)=>{
+            if (u.id !== userId){
+                newUsersList.push(u);
+            }
+        })
+        store.dispatch(setUserList(newUsersList))
+    } catch (e) {
+        console.log(e, "error")
+    }
+}
+
+export const updateUserById = async (userDetails: {
+    firstName: string, lastName: string, email: string, mobile: string, roleIds: number[],id:number
+})=>{
+   const allUsers = getAllUsersRedux()
+    try {
+        const response = await axios.put(`${mainPath}yoman/users/${userDetails.id}`, {
+            firstName: userDetails.firstName,
+            lastName: userDetails.lastName,
+            email: userDetails.email,
+            mobile: userDetails.mobile,
+            roleIds: userDetails.roleIds,
+        },{
+            headers: {
+                Authorization: `TOKEN ${getToken()}`
+            }});
+        console.log(response)
+
+        const newUserList = allUsers.map((u,index)=>{
+            if (u.id === userDetails.id){
+                return {...u,firstName:userDetails.firstName,lastName:userDetails.lastName,email:userDetails.email,mobile:userDetails.mobile,roleIds:userDetails.roleIds}
+            }else {
+                return u
+            }
+        })
+        store.dispatch(setUserList(newUserList))
+    } catch (e) {
+        console.log(e, "error")
+    }
+}
+
+export const createNewUser = async (newUserDetails: {
+    username: string, password: string, firstName: string, lastName: string, email: string,mobile:string,roleIds:number[]
+}) => {
+    console.log(newUserDetails,"newUserDetails")
+    try {
+        const response = await axios.post(`${mainPath}yoman/users/`, {
+            username: newUserDetails.username,
+            password: newUserDetails.password,
+            firstName: newUserDetails.firstName,
+            lastName: newUserDetails.lastName,
+            email: newUserDetails.email,
+            mobile:newUserDetails.mobile,
+            roleIds:newUserDetails.roleIds,
+        },{
+            headers: {
+                Authorization: `TOKEN ${getToken()}`
+            }
+        });
+        const newUser:UserModel=response.data.user;
+        const allUsers:UserModel[] = getAllUsersRedux()
+        if (newUser){
+        const newUserList:UserModel[] = [...allUsers, newUser];
+            console.log(newUserList,"newUserList")
+            store.dispatch(setUserList(newUserList))
+        }
+
+    } catch (e) {
+        console.log(e, "error")
+    }
+}
+
+
+
+export const getAllUsers = async () => {
+    console.log(getToken(), "getToken")
+    axios.get(`${mainPath}yoman/users/`, {
+        headers: {
+            Authorization: `TOKEN ${getToken()}`
+        }
+    })
+        .then(response => {
+            const data = response.data.users;
+            console.log(data,"resssss")
+            store.dispatch(setUserList(data))
+        })
+        .catch(error => {
+            console.error(error);
+        });
+};
 
 export const getAllEventsByOrganization = async () => {
     console.log(getToken(), "getToken")
@@ -95,6 +199,11 @@ export const createNewEvent = async (newList: any, eventData: {
         console.log(e, "error")
     }
 }
+
+
+
+
+
 
 export const deleteEvent = async (newList: any, eventId: number) => {
     try {

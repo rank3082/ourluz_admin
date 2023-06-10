@@ -1,0 +1,37 @@
+.employeePageContainer{
+
+
+  .employeeHeaderWrapper{
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+    margin-top:2%;
+    display: flex;
+    width: 80px;
+    margin-left: 5%;
+    padding-inline: 4px;
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid var(--wolf);
+    --icon-color: var(--grey-text);
+    .arrowWrapper{
+      transform: rotate(180deg);
+    }
+    &:hover{
+      background-color: var(--riverstone);
+      box-shadow: 0 0 15px 4px var(--light-wolf);
+    }
+  }
+
+  .employeeHeaderButtons{
+    display: flex;
+    padding-inline: 5%;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--light-wolf);
+
+  }
+
+
+}
+
