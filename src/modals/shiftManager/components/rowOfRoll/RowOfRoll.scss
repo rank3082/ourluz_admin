@@ -1,0 +1,19 @@
+.rollRow{
+  display: flex;
+  &:hover{
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .checkIcon{
+    --icon-color: var(--primary);
+  }
+  .rollDescription{
+
+  }
+  .selectedRoll{
+    color: var(--primary);
+  }
+  .notSelectedRoll{
+    color: var(--wolf);
+  }
+}

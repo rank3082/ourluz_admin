@@ -9,5 +9,8 @@ export interface EventModel {
     backgroundColor: string,
     allDay: boolean
     organizationId?:number,
-    capacity:CapacityModel[]
+    capacity:CapacityModel[],
+    users:{"id": number,
+        "booked": boolean,
+        "roleId": number|null}[]
 }

@@ -116,7 +116,7 @@ export const getAllUsers = async () => {
 
 export const getAllEventsByOrganization = async () => {
     console.log(getToken(), "getToken")
-    axios.get(`${mainPath}yoman/?organizationId=1`, {
+    axios.get(`${mainPath}yoman/events?fromDate=2023-06-03&toDate=2023-06-29`, {
         headers: {
             Authorization: `TOKEN ${getToken()}`
         }
@@ -134,7 +134,8 @@ export const getAllEventsByOrganization = async () => {
                     backgroundColor: `${eventObj.backgroundColor}`,
                     allDay: true,
                     organizationId: eventObj.organizationId,
-                    capacity:eventObj.capacity
+                    capacity:eventObj.capacity,
+                    users:eventObj.users
                 }
             })
             store.dispatch(setEventList(getEventList))
@@ -148,7 +149,7 @@ export const updateEventById = async (eventId: number, newList: any, eventData: 
     description: string, startDate: Date, endDate: Date, backgroundColor: string, location: string,capacity:CapacityModel[]
 }) => {
     try {
-        const response = await axios.put(`${mainPath}yoman/${eventId}`, {
+        const response = await axios.put(`${mainPath}yoman/events/${eventId}`, {
             description: eventData.description,
             startDate: eventData.startDate,
             endDate: eventData.endDate,
@@ -171,7 +172,6 @@ export const updateEventById = async (eventId: number, newList: any, eventData: 
             capacity:eventData.capacity
         }
         store.dispatch(setEventList(newList))
-        // setData(response.data);
     } catch (e) {
         console.log(e, "error")
     }
@@ -181,7 +181,7 @@ export const createNewEvent = async (newList: any, eventData: {
     description: string, startDate: Date, endDate: Date, backgroundColor: string, location: string,capacity:CapacityModel[]
 }) => {
     try {
-        const response = await axios.post(`${mainPath}yoman/?organizationId=1`, {
+        const response = await axios.post(`${mainPath}yoman/events`, {
             description: eventData.description,
             startDate: eventData.startDate,
             endDate: eventData.endDate,
@@ -207,7 +207,7 @@ export const createNewEvent = async (newList: any, eventData: {
 
 export const deleteEvent = async (newList: any, eventId: number) => {
     try {
-        await axios.delete(`${mainPath}yoman/${eventId}`,{ headers: {
+        await axios.delete(`${mainPath}yoman/events/${eventId}`,{ headers: {
                 Authorization: `TOKEN ${getToken()}`
             }});
         delete newList[eventId]
@@ -237,3 +237,41 @@ export const getAllRolesByOrganization = async () => {
             console.error(error);
         });
 };
+
+export const editBookedUserRoll = async (eventId: number, userId: number, roleId: number) => {
+    console.log(eventId,userId,roleId,"im here 5")
+    try {
+        const response = await axios.post(`${mainPath}yoman/bocks/`, {
+            eventId: eventId,
+            userId: userId,
+            roleId: roleId,
+        },{
+            headers: {
+                Authorization: `TOKEN ${getToken()}`
+            }
+        });
+        console.log(response,"response")
+
+        // newList[response.data.id] = {...response.data, start: response.data.startDate, end: response.data.endDate}
+        // store.dispatch(setEventList(newList))
+    } catch (e) {
+        console.log(e, "error3")
+    }
+}
+export const unBookedUser = async (eventId: number, userId: number) => {
+    try {
+        const response = await axios.patch(`${mainPath}yoman/bocks/`, {
+            eventId: eventId,
+            userId: userId,
+        },{
+            headers: {
+                Authorization: `TOKEN ${getToken()}`
+            }
+        });
+        console.log(response,"response")
+        // newList[response.data.id] = {...response.data, start: response.data.startDate, end: response.data.endDate}
+        // store.dispatch(setEventList(newList))
+    } catch (e) {
+        console.log(e, "error")
+    }
+}

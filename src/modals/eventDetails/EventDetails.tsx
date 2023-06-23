@@ -27,6 +27,9 @@ export const EventDetails = () => {
 
     console.log(selectedEvent, "selectedEvent")
     console.log(rollList, "rollList")
+    const initCapacity = rollList.map((r)=>{
+        return {roleId:r.id,count:0}
+    })
     const isNewEvent = selectedEvent === undefined
     const initEvent: EventModel = isNewEvent ? {
         id: 9999,
@@ -37,7 +40,8 @@ export const EventDetails = () => {
         backgroundColor: "#2B76E5",
         allDay: true,
         organizationId: 1,
-        capacity:[]
+        capacity:initCapacity,
+        users:[]
     } : selectedEvent
 
     const [description, setDescription] = useState<string>(initEvent.description)

@@ -1,0 +1,10 @@
+.eventUserList{
+  display: flex;
+  &:hover{
+    background-color: var(--grey-hover);
+    cursor: pointer;
+  }
+  .arrowDropDown{
+    --icon-color: var(--primary);
+  }
+}

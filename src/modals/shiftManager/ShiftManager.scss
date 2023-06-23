@@ -1,3 +1,48 @@
 .selectEventAutoComplete{
   width: 100%;
+
+
+}
+.selectedUserForRoll{
+     display: flex;
+     flex-direction: row;
+   }
+
+.selectedEventFromListContainer{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+.bockedLabel{
+  font-weight: 700;
+width: 100%;
+  border-bottom: 2px solid var(--light-wolf);
+align-items: center;
+  text-align: center;
+  padding-bottom: 5px;
+}
+  .bockRoll{
+    padding-inline: 10px;
+    border-bottom: 0.5px solid var(--light-wolf);
+  // &:hover{
+  //  background-color: var(--grey-hover);
+  //   cursor: pointer;
+  //}
+  }
+  .bookedUser{
+padding-block: 5px;
+
+    color: var(--primary);
+    font-weight: 700;
+    //background-color: var(--green);
+  //  &:hover{
+  //  background-color: grey;
+  //}
+  }
+  .unBookedUser{
+    width: 100%;
+    padding-block: 5px;
+
+    //background-color: grey;
+  }
 }

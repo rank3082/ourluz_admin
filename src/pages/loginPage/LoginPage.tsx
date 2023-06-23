@@ -31,19 +31,20 @@ export const LoginPage: React.FC = () => {
         try {
             const response = await axios.post(
                 `${mainPath}api-token-auth/`,
+
                 {
                     username,
                     password,
-                }
+                },
             );
-
+            console.log(response.data.token,"res");
             if (response?.data?.token){
                 dispatch(setToken(response.data.token))
             }else {
                 return false
             }
             // Handle the response (e.g., store token in local storage, redirect)
-            console.log(response,"res");
+
 
         } catch (error) {
             // Handle error (e.g., display error message)
