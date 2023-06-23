@@ -32,5 +32,10 @@ export const text = {
     back:isEnglish?"back":"חזור",
     selectRoles:isEnglish?"select roles":"בחר תפקידים",
     userDetailsId:isEnglish?"Edit details":"ערוך פרטים",
-    userId:isEnglish?"user id:":"ת״ז עובד:"
+    userId:isEnglish?"user id:":"ת״ז עובד:",
+    capacity:isEnglish?"capacity":"כמות נדרשת",
+    roll:isEnglish?"roll":"תפקיד",
+    booked:isEnglish?"booked":"שובצו",
+    withoutEmployee:isEnglish?"there is not available employee for this event":"לא נרשמו עובדים לאירוע זה",
+
 };
