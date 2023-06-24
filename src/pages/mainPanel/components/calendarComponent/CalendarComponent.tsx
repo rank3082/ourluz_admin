@@ -8,17 +8,33 @@ import {useDispatch} from "react-redux";
 import {setSelectedEvent, setSelectedPopup} from "../../../../store/global.slice";
 import {EventModel} from "../../../../models/event.model";
 import {SelectedPopup} from "../../../../utils/enum.const";
+import {text} from "../../../../utils/dictionary-management";
+import {getRollName, getUserById, isEventHasFullBooking} from "../../../../utils/general";
+import * as events from "events";
 
 export const CalendarComponent = () => {
-    const {selectedPopup,eventList} = useAppSelector(state => state.global);
+    const {selectedPopup,eventList,rollList} = useAppSelector(state => state.global);
     const dispatch = useDispatch()
-    const localTime = momentLocalizer(moment);
-    const DailyEventComponent: React.FC<{ event: EventModel }> = ({event}) => (
-        <div style={{backgroundColor: event.backgroundColor}}>
-            <div>{event.description}</div>
-            <div>{event.location}</div>
 
-        </div>);
+
+    const localTime = momentLocalizer(moment);
+    const DailyEventComponent: React.FC<{ event: EventModel }> = ({event}) => {
+        const eventUserBooked = event.users.filter((u)=>u.booked);
+      return  <div className={"calenderContainer"} style={{backgroundColor: event.backgroundColor,border:isEventHasFullBooking(event)?"2px solid var(--light-green)":"2px solid var(--dark)"}}>
+            <div className={"descriptionStyle"}>{event.description}</div>
+            <div>
+                <span style={{fontWeight:600}}>{text.location} - </span>
+                <span >{event.location}</span>
+            </div>
+            <div style={{fontWeight:600}}>
+              שעת התחלה-
+            </div>
+            <div >{event.start.toString().split("T")[1]}</div>
+            <div style={{fontWeight:600}}>{eventUserBooked.length>0?text.employeeList:text.emptyEmployeeList}</div>
+            {eventUserBooked.map((user)=>{
+                return <div>{getUserById(user.id)?.firstName} - {getRollName(user.roleId)}</div>
+            })}
+        </div>};
     const MonthlyEventComponent: React.FC<{ event: EventModel }> = ({event}) => (
         <div style={{backgroundColor: event.backgroundColor}}>
             <div>{event.description}</div>
@@ -45,6 +61,7 @@ export const CalendarComponent = () => {
         dispatch(setSelectedPopup(SelectedPopup.EventDetail))
         dispatch(setSelectedEvent(event))
     }
+
     console.log(eventList,"eventList")
     return (<div
             className={selectedPopup !== SelectedPopup.Close ? "notFullCalendarWidth" : "fullCalendarWidth"}>
@@ -53,9 +70,10 @@ export const CalendarComponent = () => {
                 events={Object.values(eventList)}
                 localizer={localTime}
                 components={views}
+
                 // defaultView="week"
                 onView={handleViewChange}
-                className={currentView === Views.WEEK || currentView === Views.DAY ? "week-calender-wrapper" : "month-calender-wrapper"}
+                className={currentView === Views.WEEK || currentView === Views.DAY ? "week-calender-wrapper" : `month-calender-wrapper  ` }
                 formats={{timeGutterFormat: 'HH:mm'}}
                 onSelectEvent={handleSelectEvent}
             />

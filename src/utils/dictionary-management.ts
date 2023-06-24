@@ -16,6 +16,7 @@ export const text = {
     shiftManager:isEnglish?"shift manager":"נהל משמרות",
     rollManager:isEnglish?"roles manager":"נהל תפקידים",
     employeeList:isEnglish?"employee list":"רשימת עובדים ",
+    emptyEmployeeList:isEnglish?"there is no employee booked":"לא שובצו עובדים",
     selectEventForm:isEnglish?"select event":"בחר אירוע",
     amount:isEnglish?"amount":"כמות",
     signUp:isEnglish?"sign up":"הירשם",

@@ -1,3 +1,21 @@
+//.isFullBooking .rbc-event{
+//  background-color: #01B698;
+//}
+.rbc-event{
+  background-color: white;
+}
+.calenderContainer{
+  font-size: 14px;
+  border-radius: 4%;
+  //padding: 2px;
+  border-top: #01B698 ;
+  align-items: center;
+  text-align: center;
+  .descriptionStyle{
+    text-decoration: underline;
+    font-weight: 600;
+  }
+}
 .fullCalendarWidth{
   width: 100%;
 }

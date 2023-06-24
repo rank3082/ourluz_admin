@@ -18,8 +18,6 @@ import {createNewEvent, deleteEvent, updateEventById} from "../../utils/data-man
 import {SubTitle} from "../components/subTitle/SubTitle";
 import {InputNumber} from "./components/inputNumber/InputNumber";
 import {CapacityModel} from "../../models/capacity.model";
-import {RollModel} from "../../models/roll.model";
-import {retry} from "@reduxjs/toolkit/query";
 
 export const EventDetails = () => {
     const dispatch = useDispatch()

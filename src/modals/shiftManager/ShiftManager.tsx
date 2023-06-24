@@ -9,6 +9,7 @@ import {useAppSelector} from "../../app/hooks";
 import {FormBody} from "../components/formBody/FormBody";
 import {EventModel} from "../../models/event.model";
 import {SelectedUserForShift} from "./components/selectedUserForShift/SelectedUserForShift";
+import {getRollName} from "../../utils/general";
 
 export const ShiftManager = () => {
     const dispatch = useDispatch()
@@ -30,9 +31,9 @@ export const ShiftManager = () => {
 
     }
     console.log(selectedEventFromList, "selectedEventFromList")
-    const getRollName = (rollId: number) => {
-        return rollList.find((a) => a.id === rollId)?.description
-    }
+    // const getRollName = (rollId: number) => {
+    //     return rollList.find((a) => a.id === rollId)?.description
+    // }
     const getBookedUsersByRoll = (event: EventModel, rollId: number) => {
         let counter = 0;
         event.users.forEach((user) => {
