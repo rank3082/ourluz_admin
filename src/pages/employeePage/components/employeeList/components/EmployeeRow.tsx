@@ -1,6 +1,5 @@
 import "./EmployeeRow.scss"
 import React, {useState} from "react";
-import {Checkbox} from "@mui/material";
 import {Icon} from "../../../../../components/icon/Icon";
 import {deleteUser, editBookedUserRoll, unBookedUser} from "../../../../../utils/data-management";
 import {UserModel} from "../../../../../models/user.model";
@@ -18,8 +17,6 @@ const dispatch=useDispatch()
    }
 
     const updateUserBooking = (isActive:boolean, user: UserModel,rollId:number) => {
-        // console.log(e.target.checked, "checked1")
-       // debugger
         console.log(user, "checked2")
         console.log(eventId, "checked3")
         if (eventId && currentUsersEventList) {
@@ -44,17 +41,9 @@ const dispatch=useDispatch()
             console.log(currentUsersEventList,"currentUsersEventList4")
             dispatch(setEventList({...eventList, [eventId]: {...eventList[eventId], users: currentUsersEventList}}))
             setSelectedEventFromList({...eventList[eventId], users: currentUsersEventList})
-
-
-            // if (u.roleId === roll.id){
-            //     unBookedUser(selectedEventFromList.id,u.id).then()
-            // }else {
-            //     editBookedUserRoll(selectedEventFromList.id,u.id,roll.id).then()
-            // }
         }
 
     }
-    // console.log(rollBooked,"rollBooked")
 
     return   <div className={"tableBody"}>
         {!isMobile && <span className={"column1"}>{user.email}</span>}
@@ -75,8 +64,6 @@ const dispatch=useDispatch()
         <div className={"column1 actionsStyle"}>
             {eventUserList && eventId ? <div onClick={()=>setOpenRollDetails(!openRollDetails)} className={"checkWrapper"}>
                 {eventUserList.includes(user)  ? <Icon name={"check"}/>:<div></div>}
-                {/*<Checkbox defaultChecked={eventUserList.includes(user)}*/}
-                {/*          onChange={(e) => updateUserBooking(e, user,1)}/>*/}
             </div>
                 : <>
                             <span className={"iconLabel editStyle"} onClick={() => EditUser(user)}> <Icon

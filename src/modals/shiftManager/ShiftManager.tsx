@@ -52,15 +52,7 @@ export const ShiftManager = () => {
     },[selectedEventFromList,eventList])
 
 
-    //
-    // const userOfSpecificEvent = useMemo(()=>{
-    //     if ( selectedEventFromList)
-    //         return userList.filter((user) => Object.values(selectedEventFromList?.users).map((userOfEvent) => {
-    //         return userOfEvent.id
-    //     }).includes(user.id))
-    //     else
-    //     return [];
-    // },[selectedEventFromList])
+
 
     return <div className="side-modal">
         <FormBody closeModal={closeModal} title={text.shiftManager} handleSubmit={handleSubmit} withoutSubmit>
@@ -103,11 +95,11 @@ export const ShiftManager = () => {
                         return <tr key={index}>
                             {/*add key*/}
                             {selectedEventFromList?.capacity.filter((c) => roll.id === c.roleId).map((c, indexC) => {
-                                return <>
-                                    <td style={{color: c.count === rollByUser ? "green" : c.count < rollByUser? "orange":"red",width:"25%"}} key={indexC}>{rollByUser}</td>
-                                    <td style={{color: c.count === rollByUser ? "green" : c.count < rollByUser? "orange":"red",width:"25%"}} key={indexC}>{c.count}</td>
-                                    <td style={{color: c.count === rollByUser ? "green" : c.count < rollByUser? "orange":"red",width:"50%"}} key={indexC}> {roll.description} </td>
-                                </>
+                                return <React.Fragment key={`${index}a${indexC}`}>
+                                    <td key={`${index}a${indexC}1`} style={{color: c.count === rollByUser ? "green" : c.count < rollByUser? "orange":"red",width:"25%"}} >{rollByUser}</td>
+                                    <td key={`${index}a${indexC}2`} style={{color: c.count === rollByUser ? "green" : c.count < rollByUser? "orange":"red",width:"25%"}} >{c.count}</td>
+                                    <td key={`${index}a${indexC}3`}style={{color: c.count === rollByUser ? "green" : c.count < rollByUser? "orange":"red",width:"50%"}} > {roll.description} </td>
+                                </React.Fragment>
                             })}
                         </tr>
                     })}
