@@ -33,7 +33,7 @@ export const SelectedUserForShift:React.FC<{setSelectedEventFromList:any,selecte
     return <div>
         <div onClick={()=>setOpenRollList(!openRollList)} className={`eventUserList  ${eventUser.booked ?"bookedUser":"unBookedUser"}`}>
             <div className={"arrowDropDown"}><Icon name={openRollList?"dropdown_chevron_down":"dropdown_chevron_up"}/></div>
-            <div>{userFromList.firstName} {eventUser.booked && "-"} {eventUser.booked && getRollName(eventUser?.roleId)}</div>
+            <div>{userFromList.firstName} {userFromList.lastName} {eventUser.booked && "-"} {eventUser.booked && getRollName(eventUser?.roleId)}</div>
 
         </div>
 

@@ -1,6 +1,6 @@
 import "./ShiftManager.scss"
 import {text} from "../../utils/dictionary-management";
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {setSelectedPopup} from "../../store/global.slice";
 import {useDispatch} from "react-redux";
 import {SelectedPopup} from "../../utils/enum.const";
@@ -10,6 +10,7 @@ import {FormBody} from "../components/formBody/FormBody";
 import {EventModel} from "../../models/event.model";
 import {SelectedUserForShift} from "./components/selectedUserForShift/SelectedUserForShift";
 import {getRollName} from "../../utils/general";
+import {AddManualEmployee} from "./components/addManualEmployee/AddManualEmployee";
 
 export const ShiftManager = () => {
     const dispatch = useDispatch()
@@ -23,7 +24,7 @@ export const ShiftManager = () => {
     const eventOptions = Object.values(eventList).map((eventItem) => eventItem)
     console.log(rollList, "rollList")
 
-    const selectedEvent2 = (eventObj: EventModel) => {
+    const selectedEvent = (eventObj: EventModel) => {
         setSelectedEventFromList(eventObj)
     }
 
@@ -44,9 +45,22 @@ export const ShiftManager = () => {
         return counter
     }
 
-    const userOfSpecificEvent = selectedEventFromList ?  userList.filter((user) => Object.values(selectedEventFromList?.users).map((userOfEvent) => {
-        return userOfEvent.id
-    }).includes(user.id)):[];
+    const userOfSpecificEvent = useMemo(()=>{
+        return selectedEventFromList ?  userList.filter((user) => Object.values(selectedEventFromList?.users).map((userOfEvent) => {
+            return userOfEvent.id
+        }).includes(user.id)):[];
+    },[selectedEventFromList,eventList])
+
+
+    //
+    // const userOfSpecificEvent = useMemo(()=>{
+    //     if ( selectedEventFromList)
+    //         return userList.filter((user) => Object.values(selectedEventFromList?.users).map((userOfEvent) => {
+    //         return userOfEvent.id
+    //     }).includes(user.id))
+    //     else
+    //     return [];
+    // },[selectedEventFromList])
 
     return <div className="side-modal">
         <FormBody closeModal={closeModal} title={text.shiftManager} handleSubmit={handleSubmit} withoutSubmit>
@@ -57,7 +71,7 @@ export const ShiftManager = () => {
                     setInputValue(newInputValue);
                 }}
                 onChange={(event: any, newValue: EventModel | null) => {
-                    newValue && selectedEvent2(newValue);
+                    newValue && selectedEvent(newValue);
                 }}
                 dir={isEnglish ? "ltr" : "rtl"}
                 size={"small"}
@@ -87,6 +101,7 @@ export const ShiftManager = () => {
                     {rollList.map((roll, index) => {
                         const rollByUser = getBookedUsersByRoll(selectedEventFromList, roll.id);
                         return <tr key={index}>
+                            {/*add key*/}
                             {selectedEventFromList?.capacity.filter((c) => roll.id === c.roleId).map((c, indexC) => {
                                 return <>
                                     <td style={{color: c.count === rollByUser ? "green" : c.count < rollByUser? "orange":"red",width:"25%"}} key={indexC}>{rollByUser}</td>
@@ -110,6 +125,11 @@ export const ShiftManager = () => {
                 })}
                 {userOfSpecificEvent.length ===0 && <div  style={{direction: !isEnglish ? "rtl" : "ltr"}}  className={"alertText"}>{text.withoutEmployee}</div>}
             </div>}
+            {selectedEventFromList && <AddManualEmployee setSelectedEventFromList={setSelectedEventFromList} eventId={selectedEventFromList?.id.toString()??""} eventUserList={userOfSpecificEvent.filter((eu)=> {
+               const findIndex = selectedEventFromList?.users.findIndex((u) => u.id === eu.id)??-1
+               return   selectedEventFromList?.users[findIndex].booked
+           })}/>}
+            {selectedEventFromList && <div className={"bookedEmployeesFromListBtn"}>{text.bookedEmployeesFromList}</div>}
         </FormBody>
 
     </div>

@@ -38,5 +38,6 @@ export const text = {
     roll:isEnglish?"roll":"תפקיד",
     booked:isEnglish?"booked":"שובצו",
     withoutEmployee:isEnglish?"there is not available employee for this event":"לא נרשמו עובדים לאירוע זה",
-
+    bookedEmployeesFromList :isEnglish?"booked from employee list":"שבץ מרשימת העובדים",
+    addManuelEmployee :isEnglish?"add manual employee":"הוסף עובד ידנית"
 };

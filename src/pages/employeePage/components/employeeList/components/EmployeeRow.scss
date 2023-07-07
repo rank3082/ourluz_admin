@@ -1,0 +1,31 @@
+.eyeIconOpen{
+  --icon-color: var(--primary);
+  &:hover{
+    --icon-color: var(--dark);
+  }
+}
+.eyeIconClose{
+  --icon-color: var(--dark);
+  &:hover{
+   --icon-color: var(--primary);
+  }
+}
+.rollWrapper{
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  :hover{
+    cursor: pointer;
+    color: var(--primary) !important;
+    font-weight: 700 !important;
+  }
+
+}
+.rollName{
+  display: flex;
+  justify-content: center;
+     &:hover{
+       cursor: pointer;
+       background-color: var(--white);
+     }
+   }

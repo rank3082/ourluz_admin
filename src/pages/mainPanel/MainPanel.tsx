@@ -11,7 +11,7 @@ import {EventDetails} from "../../modals/eventDetails/EventDetails";
 import {ShiftManager} from "../../modals/shiftManager/ShiftManager";
 import {SelectedPage, SelectedPopup} from "../../utils/enum.const";
 import {getAllEventsByOrganization, getAllRolesByOrganization, getAllUsers} from "../../utils/data-management";
-import {RollManager} from "../../modals/rollManager/RollManager";
+// import {RollManager} from "../../modals/rollManager/RollManager";
 
 export const MainPanel = () => {
     const dispatch = useDispatch()
@@ -35,7 +35,7 @@ export const MainPanel = () => {
         <Header/>
         {selectedPopup === SelectedPopup.EventDetail && <EventDetails/>}
         {selectedPopup === SelectedPopup.ShiftManager && <ShiftManager/>}
-        {selectedPopup === SelectedPopup.RollManager && <RollManager/>}
+        {/*{selectedPopup === SelectedPopup.RollManager && <RollManager/>}*/}
         <div className={"mainPanelBody"}>
             <div className={"addEventButtonWrapper"}>
                 <Button
@@ -48,11 +48,11 @@ export const MainPanel = () => {
                     onClick={()=>UpdatePopupManager(SelectedPopup.ShiftManager)}>
                     {text.shiftManager}
                 </Button>
-                <Button
-                    className={selectedPopup === SelectedPopup.RollManager ? "addEventButtonSelected" : "addEventButtonNotSelected"}
-                    onClick={()=>UpdatePopupManager(SelectedPopup.RollManager)}>
-                {text.rollManager}
-                </Button>
+                {/*<Button*/}
+                {/*    className={selectedPopup === SelectedPopup.RollManager ? "addEventButtonSelected" : "addEventButtonNotSelected"}*/}
+                {/*    onClick={()=>UpdatePopupManager(SelectedPopup.RollManager)}>*/}
+                {/*{text.rollManager}*/}
+                {/*</Button>*/}
                 <Button
                     className={"addEventButtonNotSelected"}
                     onClick={()=>dispatch(setSelectedPage(SelectedPage.EmployeePage))}>
