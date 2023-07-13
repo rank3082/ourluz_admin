@@ -1,6 +1,6 @@
 import axios from "axios";
 import {store} from "../app/store";
-import {setEventList, setRollList, setUserList} from "../store/global.slice";
+import {setEventList, setIsAdmin, setRollList, setUserList} from "../store/global.slice";
 import {mainPath} from "./variable.const";
 import {EventModel} from "../models/event.model";
 import {CapacityModel} from "../models/capacity.model";
@@ -237,6 +237,22 @@ export const getAllRolesByOrganization = async () => {
             console.error(error);
         });
 };
+
+export const isUserIsManager = async () => {
+    axios.get(`${mainPath}yoman/users/currentUser`, {
+        headers: {
+            Authorization: `TOKEN ${getToken()}`
+        }
+    })
+        .then(response => {
+            const isAdmin = response.data?.isAdmin??false;
+            store.dispatch(setIsAdmin(isAdmin))
+        })
+        .catch(error => {
+            console.error(error);
+        });
+};
+
 
 export const editBookedUserRoll = async (eventId: number, userId: number, roleId: number) => {
     console.log(eventId,userId,roleId,"im here 5")

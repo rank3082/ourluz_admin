@@ -14,7 +14,8 @@ const initialState: GlobalSliceModel = {
     rollList:[],
     selectedEvent:undefined,
     isMobile:false,
-    userList:[]
+    userList:[],
+    isAdmin:false
 };
 export const globalSlice = createSlice({
     name: "global", initialState: initialState, reducers: {
@@ -42,6 +43,9 @@ export const globalSlice = createSlice({
         setUserList: (state, action: PayloadAction<UserModel[] >) => {
             state.userList = action.payload;
         },
+        setIsAdmin: (state, action: PayloadAction<boolean>) => {
+            state.isAdmin = action.payload;
+        },
     },
 });
 
@@ -53,7 +57,8 @@ export const {
     setSelectedPage,
     setIsMobile,
     setRollList,
-    setUserList
+    setUserList,
+    setIsAdmin
 } = globalSlice.actions;
 
 export default globalSlice.reducer;

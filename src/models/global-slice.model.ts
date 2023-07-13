@@ -12,5 +12,6 @@ export interface GlobalSliceModel {
   selectedPage:SelectedPage,
   isMobile:boolean,
   rollList:RollModel[],
-  userList:UserModel[]
+  userList:UserModel[],
+  isAdmin:boolean
 }

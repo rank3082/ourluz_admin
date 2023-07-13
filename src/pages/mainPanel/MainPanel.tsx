@@ -10,26 +10,32 @@ import {Button} from "@mui/material";
 import {EventDetails} from "../../modals/eventDetails/EventDetails";
 import {ShiftManager} from "../../modals/shiftManager/ShiftManager";
 import {SelectedPage, SelectedPopup} from "../../utils/enum.const";
-import {getAllEventsByOrganization, getAllRolesByOrganization, getAllUsers} from "../../utils/data-management";
+import {
+    getAllEventsByOrganization,
+    getAllRolesByOrganization,
+    getAllUsers, isUserIsManager
+} from "../../utils/data-management";
 // import {RollManager} from "../../modals/rollManager/RollManager";
 
 export const MainPanel = () => {
     const dispatch = useDispatch()
 
-    const {selectedPopup,isMobile} = useAppSelector(state => state.global);
+    const {selectedPopup,isMobile,isAdmin} = useAppSelector(state => state.global);
     useEffect(() => {
         getAllEventsByOrganization().then()
         getAllRolesByOrganization().then()
+        isUserIsManager().then()
         getAllUsers().then()
     }, [])
 
     const UpdatePopupManager = (popupManage : SelectedPopup) =>{
         if (selectedPopup === popupManage){
-            dispatch(setSelectedPopup(SelectedPopup.Close, ))
+            dispatch(setSelectedPopup(SelectedPopup.Close ))
         }else {
         dispatch(setSelectedPopup(popupManage))
         }
     }
+    console.log(isAdmin,"isAdmin")
 
     return <div className="mainPanelContainer">
         <Header/>
@@ -37,7 +43,7 @@ export const MainPanel = () => {
         {selectedPopup === SelectedPopup.ShiftManager && <ShiftManager/>}
         {/*{selectedPopup === SelectedPopup.RollManager && <RollManager/>}*/}
         <div className={"mainPanelBody"}>
-            <div className={"addEventButtonWrapper"}>
+            {isAdmin && <div className={"addEventButtonWrapper"}>
                 <Button
                     className={selectedPopup === SelectedPopup.EventDetail ? "addEventButtonSelected" : "addEventButtonNotSelected"}
                     onClick={()=>UpdatePopupManager(SelectedPopup.EventDetail)}>
@@ -58,7 +64,7 @@ export const MainPanel = () => {
                     onClick={()=>dispatch(setSelectedPage(SelectedPage.EmployeePage))}>
                 {text.employeeList}
                 </Button>
-            </div>
+            </div>}
             <CalendarComponent/>
         </div>
     </div>
