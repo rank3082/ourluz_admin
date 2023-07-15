@@ -4,6 +4,7 @@ import {HeaderPage} from "../components/headerPage/HeaderPage";
 import {useAppSelector} from "../../../app/hooks";
 import {AvailableRow} from "../myAvailabilityPage/components/availabelRow/AvailableRow";
 import {ShiftRow} from "./components/ShiftRow";
+import {text} from "../../../utils/dictionary-management";
 export const MyShiftPage=()=>{
     const {eventList,currentUser} = useAppSelector(state => state.global)
 
@@ -16,13 +17,17 @@ export const MyShiftPage=()=>{
         })
         return isBooked
     }
+    let counter =0
     return <div>
         <HeaderPage/>
         {Object.keys(eventList).map((eventKey,index)=>{
             const isBooked = checkIfUserIsBookedToEvent(eventList[eventKey]?.users??false)
-            return !isBooked &&
+           if (isBooked){
+               counter++
+           }
+            return isBooked &&
                 <ShiftRow eventDetails={eventList[eventKey]}/>
-            // return <AvailableRow key={index} eventDetails={eventList[eventKey]} isAvailable={checkIfUserIsBookedToEvent(eventList[eventKey]?.users??false)}/>
         })}
+        {counter === 0 && <div className={"thereIsNotBookedEvent"}>{text.thereIsNotBookedEvent}</div>}
     </div>
 }

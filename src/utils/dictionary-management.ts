@@ -45,5 +45,6 @@ export const text = {
     addManuelEmployee :isEnglish?"add manual employee":"הוסף עובד ידנית",
     startAtTime :isEnglish?"start at: ":"התחלת משמרת:",
     endAtTime :isEnglish?"end at: ":"סיום משמרת:",
-    team :isEnglish?"team: ":"צוות"
+    team :isEnglish?"team: ":"צוות",
+    thereIsNotBookedEvent :isEnglish?"there is no booked event: ":"לא שובצו אירועים ",
 };
