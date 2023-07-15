@@ -1,0 +1,13 @@
+.availabilityPageHeaderContainer{
+  display: flex;
+  width: 100%;
+  --icon-color: var(--primary);
+  justify-content: end;
+  align-items: center;
+  border-bottom: 0.5px solid var(--light-wolf);
+  .availabilityPageHeaderWrapper{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+  }
+}

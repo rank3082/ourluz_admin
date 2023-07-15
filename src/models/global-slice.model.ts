@@ -13,5 +13,6 @@ export interface GlobalSliceModel {
   isMobile:boolean,
   rollList:RollModel[],
   userList:UserModel[],
-  isAdmin:boolean
+  isAdmin:boolean,
+  currentUser:UserModel|undefined
 }

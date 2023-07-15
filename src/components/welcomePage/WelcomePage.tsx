@@ -3,7 +3,7 @@ import {text} from "../../utils/dictionary-management";
 import {useAppSelector} from "../../app/hooks";
 import "./WelcomePage.scss"
 import {LoginPage} from "../../pages/loginPage/LoginPage";
-import {SignUp} from "../../pages/employeePage/components/signUp/SignUp";
+import {SignUp} from "../../pages/adminPages/employeePage/components/signUp/SignUp";
 import {Icon} from "../icon/Icon";
 import ourluzIcon from "../../assets/images/ourluzIcon.png";
 

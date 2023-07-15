@@ -1,0 +1,25 @@
+.shiftRowContainer{
+  padding: 10px;
+  align-items: end;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 15px 4px var(--dark);
+  .descriptionLabel{
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .eventDetailsText{
+    font-size: 20px;
+  }
+  .teamsWrapper{
+    display: flex;
+    flex-direction: column;
+    text-align: end;
+    padding-inline-end: 5px;
+    .teamsLabel{
+      padding-block: 5px;
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+}

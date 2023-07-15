@@ -1,12 +1,12 @@
 import "./EmployeeRow.scss"
 import React, {useState} from "react";
-import {Icon} from "../../../../../components/icon/Icon";
-import {deleteUser, editBookedUserRoll, unBookedUser} from "../../../../../utils/data-management";
-import {UserModel} from "../../../../../models/user.model";
-import {setEventList} from "../../../../../store/global.slice";
-import {EventModel} from "../../../../../models/event.model";
+import {Icon} from "../../../../../../components/icon/Icon";
+import {deleteUser, editBookedUserRoll, unBookedUser} from "../../../../../../utils/data-management";
+import {UserModel} from "../../../../../../models/user.model";
+import {setEventList} from "../../../../../../store/global.slice";
+import {EventModel} from "../../../../../../models/event.model";
 import {useDispatch} from "react-redux";
-import {getRollName} from "../../../../../utils/general";
+import {getRollName} from "../../../../../../utils/general";
 export const EmployeeRow:React.FC<{setSelectedEventFromList:any,isMobile:boolean,user:UserModel,eventUserList?:UserModel[],eventId?:string,eventList:{[p: string]: EventModel},EditUser:any,rollBooked:any}>=({setSelectedEventFromList,isMobile,user,eventUserList,eventId,eventList,EditUser,rollBooked})=>{
 const dispatch=useDispatch()
 

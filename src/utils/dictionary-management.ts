@@ -16,6 +16,9 @@ export const text = {
     shiftManager:isEnglish?"shift manager":"נהל משמרות",
     rollManager:isEnglish?"roles manager":"נהל תפקידים",
     employeeList:isEnglish?"employee list":"רשימת עובדים ",
+    myShift:isEnglish?"my shift":"המשמרות שלי ",
+    myAvailability:isEnglish?"my availability":"הזמינות שלי ",
+    myDetails:isEnglish?"my details":"הפרטים שלי ",
     emptyEmployeeList:isEnglish?"there is no employee booked":"לא שובצו עובדים",
     selectEventForm:isEnglish?"select event":"בחר אירוע",
     amount:isEnglish?"amount":"כמות",
@@ -39,5 +42,8 @@ export const text = {
     booked:isEnglish?"booked":"שובצו",
     withoutEmployee:isEnglish?"there is not available employee for this event":"לא נרשמו עובדים לאירוע זה",
     bookedEmployeesFromList :isEnglish?"booked from employee list":"שבץ מרשימת העובדים",
-    addManuelEmployee :isEnglish?"add manual employee":"הוסף עובד ידנית"
+    addManuelEmployee :isEnglish?"add manual employee":"הוסף עובד ידנית",
+    startAtTime :isEnglish?"start at: ":"התחלת משמרת:",
+    endAtTime :isEnglish?"end at: ":"סיום משמרת:",
+    team :isEnglish?"team: ":"צוות"
 };

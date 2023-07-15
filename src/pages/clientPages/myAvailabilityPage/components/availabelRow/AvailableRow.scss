@@ -1,0 +1,41 @@
+.availableRowContainer {
+  box-shadow: var(--light-wolf) 2px 2px 2px 2px;
+
+  .moreEventDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+    gap: 5px;
+    font-size: 18px;
+    padding-inline-end: 20px;
+    padding-bottom: 10px;
+  }
+
+  .availableRowWrapper {
+    padding-inline-start: 10px;
+    padding-block: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+
+    .iconsWrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 5px;
+
+      .chevronWrapper {
+        padding-inline: 10px;
+      }
+
+      .iconWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

@@ -1,15 +1,15 @@
 import React, {useState} from "react";
 import "./EmployeePage.scss"
-import {Icon} from "../../components/icon/Icon";
-import {setSelectedPage} from "../../store/global.slice";
-import {SelectedPage} from "../../utils/enum.const";
+import {Icon} from "../../../components/icon/Icon";
+import {setSelectedPage} from "../../../store/global.slice";
+import {SelectedPage} from "../../../utils/enum.const";
 import {useDispatch} from "react-redux";
 import {SignUp} from "./components/signUp/SignUp";
 import "./EmployeePage.scss"
 import {Button} from "@mui/material";
-import {text} from "../../utils/dictionary-management";
-import "../mainPanel/MainPanel.scss"
-import {Header} from "../mainPanel/components/header/Header";
+import {text} from "../../../utils/dictionary-management";
+import "../../mainPanel/MainPanel.scss"
+import {Header} from "../../mainPanel/components/header/Header";
 import {EmployeeList} from "./components/employeeList/EmployeeList";
 export const EmployeePage = () => {
     const dispatch = useDispatch()

@@ -1,7 +1,7 @@
 import React  from 'react';
 import "./SelectRoles.scss"
-import {useAppSelector} from "../../../../../../app/hooks";
-import {text} from "../../../../../../utils/dictionary-management";
+import {useAppSelector} from "../../../../../../../app/hooks";
+import {text} from "../../../../../../../utils/dictionary-management";
 
 export const SelectRoles:React.FC<{selectedRoles:number[],setSelectedRoles:any}>=({selectedRoles,setSelectedRoles})=> {
 const {rollList,isEnglish}=useAppSelector(state => state.global)

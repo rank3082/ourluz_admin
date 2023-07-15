@@ -7,7 +7,9 @@ import {isMobileFunction} from "./utils/general";
 import {LoginPage} from "./pages/loginPage/LoginPage";
 import {useAppSelector} from "./app/hooks";
 import {SelectedPage} from "./utils/enum.const";
-import {EmployeePage} from "./pages/employeePage/EmployeePage";
+import {EmployeePage} from "./pages/adminPages/employeePage/EmployeePage";
+import {MyAvailabilityPage} from "./pages/clientPages/myAvailabilityPage/MyAvailabilityPage";
+import {MyShiftPage} from "./pages/clientPages/myShiftPage/MyShiftPage";
 
 function App() {
 const dispatch = useDispatch()
@@ -19,6 +21,8 @@ const dispatch = useDispatch()
             <>
             {selectedPage === SelectedPage.MainPanel && <MainPanel/>}
             {selectedPage === SelectedPage.EmployeePage && <EmployeePage/>}
+            {selectedPage === SelectedPage.MyAvailabilityPage && <MyAvailabilityPage/>}
+            {selectedPage === SelectedPage.MyShiftPage && <MyShiftPage/>}
             </>
         }
 

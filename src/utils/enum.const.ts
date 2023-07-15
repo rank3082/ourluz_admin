@@ -1,7 +1,10 @@
 export enum SelectedPage {
     LoginPage = 1,
     MainPanel = 2,
-    EmployeePage = 3
+    EmployeePage = 3,
+    MyAvailabilityPage=4,
+    MyShiftPage=5
+
 }
 
 

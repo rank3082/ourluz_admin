@@ -39,6 +39,8 @@ import { ReactComponent as OpenEye } from "../../assets/icons/open_eye.svg";
 import { ReactComponent as MultiSelect } from "../../assets/icons/multi_select.svg";
 import { ReactComponent as Check } from "../../assets/icons/check.svg";
 import { ReactComponent as Cross } from "../../assets/icons/cross.svg";
+import { ReactComponent as XAvailable } from "../../assets/icons/xAvailable.svg";
+import { ReactComponent as VAvailable } from "../../assets/icons/vAvailable.svg";
 import { ReactComponent as Medication } from "../../assets/icons/medication.svg";
 import { ReactComponent as GreenV } from "../../assets/icons/green_v.svg";
 import { ReactComponent as Wizard } from "../../assets/icons/wizard.svg";
@@ -121,6 +123,8 @@ class Icons {
   readonly roomPreferences: ReactSVGComponent = RoomPreferences;
   readonly threeDots: ReactSVGComponent = ThreeDots;
   readonly ignored: ReactSVGComponent = Ignored;
+  readonly xAvailable: ReactSVGComponent = XAvailable;
+  readonly vAvailable: ReactSVGComponent = VAvailable;
 }
 
 export const icons = new Icons();

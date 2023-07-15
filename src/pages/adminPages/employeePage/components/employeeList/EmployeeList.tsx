@@ -1,13 +1,13 @@
 import React, {Fragment, useMemo, useState} from "react";
 import "./EmployeeList.scss"
-import {useAppSelector} from "../../../../app/hooks";
-import {Icon} from "../../../../components/icon/Icon";
+import {useAppSelector} from "../../../../../app/hooks";
+import {Icon} from "../../../../../components/icon/Icon";
 import {Checkbox, Dialog} from "@mui/material";
 import {SignUp} from "../signUp/SignUp";
-import {UserModel} from "../../../../models/user.model";
-import {deleteUser} from "../../../../utils/data-management";
-import {text} from "../../../../utils/dictionary-management";
-import {setEventList} from "../../../../store/global.slice";
+import {UserModel} from "../../../../../models/user.model";
+import {deleteUser} from "../../../../../utils/data-management";
+import {text} from "../../../../../utils/dictionary-management";
+import {setEventList} from "../../../../../store/global.slice";
 import {useDispatch} from "react-redux";
 import {EmployeeRow} from "./components/EmployeeRow";
 

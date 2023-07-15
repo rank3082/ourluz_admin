@@ -1,6 +1,6 @@
 import axios from "axios";
 import {store} from "../app/store";
-import {setEventList, setIsAdmin, setRollList, setUserList} from "../store/global.slice";
+import {setCurrentUser, setEventList, setIsAdmin, setRollList, setUserList} from "../store/global.slice";
 import {mainPath} from "./variable.const";
 import {EventModel} from "../models/event.model";
 import {CapacityModel} from "../models/capacity.model";
@@ -246,7 +246,9 @@ export const isUserIsManager = async () => {
     })
         .then(response => {
             const isAdmin = response.data?.isAdmin??false;
+            const currentUser:UserModel|undefined = response.data??undefined;
             store.dispatch(setIsAdmin(isAdmin))
+            store.dispatch(setCurrentUser(currentUser))
         })
         .catch(error => {
             console.error(error);
@@ -289,5 +291,37 @@ export const unBookedUser = async (eventId: number, userId: number) => {
         // store.dispatch(setEventList(newList))
     } catch (e) {
         console.log(e, "error")
+    }
+}
+
+
+export const setAvailabilityToEvent = async (eventId: number) => {
+    try {
+        const response = await axios.post(`${mainPath}yoman/users/currentUser`, {
+            eventId: eventId
+        },{
+            headers: {
+                Authorization: `TOKEN ${getToken()}`
+            }
+        });
+        console.log(response,"response123")
+    } catch (e) {
+        console.log(e, "error3")
+    }
+}
+
+export const removeAvailabilityFromEvent = async (eventId: number) => {
+    try {
+        const response = await axios.delete(`${mainPath}yoman/users/currentUser`, {
+            headers: {
+                Authorization: `TOKEN ${getToken()}`
+            },
+            data: {
+                eventId: eventId
+            }
+        });
+        console.log(response,"response123")
+    } catch (e) {
+        console.log(e, "error3")
     }
 }

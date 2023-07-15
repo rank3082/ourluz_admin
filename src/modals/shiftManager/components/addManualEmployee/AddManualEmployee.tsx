@@ -1,10 +1,10 @@
 import "./AddManualEmployee.scss"
 import React, {useState} from "react";
 import {text} from "../../../../utils/dictionary-management";
-import {EmployeeList} from "../../../../pages/employeePage/components/employeeList/EmployeeList";
+import {EmployeeList} from "../../../../pages/adminPages/employeePage/components/employeeList/EmployeeList";
 import {Dialog} from "@mui/material";
 import {Icon} from "../../../../components/icon/Icon";
-import {SignUp} from "../../../../pages/employeePage/components/signUp/SignUp";
+import {SignUp} from "../../../../pages/adminPages/employeePage/components/signUp/SignUp";
 import {useAppSelector} from "../../../../app/hooks";
 import {UserModel} from "../../../../models/user.model";
 

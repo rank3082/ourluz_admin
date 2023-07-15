@@ -43,28 +43,43 @@ export const MainPanel = () => {
         {selectedPopup === SelectedPopup.ShiftManager && <ShiftManager/>}
         {/*{selectedPopup === SelectedPopup.RollManager && <RollManager/>}*/}
         <div className={"mainPanelBody"}>
-            {isAdmin && <div className={"addEventButtonWrapper"}>
-                <Button
+            <div style={{justifyContent:!isMobile ?"start":"center" }} className={"addEventButtonWrapper"}>
+                {isAdmin && <Button
                     className={selectedPopup === SelectedPopup.EventDetail ? "addEventButtonSelected" : "addEventButtonNotSelected"}
                     onClick={()=>UpdatePopupManager(SelectedPopup.EventDetail)}>
                     {text.AddEventBtn}
-                </Button>
-                <Button
+                </Button>}
+                {isAdmin &&  <Button
                     className={selectedPopup === SelectedPopup.ShiftManager ? "addEventButtonSelected" : "addEventButtonNotSelected"}
                     onClick={()=>UpdatePopupManager(SelectedPopup.ShiftManager)}>
                     {text.shiftManager}
-                </Button>
+                </Button>}
                 {/*<Button*/}
                 {/*    className={selectedPopup === SelectedPopup.RollManager ? "addEventButtonSelected" : "addEventButtonNotSelected"}*/}
                 {/*    onClick={()=>UpdatePopupManager(SelectedPopup.RollManager)}>*/}
                 {/*{text.rollManager}*/}
                 {/*</Button>*/}
-                <Button
+                {isAdmin &&  <Button
                     className={"addEventButtonNotSelected"}
                     onClick={()=>dispatch(setSelectedPage(SelectedPage.EmployeePage))}>
                 {text.employeeList}
-                </Button>
-            </div>}
+                </Button>}
+                {!isAdmin &&  <Button
+                    className={"addEventButtonNotSelected"}
+                    onClick={()=>dispatch(setSelectedPage(SelectedPage.MyShiftPage))}>
+                    {text.myShift}
+                </Button>}
+                {!isAdmin &&  <Button
+                    className={"addEventButtonNotSelected"}
+                    onClick={()=>dispatch(setSelectedPage(SelectedPage.MyAvailabilityPage))}>
+                    {text.myAvailability}
+                </Button>}
+                {/*{!isAdmin &&  <Button*/}
+                {/*    className={"addEventButtonNotSelected"}*/}
+                {/*    onClick={()=>dispatch(setSelectedPage(SelectedPage.EmployeePage))}>*/}
+                {/*    {text.myDetails}*/}
+                {/*</Button>}*/}
+                    </div>
             <CalendarComponent/>
         </div>
     </div>

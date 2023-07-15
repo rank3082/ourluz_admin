@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import "./SignUp.scss"
 import {Button, TextField} from "@mui/material";
-import {text} from "../../../../utils/dictionary-management";
-import {useAppSelector} from "../../../../app/hooks";
+import {text} from "../../../../../utils/dictionary-management";
+import {useAppSelector} from "../../../../../app/hooks";
 import {CacheProvider} from "@emotion/react";
-import {cacheRtl} from "../../../../utils/general";
-import {createNewUser, updateUserById} from "../../../../utils/data-management";
+import {cacheRtl} from "../../../../../utils/general";
+import {createNewUser, updateUserById} from "../../../../../utils/data-management";
 import {SelectRoles} from "./components/selectRoles/SelectRoles";
-import {UserModel} from "../../../../models/user.model";
+import {UserModel} from "../../../../../models/user.model";
 
 export const SignUp:React.FC<{ isEditMode?:boolean,selectedUser?:UserModel,closeDialog?:any,setEmployeeList?:any }> = ({isEditMode=false,selectedUser,closeDialog,setEmployeeList}) => {
     const {isEnglish} = useAppSelector(state => state.global)
