@@ -1,32 +1,38 @@
 import "./MainPanel.scss"
 import {Header} from "./components/header/Header";
 import {CalendarComponent} from "./components/calendarComponent/CalendarComponent";
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo} from "react";
 import {text} from "../../utils/dictionary-management";
-import {setSelectedPage, setSelectedPopup} from "../../store/global.slice";
+import {setSelectedEvent, setSelectedPage, setSelectedPopup} from "../../store/global.slice";
 import {useAppSelector} from "../../app/hooks";
 import {useDispatch} from "react-redux";
-import {Button} from "@mui/material";
+import {Button, Dialog} from "@mui/material";
 import {EventDetails} from "../../modals/eventDetails/EventDetails";
 import {ShiftManager} from "../../modals/shiftManager/ShiftManager";
 import {SelectedPage, SelectedPopup} from "../../utils/enum.const";
 import {
     getAllEventsByOrganization,
     getAllRolesByOrganization,
-    getAllUsers, isUserIsManager
+    getAllUsers,
+    isUserIsManager
 } from "../../utils/data-management";
+import {ClientEventDetailsDialog} from "./components/clientEventDetailsDialog/ClientEventDetailsDialog";
+import {EventModel} from "../../models/event.model";
+import {checkIfUserIsAvailabilityToEvent} from "../../utils/general";
 // import {RollManager} from "../../modals/rollManager/RollManager";
 
 export const MainPanel = () => {
     const dispatch = useDispatch()
 
-    const {selectedPopup,isMobile,isAdmin} = useAppSelector(state => state.global);
+    const {selectedEvent,selectedPopup,isMobile,isAdmin,currentUser} = useAppSelector(state => state.global);
     useEffect(() => {
-        getAllEventsByOrganization().then()
-        getAllRolesByOrganization().then()
-        isUserIsManager().then()
-        getAllUsers().then()
-    }, [])
+        if (selectedPopup === SelectedPopup.Close){
+            getAllEventsByOrganization().then()
+            getAllRolesByOrganization().then()
+            isUserIsManager().then()
+            getAllUsers().then()
+        }
+    }, [selectedPopup])
 
     const UpdatePopupManager = (popupManage : SelectedPopup) =>{
         if (selectedPopup === popupManage){
@@ -37,11 +43,15 @@ export const MainPanel = () => {
     }
     console.log(isAdmin,"isAdmin")
 
+    const isAvailableMemo = useMemo(()=>{
+        return checkIfUserIsAvailabilityToEvent(currentUser,(selectedEvent as EventModel)?.users??[])??false
+    },[selectedPopup])
+
     return <div className="mainPanelContainer">
         <Header/>
         {selectedPopup === SelectedPopup.EventDetail && <EventDetails/>}
         {selectedPopup === SelectedPopup.ShiftManager && <ShiftManager/>}
-        {/*{selectedPopup === SelectedPopup.RollManager && <RollManager/>}*/}
+        {/*{selectedPopup === SelectedPopup.ClientEventDetails && <RollManager/>}*/}
         <div className={"mainPanelBody"}>
             <div style={{justifyContent:!isMobile ?"start":"center" }} className={"addEventButtonWrapper"}>
                 {isAdmin && <Button
@@ -82,5 +92,15 @@ export const MainPanel = () => {
                     </div>
             <CalendarComponent/>
         </div>
+            <Dialog
+                fullWidth={true}
+                onClose={()=> {
+                    dispatch(setSelectedPopup(SelectedPopup.Close))
+                    dispatch(setSelectedEvent(undefined))
+                }}
+            open={selectedPopup === SelectedPopup.ClientEventDetails}
+            >
+                <ClientEventDetailsDialog isAvailable={isAvailableMemo}/>
+            </Dialog>
     </div>
 }

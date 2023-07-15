@@ -10,12 +10,11 @@ import {EventModel} from "../../../../models/event.model";
 import {SelectedPopup} from "../../../../utils/enum.const";
 import {text} from "../../../../utils/dictionary-management";
 import {getRollName, getUserById, isEventHasFullBooking} from "../../../../utils/general";
-import * as events from "events";
 
 export const CalendarComponent = () => {
-    const {selectedPopup,eventList,rollList} = useAppSelector(state => state.global);
+    const {selectedPopup,eventList,currentUser,rollList,isMobile} = useAppSelector(state => state.global);
     const dispatch = useDispatch()
-
+console.log(currentUser,"currentUser")
 
     const localTime = momentLocalizer(moment);
     const DailyEventComponent: React.FC<{ event: EventModel }> = ({event}) => {
@@ -58,13 +57,17 @@ export const CalendarComponent = () => {
 
 
     const handleSelectEvent = (event: EventModel) => {
+        if (currentUser?.isAdmin){
         dispatch(setSelectedPopup(SelectedPopup.EventDetail))
+        }else {
+         dispatch(setSelectedPopup(SelectedPopup.ClientEventDetails))
+        }
         dispatch(setSelectedEvent(event))
     }
 
     console.log(eventList,"eventList")
     return (<div
-            className={selectedPopup !== SelectedPopup.Close ? "notFullCalendarWidth" : "fullCalendarWidth"}>
+            className={selectedPopup !== SelectedPopup.Close && !isMobile ? "notFullCalendarWidth" : "fullCalendarWidth"}>
         <Calendar
                 ampm={false}
                 events={Object.values(eventList)}

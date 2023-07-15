@@ -47,4 +47,5 @@ export const text = {
     endAtTime :isEnglish?"end at: ":"סיום משמרת:",
     team :isEnglish?"team: ":"צוות",
     thereIsNotBookedEvent :isEnglish?"there is no booked event: ":"לא שובצו אירועים ",
+    setAvailabilityText :isEnglish?"set availability: ":":רשום זמינות לאירוע ",
 };

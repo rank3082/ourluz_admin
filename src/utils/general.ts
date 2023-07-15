@@ -3,6 +3,7 @@ import {prefixer} from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
 import {store} from "../app/store";
 import {EventModel} from "../models/event.model";
+import {UserModel} from "../models/user.model";
 
 const {isEnglish} = store.getState().global
 export const cacheRtl = createCache({
@@ -44,4 +45,14 @@ export const isEventHasFullBooking = (event: EventModel|undefined) => {
         }
     })
     return isFullBooked
+}
+
+export  const checkIfUserIsAvailabilityToEvent=(currentUser:UserModel|undefined,userList:{id:number,booked:boolean,roleId:number | null}[])=>{
+    let isAvailable = false
+    userList.forEach((u)=>{
+        if (u.id === currentUser?.id){
+            isAvailable =  true
+        }
+    })
+    return isAvailable
 }

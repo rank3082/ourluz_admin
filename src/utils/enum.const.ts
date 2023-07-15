@@ -14,6 +14,7 @@ export enum SelectedPopup {
     ShiftManager = 2,
     RollManager = 3,
     EmployeeList = 4,
+    ClientEventDetails = 5
 }
 
 
