@@ -13,8 +13,8 @@ import {useAppSelector} from "../../app/hooks";
 export const LoginPage: React.FC = () => {
     const dispatch= useDispatch()
     const {isEnglish}=useAppSelector(state => state.global)
-    const [username, setUsername] = useState("rank");
-    const [password, setPassword] = useState("Pxt40833");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);
