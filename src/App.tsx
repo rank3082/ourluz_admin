@@ -16,7 +16,7 @@ const dispatch = useDispatch()
     dispatch(setIsMobile(isMobileFunction()))
     const {token} = useAppSelector(state => state.authentication)
     const {selectedPage} = useAppSelector(state => state.global)
-    return (<div className="App">
+    return (<div  className="App">
         {!token ? <LoginPage/> :
             <>
             {selectedPage === SelectedPage.MainPanel && <MainPanel/>}

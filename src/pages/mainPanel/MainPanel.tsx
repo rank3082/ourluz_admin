@@ -1,7 +1,7 @@
 import "./MainPanel.scss"
 import {Header} from "./components/header/Header";
 import {CalendarComponent} from "./components/calendarComponent/CalendarComponent";
-import React, {useEffect, useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {text} from "../../utils/dictionary-management";
 import {setSelectedEvent, setSelectedPage, setSelectedPopup} from "../../store/global.slice";
 import {useAppSelector} from "../../app/hooks";
@@ -9,6 +9,7 @@ import {useDispatch} from "react-redux";
 import {Button, Dialog} from "@mui/material";
 import {EventDetails} from "../../modals/eventDetails/EventDetails";
 import {ShiftManager} from "../../modals/shiftManager/ShiftManager";
+import { Menu } from '@headlessui/react'
 import {SelectedPage, SelectedPopup} from "../../utils/enum.const";
 import {
     getAllEventsByOrganization,
@@ -19,6 +20,8 @@ import {
 import {ClientEventDetailsDialog} from "./components/clientEventDetailsDialog/ClientEventDetailsDialog";
 import {EventModel} from "../../models/event.model";
 import {checkIfUserIsAvailabilityToEvent} from "../../utils/general";
+import {Icon} from "../../components/icon/Icon";
+import {setToken} from "../../store/authentication.slice";
 // import {RollManager} from "../../modals/rollManager/RollManager";
 
 export const MainPanel = () => {
@@ -47,8 +50,32 @@ export const MainPanel = () => {
         return checkIfUserIsAvailabilityToEvent(currentUser,(selectedEvent as EventModel)?.users??[])??false
     },[selectedPopup])
 
+   const disconnect=()=>{
+        localStorage.setItem("token","")
+        localStorage.setItem("username","")
+        localStorage.setItem("password","")
+        dispatch(setToken(undefined))
+
+   }
     return <div className="mainPanelContainer">
         <Header/>
+        <Menu>
+            <Menu.Button className={"menuContainer"}>
+                        <Icon name={"menu"}/>
+            </Menu.Button>
+
+            <Menu.Items className={"menuItems"}>
+                <Menu.Item >
+                    <div onClick={disconnect} className="opacity-75">Disconnect</div>
+                </Menu.Item>
+            </Menu.Items>
+        </Menu>
+        {/*<div className={"menuContainer"}>*/}
+        {/*    <div onClick={()=>setMenu(!menu)} className={"menuWrapper"} >*/}
+        {/*        <Icon name={"menu"}/>*/}
+        {/*    </div>*/}
+        {/*</div>*/}
+        {/*{menu && <div>asdf</div>}*/}
         {selectedPopup === SelectedPopup.EventDetail && <EventDetails/>}
         {selectedPopup === SelectedPopup.ShiftManager && <ShiftManager/>}
         {/*{selectedPopup === SelectedPopup.ClientEventDetails && <RollManager/>}*/}

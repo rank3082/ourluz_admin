@@ -2,9 +2,9 @@
   height: 100vh;
   background-color: var(--primary);
   padding: 3%;
-.welcomePageHeader{
-  display: flex;
-  justify-content: space-between;
+  .welcomePageHeader{
+      display: flex;
+      justify-content: space-between;
 }
   .signUpWrapper{
     color: var(--white);

@@ -13,7 +13,7 @@ export const text = {
     showWithoutOverlap:isEnglish?"show without overlap":"הצג ללא חפיפת אירועים",
     submit:isEnglish?"Submit":"עדכן פרטים",
     delete:isEnglish?"Delete":"מחק אירוע",
-    shiftManager:isEnglish?"shift manager":"נהל משמרות",
+    shiftManager:isEnglish?"shift manager":"שבץ עובדים",
     rollManager:isEnglish?"roles manager":"נהל תפקידים",
     employeeList:isEnglish?"employee list":"רשימת עובדים ",
     myShift:isEnglish?"my shift":"המשמרות שלי ",
@@ -48,4 +48,6 @@ export const text = {
     team :isEnglish?"team: ":"צוות",
     thereIsNotBookedEvent :isEnglish?"there is no booked event: ":"לא שובצו אירועים ",
     setAvailabilityText :isEnglish?"set availability: ":":רשום זמינות לאירוע ",
+    availabilityStatus :isEnglish?"availability status: ":"סטטוס זמינות: ",
+    changeAvailableStatus :isEnglish?"change available status: ":"שנה סטטוס ל: ",
 };

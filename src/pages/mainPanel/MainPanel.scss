@@ -6,7 +6,30 @@
   .mainPanelBody {
     padding-inline: 5%;
   }
+.menuContainer{
+  width: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 10px;
+  margin-top: 5px;
+  border: 1px solid var(--light-wolf);
+  background-color: var(--grey-hover);
+  .menuWrapper{
 
+    //height: 30px;
+    //width: 30px;
+    //background-color: var(--grey-hover);
+  }
+}
+  .menuItems{
+    border: 1px solid var(--light-wolf);
+
+    width: 80px;
+    background-color: var(--grey-hover);
+    margin-left: 10px;
+    padding: 8px;
+  }
 
 }
 
