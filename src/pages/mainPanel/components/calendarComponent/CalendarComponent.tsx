@@ -96,23 +96,12 @@ console.log(currentUser,"currentUser")
 
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    const slotStyleGetter = (date: Date, resourceId: any) => {
-        const isHighlighted = selectedDate && moment(date).isSame(selectedDate, 'minute');
 
-        return {
-            style: {
-                backgroundColor: isHighlighted ? 'red' : 'transparent',
-                // You can apply any other styles here
-            },
-        };
-    };
     const selectedSlotStyle = {
         backgroundColor: 'red', // Replace 'red' with your desired color
     };
 
     const getSlotStyle = (date: Date) => {
-        console.log("im hereaaa")
-        // If the current date matches the selectedSlot, apply the custom style.
         if (selectedDate && moment(date).isSame(selectedDate, 'day')) {
             return selectedSlotStyle;
         }
@@ -128,7 +117,6 @@ console.log(currentUser,"currentUser")
                 localizer={localTime}
                 components={views}
                 // defaultView="week"
-            // selected={selectedDate}
                 onView={handleViewChange}
                 className={currentView === Views.WEEK || currentView === Views.DAY ? "week-calender-wrapper" : `month-calender-wrapper  ` }
                 formats={{timeGutterFormat: 'HH:mm'}}
