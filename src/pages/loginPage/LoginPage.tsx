@@ -1,16 +1,47 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import ourLuzLogo from "../../assets/images/ourLuzLogo.png"
 import "./LoginPage.scss"
 import {mainPath} from "../../utils/variable.const";
 import {setToken} from "../../store/authentication.slice";
 import {useDispatch} from "react-redux";
-import {text} from "../../utils/dictionary-management";
 import {useAppSelector} from "../../app/hooks";
 
 
 
 export const LoginPage: React.FC = () => {
+
+    const checkIfUserConnected= async (storageUsername:string,storagePassword:string,token:string)=>{
+        dispatch(setToken(token))
+        console.log("checking",storageUsername,storagePassword)
+        // try {
+        //     const response = await axios.post(
+        //         `${mainPath}api-token-auth/`,
+        //         {
+        //             storageUsername,
+        //             storagePassword,
+        //         },
+        //     );
+        //     console.log(response.data.token,"res");
+        //     if (response?.data?.token){
+        //         dispatch(setToken(response.data.token))
+        //         localStorage.setItem("username", username);
+        //         localStorage.setItem("password", password);
+        //     }else {
+        //         return false
+        //     }
+        //     // Handle the response (e.g., store token in local storage, redirect)
+        // } catch (error) {
+        //     // Handle error (e.g., display error message)
+        //     console.error(error);
+        // }
+    }
+    useEffect(()=>{
+        const storageUsername = localStorage.getItem("username");
+        const token = localStorage.getItem("token");
+        const storagePassword = localStorage.getItem("password");
+        storageUsername && storagePassword && token && checkIfUserConnected(storageUsername,storagePassword,token)
+        },[])
     const dispatch= useDispatch()
     const {isEnglish}=useAppSelector(state => state.global)
     const [username, setUsername] = useState("");
@@ -40,6 +71,9 @@ export const LoginPage: React.FC = () => {
             console.log(response.data.token,"res");
             if (response?.data?.token){
                 dispatch(setToken(response.data.token))
+                localStorage.setItem("username", username);
+                localStorage.setItem("password", password);
+                localStorage.setItem("token", response.data.token);
             }else {
                 return false
             }
