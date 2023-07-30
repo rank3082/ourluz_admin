@@ -13,7 +13,7 @@ export const FormBody: React.FC<{ children: React.ReactNode, closeModal: any, ti
                                                                                                                          handleSubmit,
                                                                                                                          deleteEventFunction,
                                                                                                                          isNewEvent=true,
-                                                                                                                                                                                             withoutSubmit=false
+                                                                                                                         withoutSubmit=false
                                                                                                                      }) => {
 
 

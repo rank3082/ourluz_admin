@@ -18,11 +18,11 @@ import {createNewEvent, deleteEvent, updateEventById} from "../../utils/data-man
 import {SubTitle} from "../components/subTitle/SubTitle";
 import {InputNumber} from "./components/inputNumber/InputNumber";
 import {CapacityModel} from "../../models/capacity.model";
+import {ShiftManagerMenu} from "../shiftManager/components/shiftMannagerMenu/ShiftManagerMenu";
 
 export const EventDetails = () => {
     const dispatch = useDispatch()
     const {eventList,rollList, isEnglish, selectedEvent} = useAppSelector(state => state.global)
-
     console.log(selectedEvent, "selectedEvent")
     console.log(rollList, "rollList")
     const initCapacity = rollList.map((r)=>{
@@ -50,9 +50,7 @@ export const EventDetails = () => {
     const [checkBoxValue, setCheckBoxValue] = useState(initEvent.allDay)
 
     const [capacity,setCapacity] = useState<CapacityModel[]>(initEvent.capacity)
-    // const [capacity,setCapacity] = useState<CapacityModel[]>(rollList.map((r)=> {
-    //     return {roleId:r.id,count:0}
-    // }))
+
     console.log(capacity,"capacity")
     const closeModal = () => {
         dispatch(setSelectedPopup(SelectedPopup.Close))
@@ -89,6 +87,7 @@ export const EventDetails = () => {
         console.log(newList,"newList")
         console.log(initEvent,"initEvent")
         deleteEvent(newList,initEvent.id).then()
+        closeModal()
     }
 
     const updateCapacityArray = (rollId:number, newCount:number) => {
@@ -105,7 +104,8 @@ export const EventDetails = () => {
             handleSubmit={handleSubmit}
             deleteEventFunction={deleteEventFunction}
             isNewEvent={isNewEvent} >
-            <TextField onChange={(e) => setDescription(e.target.value)} required={true} className={"textField"}
+            <TextField
+                onChange={(e) => setDescription(e.target.value)} required={true} className={"textField"}
                        id="name"
                        defaultValue={description}
                        label={text.description}
@@ -148,6 +148,8 @@ export const EventDetails = () => {
             <SubTitle title={"הגדרת תצוגה"}/>
             <ColorPicker backgroundColor={color} setBackgroundColor={setColor}/>
 
+
+            {selectedEvent && selectedEvent.description !== "" && <ShiftManagerMenu selectedEvent={selectedEvent}/>}
             <div style={{
                 display: "flex",
                 width: "100%",

@@ -29,6 +29,7 @@ export const ClientEventDetailsDialog: React.FC<{isAvailable:boolean}> = ({isAva
         <div className={"eventDetailsText"}>
             {text.endAtTime} {moment(selectedEvent?.end).format("dddd DD/MM HH:MM")}
         </div>
+        <div className={"setAvailabilityText"}>{text.availabilityStatus} {selectedAvailabilityEvent?" זמין":" לא זמין"}</div>
         <div className={"setAvailabilityText"}>{text.setAvailabilityText}</div>
         <div className={"iconsWrapper"}>
             <div onClick={addAvailabilityEvent}

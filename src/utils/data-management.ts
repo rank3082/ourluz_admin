@@ -116,7 +116,7 @@ export const getAllUsers = async () => {
 
 export const getAllEventsByOrganization = async () => {
     console.log(getToken(), "getToken")
-    axios.get(`${mainPath}yoman/events?fromDate=2023-06-03&toDate=2023-06-29`, {
+    axios.get(`${mainPath}yoman/events?fromDate=2023-06-03&toDate=2030-06-29`, {
         headers: {
             Authorization: `TOKEN ${getToken()}`
         }

@@ -59,11 +59,11 @@ export const LoginPage: React.FC = () => {
                 <form className={"formWrapper"} onSubmit={handleSubmit}>
                     <div className={"inputWrapper"}>
                         <div className={"labelStyle"}>Username:</div>
-                        <input className={"inputText"}  type="text" value={username} onChange={handleUsernameChange} />
+                        <input className={"inputText"}  type="text" value={username} onChange={handleUsernameChange} autoFocus={false}/>
                     </div>
                     <div className={"inputWrapper"}>
                         <div className={"labelStyle"}>Password:</div>
-                        <input className={"inputText"}  type="password" value={password} onChange={handlePasswordChange} />
+                        <input className={"inputText"}  type="password" value={password} onChange={handlePasswordChange} autoFocus={false} />
                     </div>
                     <button className={"buttonStyle"} type="submit">Submit</button>
                 </form>

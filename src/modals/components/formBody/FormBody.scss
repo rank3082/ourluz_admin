@@ -1,23 +1,28 @@
 .formBodyContainer {
   width: 100%;
+  height: 100%;
 
   .formContainer {
     width: 100%;
+    height: 100%;
 
     .fieldWrapper {
+      padding-top: 10px;
+      height: 88%;
+      overflow-y: scroll;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       width: 100%;
       gap: 15px;
     }
 
 
-    .bottomButtonsWrapper{
+    .bottomButtonsWrapper {
       display: flex;
       justify-content: space-between;
-      .submitButton{
+
+      .submitButton {
         margin-top: 20px;
       }
     }

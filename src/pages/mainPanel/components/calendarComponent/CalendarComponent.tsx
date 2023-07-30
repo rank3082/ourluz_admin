@@ -34,10 +34,11 @@ console.log(currentUser,"currentUser")
                 return <div>{getUserById(user.id)?.firstName} - {getRollName(user.roleId)}</div>
             })}
         </div>};
-    const MonthlyEventComponent: React.FC<{ event: EventModel }> = ({event}) => (
-        <div style={{backgroundColor: event.backgroundColor}}>
+    const MonthlyEventComponent: React.FC<{ event: EventModel }> = ({event}) => {
+        return <div style={{backgroundColor: event.backgroundColor}}>
             <div>{event.description}</div>
-        </div>);
+        </div>
+    };
 
     const views = {
         month: {
@@ -57,6 +58,7 @@ console.log(currentUser,"currentUser")
 
 
     const handleSelectEvent = (event: EventModel) => {
+        console.log(event,"event123")
         if (currentUser?.isAdmin){
         dispatch(setSelectedPopup(SelectedPopup.EventDetail))
         }else {
@@ -66,19 +68,72 @@ console.log(currentUser,"currentUser")
     }
 
     console.log(eventList,"eventList")
+
+
+
+    const handleSelectSlot=(slotDetails:any)=>{
+        setSelectedDate(slotDetails.start as Date);
+        if (currentUser?.isAdmin){
+            dispatch(setSelectedPopup(SelectedPopup.EventDetail))
+            const initCapacity = rollList.map((r)=>{
+                return {roleId:r.id,count:0}
+            })
+            const tempEvent:EventModel={
+                id: 9999,
+                description: "",
+                start: slotDetails.start.setHours(5),
+                end:slotDetails.start.setHours(12),
+                location: "",
+                backgroundColor: "#2B76E5",
+                allDay: true,
+                organizationId: 1,
+                capacity:initCapacity,
+                users:[]}
+            dispatch(setSelectedEvent(tempEvent))
+        }
+
+    }
+
+
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const slotStyleGetter = (date: Date, resourceId: any) => {
+        const isHighlighted = selectedDate && moment(date).isSame(selectedDate, 'minute');
+
+        return {
+            style: {
+                backgroundColor: isHighlighted ? 'red' : 'transparent',
+                // You can apply any other styles here
+            },
+        };
+    };
+    const selectedSlotStyle = {
+        backgroundColor: 'red', // Replace 'red' with your desired color
+    };
+
+    const getSlotStyle = (date: Date) => {
+        console.log("im hereaaa")
+        // If the current date matches the selectedSlot, apply the custom style.
+        if (selectedDate && moment(date).isSame(selectedDate, 'day')) {
+            return selectedSlotStyle;
+        }
+        return {};
+    };
     return (<div
             className={selectedPopup !== SelectedPopup.Close && !isMobile ? "notFullCalendarWidth" : "fullCalendarWidth"}>
         <Calendar
-                ampm={false}
+            selectable
+            onSelectSlot={handleSelectSlot}
+            ampm={false}
                 events={Object.values(eventList)}
                 localizer={localTime}
                 components={views}
-
                 // defaultView="week"
+            // selected={selectedDate}
                 onView={handleViewChange}
                 className={currentView === Views.WEEK || currentView === Views.DAY ? "week-calender-wrapper" : `month-calender-wrapper  ` }
                 formats={{timeGutterFormat: 'HH:mm'}}
                 onSelectEvent={handleSelectEvent}
+            slotPropGetter={getSlotStyle}
             />
         </div>
 
