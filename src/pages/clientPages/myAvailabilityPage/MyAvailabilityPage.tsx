@@ -7,18 +7,12 @@ import {checkIfUserIsAvailabilityToEvent} from "../../../utils/general";
 
 export const MyAvailabilityPage=()=>{
     const {eventList,currentUser} = useAppSelector(state => state.global)
-    // const checkIfUserIsAvailabilityToEvent=(userList:{id:number,booked:boolean,roleId:number | null}[])=>{
-    //     let isAvailable = false
-    //     userList.forEach((u)=>{
-    //         if (u.id === currentUser?.id){
-    //             isAvailable =  true
-    //         }
-    //     })
-    //     return isAvailable
-    // }
     return <div>
         <HeaderPage/>
-        {Object.keys(eventList).map((eventKey,index)=>{
+        {Object.keys(eventList).filter((eventItem)=>{
+
+            return new Date(eventList[eventItem].start) >= new Date()
+        }).map((eventKey,index)=>{
           return <AvailableRow key={index} eventDetails={eventList[eventKey]} isAvailable={checkIfUserIsAvailabilityToEvent(currentUser,eventList[eventKey]?.users)}/>
         })}
     </div>
