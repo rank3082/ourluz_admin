@@ -16,7 +16,8 @@ const initialState: GlobalSliceModel = {
     isMobile:false,
     userList:[],
     isAdmin:false,
-    currentUser:undefined
+    currentUser:undefined,
+    slotSelected:undefined
 };
 export const globalSlice = createSlice({
     name: "global", initialState: initialState, reducers: {
@@ -49,6 +50,8 @@ export const globalSlice = createSlice({
         },
         setCurrentUser: (state, action: PayloadAction<UserModel|undefined>) => {
             state.currentUser = action.payload;
+        },setSlotSelected: (state, action: PayloadAction<{start:Date,end:Date} |undefined>) => {
+            state.slotSelected = action.payload;
         },
     },
 });
@@ -63,7 +66,8 @@ export const {
     setRollList,
     setUserList,
     setIsAdmin,
-    setCurrentUser
+    setCurrentUser,
+    setSlotSelected
 } = globalSlice.actions;
 
 export default globalSlice.reducer;

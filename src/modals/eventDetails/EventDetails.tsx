@@ -1,6 +1,6 @@
 import './EventDetails.scss'
 import {useDispatch} from "react-redux";
-import {setSelectedEvent, setSelectedPopup} from "../../store/global.slice";
+import {setSelectedEvent, setSelectedPopup, setSlotSelected} from "../../store/global.slice";
 import React, {useState} from "react";
 import {text} from "../../utils/dictionary-management";
 import "../../styles/side-modals.scss"
@@ -22,7 +22,7 @@ import {ShiftManagerMenu} from "../shiftManager/components/shiftMannagerMenu/Shi
 
 export const EventDetails = () => {
     const dispatch = useDispatch()
-    const {eventList,rollList, isEnglish, selectedEvent} = useAppSelector(state => state.global)
+    const {eventList,rollList, isEnglish, selectedEvent,slotSelected} = useAppSelector(state => state.global)
     console.log(selectedEvent, "selectedEvent")
     console.log(rollList, "rollList")
     const initCapacity = rollList.map((r)=>{
@@ -32,8 +32,8 @@ export const EventDetails = () => {
     const initEvent: EventModel = isNewEvent ? {
         id: 9999,
         description: "",
-        start: new Date(),
-        end: new Date(),
+        start: slotSelected ? slotSelected.start : new Date(),
+        end: slotSelected ? slotSelected.end : new Date(),
         location: "",
         backgroundColor: "#2B76E5",
         allDay: true,
@@ -55,6 +55,7 @@ export const EventDetails = () => {
     const closeModal = () => {
         dispatch(setSelectedPopup(SelectedPopup.Close))
         dispatch(setSelectedEvent(undefined))
+        dispatch(setSlotSelected(undefined))
     }
 
 
