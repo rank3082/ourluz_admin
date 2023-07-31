@@ -5,11 +5,12 @@ import moment from 'moment'
 import "./CalendarComponent.scss"
 import {useAppSelector} from "../../../../app/hooks";
 import {useDispatch} from "react-redux";
-import {setSelectedEvent, setSelectedPopup} from "../../../../store/global.slice";
+import {setSelectedEvent, setSelectedPopup, setSlotSelected} from "../../../../store/global.slice";
 import {EventModel} from "../../../../models/event.model";
 import {SelectedPopup} from "../../../../utils/enum.const";
 import {text} from "../../../../utils/dictionary-management";
 import {getRollName, getUserById, isEventHasFullBooking} from "../../../../utils/general";
+import {start} from "repl";
 
 export const CalendarComponent = () => {
     const {selectedPopup,eventList,currentUser,rollList,isMobile} = useAppSelector(state => state.global);
@@ -75,21 +76,22 @@ console.log(currentUser,"currentUser")
         setSelectedDate(slotDetails.start as Date);
         if (currentUser?.isAdmin){
             dispatch(setSelectedPopup(SelectedPopup.EventDetail))
-            const initCapacity = rollList.map((r)=>{
-                return {roleId:r.id,count:0}
-            })
-            const tempEvent:EventModel={
-                id: 9999,
-                description: "",
-                start: slotDetails.start.setHours(5),
-                end:slotDetails.start.setHours(12),
-                location: "",
-                backgroundColor: "#2B76E5",
-                allDay: true,
-                organizationId: 1,
-                capacity:initCapacity,
-                users:[]}
-            dispatch(setSelectedEvent(tempEvent))
+            dispatch(setSlotSelected({start: slotDetails.start.setHours(5),end:slotDetails.start.setHours(12)}))
+            // const initCapacity = rollList.map((r)=>{
+            //     return {roleId:r.id,count:0}
+            // })
+            // const tempEvent:EventModel={
+            //     id: Date.now(),
+            //     description: "",
+            //     start: slotDetails.start.setHours(5),
+            //     end:slotDetails.start.setHours(12),
+            //     location: "",
+            //     backgroundColor: "#2B76E5",
+            //     allDay: true,
+            //     organizationId: 1,
+            //     capacity:initCapacity,
+            //     users:[]}
+            // dispatch(setSelectedEvent(tempEvent))
         }
 
     }

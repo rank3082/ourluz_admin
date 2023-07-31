@@ -14,5 +14,6 @@ export interface GlobalSliceModel {
   rollList:RollModel[],
   userList:UserModel[],
   isAdmin:boolean,
-  currentUser:UserModel|undefined
+  currentUser:UserModel|undefined,
+  slotSelected:{start:Date,end:Date}|undefined
 }
