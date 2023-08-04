@@ -51,7 +51,7 @@ export const AvailableRow: React.FC<{ eventDetails: EventModel ,isAvailable:bool
                 {text.endAtTime} {moment(eventDetails.end).format("dddd DD/MM HH:MM")}
             </div>
             <div style={{fontSize:20}}>
-                {text.commands} : {eventDetails.commands}
+                {text.comments} : {eventDetails.comments}
             </div>
         </div>}
     </div>

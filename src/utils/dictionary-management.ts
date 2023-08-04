@@ -7,7 +7,7 @@ export const text = {
     eventDetails:isEnglish?"Event details":"פרטי האירוע",
     description:isEnglish?"description":"שם האירוע",
     location:isEnglish?"location":"מיקום",
-    commands:isEnglish?"commands":"הערות",
+    comments:isEnglish?"comments":"הערות",
     startAt:isEnglish?"start at":"תאריך התחלה",
     endAt:isEnglish?"end at":"תאריך סיום",
     color:isEnglish?"color":"צבע",
