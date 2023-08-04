@@ -10,6 +10,7 @@ export interface EventModel {
     allDay: boolean
     organizationId?:number,
     capacity:CapacityModel[],
+    commands:string
     users:{"id": number,
         "booked": boolean,
         "roleId": number|null}[]

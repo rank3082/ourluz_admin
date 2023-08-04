@@ -4,6 +4,8 @@ import rtlPlugin from "stylis-plugin-rtl";
 import {store} from "../app/store";
 import {EventModel} from "../models/event.model";
 import {UserModel} from "../models/user.model";
+import {EmployeeRoll, UserEventStatus} from "./enum.const";
+import {iconNames} from "../components/icon/icon-types";
 
 const {isEnglish} = store.getState().global
 export const cacheRtl = createCache({
@@ -31,6 +33,23 @@ export function isMobileFunction(): boolean {
 export const getRollName = (rollId: number | null) => {
     return getRollList().find((a) => a.id === rollId)?.description
 }
+// export const getRollIcon = (rollId: number | null): keyof iconNames => {
+//     switch (rollId){
+//         case 1:{
+//             return "manager"
+//         }
+//         case 2:{
+//             return "computerMan"
+//         }
+//         case 3:{
+//             return "driver"
+//         }
+//         default :{
+//           return "regularEmployee"
+//         }
+//     }
+//     // return getRollList().find((a) => a.id === rollId)?.description
+// }
 export const getUserById = (userId: number) => {
     return getUsersList().find((u) => u.id === userId)
 }
@@ -55,4 +74,47 @@ export  const checkIfUserIsAvailabilityToEvent=(currentUser:UserModel|undefined,
         }
     })
     return isAvailable
+}
+
+export const getColorByStatus=(status:UserEventStatus)=>{
+    switch (status){
+        case UserEventStatus.booked:{
+            return "green"
+        }
+        case UserEventStatus.available:{
+            return "orange"
+        }
+        case UserEventStatus.nothing:{
+            return "var(--primary)"
+        }
+        case UserEventStatus.eventDoneWithoutBooked:{
+            return "red"
+        }
+    }
+
+}
+
+
+export   const getStatusEventForClient=(eventUsers:{id:number,booked:boolean,roleId:number | null}[],currentUser:UserModel|undefined):UserEventStatus=>{
+    let status:UserEventStatus = UserEventStatus.nothing
+    // event.users.
+
+    eventUsers.filter((user)=>user.id === currentUser?.id).forEach((u)=> {
+        if (u.booked){
+            status = UserEventStatus.booked
+        }  else {
+            status = UserEventStatus.available
+        }
+    })
+    return  status
+    // const now = new Date();
+    // console.log(new Date(event.start),"event.start")
+    // console.log(now,"now.start")
+    // @ts-ignore
+    // if ((new Date(event.start) > now) && (status !== UserEventStatus.booked)){
+    //     status = UserEventStatus.eventDoneWithoutBooked
+    //     console.log("after.start")
+    // }
+    // console.log(status,"status")
+    // return getColorByStatus(status)
 }

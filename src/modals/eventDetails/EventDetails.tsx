@@ -19,7 +19,6 @@ import {SubTitle} from "../components/subTitle/SubTitle";
 import {InputNumber} from "./components/inputNumber/InputNumber";
 import {CapacityModel} from "../../models/capacity.model";
 import {ShiftManagerMenu} from "../shiftManager/components/shiftMannagerMenu/ShiftManagerMenu";
-
 export const EventDetails = () => {
     const dispatch = useDispatch()
     const {eventList,rollList, isEnglish, selectedEvent,slotSelected} = useAppSelector(state => state.global)
@@ -35,6 +34,7 @@ export const EventDetails = () => {
         start: slotSelected ? slotSelected.start : new Date(),
         end: slotSelected ? slotSelected.end : new Date(),
         location: "",
+        commands:"",
         backgroundColor: "#2B76E5",
         allDay: true,
         organizationId: 1,
@@ -44,6 +44,7 @@ export const EventDetails = () => {
 
     const [description, setDescription] = useState<string>(initEvent.description)
     const [location, setLocation] = useState<string>(initEvent.location)
+    const [commands, setCommands] = useState<string>(initEvent.commands)
     const [startTime, setStartTime] = useState<dayjs.Dayjs | null>(dayjs(initEvent.start))
     const [endTime, setEndTime] = useState<dayjs.Dayjs | null>(dayjs(initEvent.end))
     const [color, setColor] = useState(initEvent.backgroundColor)
@@ -69,6 +70,7 @@ export const EventDetails = () => {
                 endDate: endTime?.toDate() as Date,
                 backgroundColor:color,
                 location: location,
+                commands :commands,
                 capacity:capacity
             }).then()
         } else {
@@ -78,6 +80,7 @@ export const EventDetails = () => {
                 endDate: endTime?.toDate() as Date,
                 backgroundColor:color,
                 location: location,
+                commands: commands,
                 capacity:capacity
             }).then()
         }
@@ -122,6 +125,13 @@ export const EventDetails = () => {
                        variant="outlined"
                        dir={isEnglish ? "ltr" : "rtl"}
             />
+            <TextField onChange={(e) => setCommands(e.target.value)} required={true} className={"textField"}
+                       id="commands"
+                       label={text.commands}
+                       defaultValue={commands}
+                       variant="outlined"
+                       dir={isEnglish ? "ltr" : "rtl"}
+            />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DesktopDateTimePicker onChange={(e: dayjs.Dayjs | null) => setStartTime(e)} className={"textField"}
                                        label={text.startAt}
@@ -132,6 +142,7 @@ export const EventDetails = () => {
                                        label={text.endAt} defaultValue={endTime} ampm={false}
                                        format={'DD/MM/YYYY HH:mm'}/>
             </LocalizationProvider>
+
 
             <SubTitle title={"הגדרת תפקידים"}/>
 

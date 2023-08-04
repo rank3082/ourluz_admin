@@ -60,6 +60,10 @@ import { ReactComponent as BigDetectAlert } from "../../assets/icons/big_detect-
 import { ReactComponent as RoomPreferences } from "../../assets/icons/room_preferences.svg";
 import { ReactComponent as ThreeDots } from "../../assets/icons/three-dots-vertical.svg";
 import { ReactComponent as Ignored } from "../../assets/icons/ignored.svg";
+import { ReactComponent as Driver } from "../../assets/icons/driver.svg";
+import { ReactComponent as ComputerMan } from "../../assets/icons/computerMan.svg";
+import { ReactComponent as RegularEmployee } from "../../assets/icons/regularEmployee.svg";
+import { ReactComponent as Manager } from "../../assets/icons/manager.svg";
 
 class Icons {
   readonly arrow_up: ReactSVGComponent = ArrowUp;
@@ -125,6 +129,10 @@ class Icons {
   readonly ignored: ReactSVGComponent = Ignored;
   readonly xAvailable: ReactSVGComponent = XAvailable;
   readonly vAvailable: ReactSVGComponent = VAvailable;
+  readonly driver: ReactSVGComponent = Driver;
+  readonly computerMan: ReactSVGComponent = ComputerMan;
+  readonly regularEmployee: ReactSVGComponent = RegularEmployee;
+  readonly manager: ReactSVGComponent = Manager;
 }
 
 export const icons = new Icons();
