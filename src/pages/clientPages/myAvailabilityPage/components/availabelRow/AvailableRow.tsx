@@ -39,8 +39,6 @@ export const AvailableRow: React.FC<{ eventDetails: EventModel ,isAvailable:bool
                     <Icon name={openDropDown ? "dropdown_chevron_down" : "dropdown_chevron_up"}/>
                 </div>
             </div>
-
-
         </div>
         {openDropDown && <div className={"moreEventDetails"}>
             <div style={{fontSize:20}}>
@@ -51,6 +49,9 @@ export const AvailableRow: React.FC<{ eventDetails: EventModel ,isAvailable:bool
             </div>
             <div style={{fontSize:20}}>
                 {text.endAtTime} {moment(eventDetails.end).format("dddd DD/MM HH:MM")}
+            </div>
+            <div style={{fontSize:20}}>
+                {text.commands} : {eventDetails.commands}
             </div>
         </div>}
     </div>

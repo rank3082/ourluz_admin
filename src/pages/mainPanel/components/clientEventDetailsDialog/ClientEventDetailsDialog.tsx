@@ -6,17 +6,19 @@ import moment from "moment/moment";
 import {Icon} from "../../../../components/icon/Icon";
 import {removeAvailabilityFromEvent, setAvailabilityToEvent} from "../../../../utils/data-management";
 import {EventModel} from "../../../../models/event.model";
-export const ClientEventDetailsDialog: React.FC<{isAvailable:boolean}> = ({isAvailable}) => {
+import {UserEventStatus} from "../../../../utils/enum.const";
+
+export const ClientEventDetailsDialog: React.FC<{userEventStatusMemo:UserEventStatus}> = ({userEventStatusMemo}) => {
     const {selectedEvent} = useAppSelector(state => state.global)
-    const [selectedAvailabilityEvent, setSelectedAvailabilityEvent] = useState(isAvailable)
+    const [selectedAvailabilityEvent, setSelectedAvailabilityEvent] = useState(userEventStatusMemo)
 
     const addAvailabilityEvent =async () => {
        await setAvailabilityToEvent((selectedEvent as EventModel).id).then()
-        setSelectedAvailabilityEvent(true)
+        setSelectedAvailabilityEvent(UserEventStatus.available)
     }
     const removeAvailabilityEvent = async () => {
      await   removeAvailabilityFromEvent((selectedEvent as EventModel).id).then()
-        setSelectedAvailabilityEvent(false)
+        setSelectedAvailabilityEvent(UserEventStatus.nothing)
     }
     return  <div className={"clientEventDetails"}>
         <div className={"descriptionLabel"}> {selectedEvent?.description}</div>
@@ -24,24 +26,29 @@ export const ClientEventDetailsDialog: React.FC<{isAvailable:boolean}> = ({isAva
             {text.location} : {selectedEvent?.location}
         </div>
         <div className={"eventDetailsText"}>
+            {text.commands} : {selectedEvent?.commands}
+        </div>
+        <div className={"eventDetailsText"}>
             {text.startAtTime} {moment(selectedEvent?.start).format("dddd DD/MM HH:MM")}
         </div>
         <div className={"eventDetailsText"}>
             {text.endAtTime} {moment(selectedEvent?.end).format("dddd DD/MM HH:MM")}
         </div>
-        <div className={"setAvailabilityText"}>{text.availabilityStatus} {selectedAvailabilityEvent?" זמין":" לא זמין"}</div>
-        <div className={"setAvailabilityText"}>{text.setAvailabilityText}</div>
-        <div className={"iconsWrapper"}>
+        {userEventStatusMemo !== UserEventStatus.booked && <div className={"setAvailabilityText"}>{text.availabilityStatus} {selectedAvailabilityEvent?" זמין":" לא זמין"}</div>
+        } <div className={"setAvailabilityText"}>{userEventStatusMemo=== UserEventStatus.booked ?text.youAreAlreadyBooked:text.setAvailabilityText}</div>
+        {userEventStatusMemo === UserEventStatus.booked ? <div style={{color:"red",fontSize:20,fontWeight:400,display:"flex",justifyContent:"end"}}> {text.cancelBooked}</div>:
+            <div className={"iconsWrapper"}>
             <div onClick={addAvailabilityEvent}
-                 style={{stroke: selectedAvailabilityEvent ? "var(--primary)" : "var(--wolf)"}}
+                 style={{stroke: selectedAvailabilityEvent === UserEventStatus.available ? "var(--primary)" : "var(--wolf)"}}
                  className={"iconWrapper"}>
                 <Icon name={"vAvailable"}/>
             </div>
             <div onClick={removeAvailabilityEvent}
-                 style={{stroke: !selectedAvailabilityEvent ? "var(--alert)" : "var(--wolf)"}}
+                 style={{stroke: selectedAvailabilityEvent !== UserEventStatus.available ? "var(--alert)" : "var(--wolf)"}}
                  className={"iconWrapper"}>
                 <Icon name={"xAvailable"}/>
             </div>
         </div>
+    }
     </div>
 }

@@ -18,3 +18,20 @@ export enum SelectedPopup {
 }
 
 
+
+export enum UserEventStatus {
+    booked = 0,
+    available = 1,
+    nothing = 2,
+    eventDoneWithoutBooked
+}
+
+
+export enum EmployeeRoll {
+    manager = 1,
+    computerMan = 2,
+    driver = 3,
+    regularEmployee
+}
+
+

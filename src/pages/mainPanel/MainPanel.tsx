@@ -10,7 +10,7 @@ import {Button, Dialog} from "@mui/material";
 import {EventDetails} from "../../modals/eventDetails/EventDetails";
 import {ShiftManager} from "../../modals/shiftManager/ShiftManager";
 import { Menu } from '@headlessui/react'
-import {SelectedPage, SelectedPopup} from "../../utils/enum.const";
+import {SelectedPage, SelectedPopup, UserEventStatus} from "../../utils/enum.const";
 import {
     getAllEventsByOrganization,
     getAllRolesByOrganization,
@@ -19,7 +19,7 @@ import {
 } from "../../utils/data-management";
 import {ClientEventDetailsDialog} from "./components/clientEventDetailsDialog/ClientEventDetailsDialog";
 import {EventModel} from "../../models/event.model";
-import {checkIfUserIsAvailabilityToEvent} from "../../utils/general";
+import {checkIfUserIsAvailabilityToEvent, getStatusEventForClient} from "../../utils/general";
 import {Icon} from "../../components/icon/Icon";
 import {setToken} from "../../store/authentication.slice";
 // import {RollManager} from "../../modals/rollManager/RollManager";
@@ -46,8 +46,9 @@ export const MainPanel = () => {
     }
     console.log(isAdmin,"isAdmin")
 
-    const isAvailableMemo = useMemo(()=>{
-        return checkIfUserIsAvailabilityToEvent(currentUser,(selectedEvent as EventModel)?.users??[])??false
+    const userEventStatusMemo:UserEventStatus = useMemo(()=>{
+        return getStatusEventForClient((selectedEvent as EventModel)?.users??[],currentUser)
+        // return checkIfUserIsAvailabilityToEvent(currentUser,(selectedEvent as EventModel)?.users??[])??false
     },[selectedPopup])
 
    const disconnect=()=>{
@@ -70,12 +71,6 @@ export const MainPanel = () => {
                 </Menu.Item>
             </Menu.Items>
         </Menu>
-        {/*<div className={"menuContainer"}>*/}
-        {/*    <div onClick={()=>setMenu(!menu)} className={"menuWrapper"} >*/}
-        {/*        <Icon name={"menu"}/>*/}
-        {/*    </div>*/}
-        {/*</div>*/}
-        {/*{menu && <div>asdf</div>}*/}
         {selectedPopup === SelectedPopup.EventDetail && <EventDetails/>}
         {selectedPopup === SelectedPopup.ShiftManager && <ShiftManager/>}
         {/*{selectedPopup === SelectedPopup.ClientEventDetails && <RollManager/>}*/}
@@ -91,11 +86,6 @@ export const MainPanel = () => {
                     onClick={()=>UpdatePopupManager(SelectedPopup.ShiftManager)}>
                     {text.shiftManager}
                 </Button>}
-                {/*<Button*/}
-                {/*    className={selectedPopup === SelectedPopup.RollManager ? "addEventButtonSelected" : "addEventButtonNotSelected"}*/}
-                {/*    onClick={()=>UpdatePopupManager(SelectedPopup.RollManager)}>*/}
-                {/*{text.rollManager}*/}
-                {/*</Button>*/}
                 {isAdmin &&  <Button
                     className={"addEventButtonNotSelected"}
                     onClick={()=>dispatch(setSelectedPage(SelectedPage.EmployeePage))}>
@@ -127,7 +117,7 @@ export const MainPanel = () => {
                 }}
             open={selectedPopup === SelectedPopup.ClientEventDetails}
             >
-                <ClientEventDetailsDialog isAvailable={isAvailableMemo}/>
+                <ClientEventDetailsDialog userEventStatusMemo={userEventStatusMemo}/>
             </Dialog>
     </div>
 }

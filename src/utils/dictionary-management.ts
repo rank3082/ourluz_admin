@@ -7,6 +7,7 @@ export const text = {
     eventDetails:isEnglish?"Event details":"פרטי האירוע",
     description:isEnglish?"description":"שם האירוע",
     location:isEnglish?"location":"מיקום",
+    commands:isEnglish?"commands":"הערות",
     startAt:isEnglish?"start at":"תאריך התחלה",
     endAt:isEnglish?"end at":"תאריך סיום",
     color:isEnglish?"color":"צבע",
@@ -48,6 +49,8 @@ export const text = {
     team :isEnglish?"team: ":"צוות",
     thereIsNotBookedEvent :isEnglish?"there is no booked event: ":"לא שובצו אירועים ",
     setAvailabilityText :isEnglish?"set availability: ":":רשום זמינות לאירוע ",
+    youAreAlreadyBooked :isEnglish?"you are already booked: ":"הינך משובץ לאירוע ",
+    cancelBooked :isEnglish?"contact Ilan for cancel booking 052-2495649":"לביטול נא ליצור קשר עם אילן במספר 052-2495649 ",
     availabilityStatus :isEnglish?"availability status: ":"סטטוס זמינות: ",
     changeAvailableStatus :isEnglish?"change available status: ":"שנה סטטוס ל: ",
 };
