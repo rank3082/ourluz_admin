@@ -5,20 +5,19 @@ import moment from 'moment'
 import "./CalendarComponent.scss"
 import {useAppSelector} from "../../../../app/hooks";
 import {useDispatch} from "react-redux";
-import {setSelectedEvent, setSelectedPopup, setSlotSelected} from "../../../../store/global.slice";
+import {setSelectedEvent, setSelectedPopup, setSlotSelected, setWeekDates} from "../../../../store/global.slice";
 import {EventModel} from "../../../../models/event.model";
 import {SelectedPopup} from "../../../../utils/enum.const";
 import {text} from "../../../../utils/dictionary-management";
 import {
-    getColorByStatus, getRollName, getStatusEventForClient, getUserById, isEventHasFullBooking
+    getColorByStatus, getStatusEventForClient, getUserById, isEventHasFullBooking
 } from "../../../../utils/general";
 import {Icon} from "../../../../components/icon/Icon";
-import {iconNames} from "../../../../components/icon/icon-types";
 
-export const CalendarComponent = () => {
+export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = ({currentView, setCurrentView}) => {
     const {isAdmin, selectedPopup, eventList, currentUser, isMobile} = useAppSelector(state => state.global);
     const dispatch = useDispatch()
-    console.log(currentUser, "currentUser")
+
     const getRollIcon = (rollId: number | null) => {
         switch (rollId) {
             case 1: {
@@ -34,14 +33,12 @@ export const CalendarComponent = () => {
                 return <Icon name={"regularEmployee"}/>
             }
         }
-        // return getRollList().find((a) => a.id === rollId)?.description
     }
 
     const localTime = momentLocalizer(moment);
     const DailyEventComponent: React.FC<{ event: EventModel }> = ({event}) => {
         const eventUserBooked = event.users.filter((u) => u.booked);
        const userListForDisplay = isAdmin? event.users: eventUserBooked;
-
         return <div className={"calenderContainer"} style={{
             backgroundColor: isAdmin ? event.backgroundColor : getColorByStatus(getStatusEventForClient(event.users, currentUser)),
             border: isEventHasFullBooking(event) ? "2px solid var(--light-green)" : "2px solid var(--dark)"
@@ -61,14 +58,16 @@ export const CalendarComponent = () => {
             </div>}
             <div
                 style={{fontWeight: 600}}>{eventUserBooked.length > 0 ? text.employeeList : text.emptyEmployeeList}</div>
-            {userListForDisplay.map((user) => {
+            {userListForDisplay.map((user,index) => {
                 return <div style={{
                     display: "flex",
                     justifyContent: "space-between",
                     gap: 7,
                     alignItems: "center",
                     textAlign: "center"
-                }}>
+                }}
+                key={index}
+                >
                     <div style={{
                         fontSize: user.booked ? 18 : 14,
                         fontWeight: user.booked ? 700 : 400
@@ -143,7 +142,6 @@ export const CalendarComponent = () => {
             event: DailyEventComponent,
         }
     };
-    const [currentView, setCurrentView] = useState(Views.W);
     const handleViewChange = (view: string) => {
         setCurrentView(view);
     };
@@ -184,6 +182,29 @@ export const CalendarComponent = () => {
         }
         return {};
     };
+    const handleNavigate=(date: Date, view: string)=>{
+        if (view === "week") {
+            if (view === "week") {
+                // Calculate the start and end dates of the week
+                const startOfWeek = moment(date).startOf("week").toDate();
+                const endOfWeek = moment(date).endOf("week").toDate();
+                dispatch(setWeekDates({ start: startOfWeek, end: endOfWeek }));
+            console.log("startOfWeek:", startOfWeek);
+            console.log("endOfWeek:", endOfWeek);
+            } else {
+                dispatch(setWeekDates({start:undefined,end:undefined}));
+            }
+        }
+    }
+    const handleRangeChange = (range: any[],view: string) => {
+        if (view === "week") {
+            const startOfWeek = moment(range[0]).startOf("week").toDate();
+            const endOfWeek = moment(range[6]).endOf("week").toDate();
+            dispatch(setWeekDates({ start: startOfWeek, end: endOfWeek}));
+        }
+    };
+    // console.log(moment(weekDates?.start).format("yyyy-MM-D"),"weekDates123")
+    // console.log(moment(weekDates?.end).format("yyyy-MM-D"),"weekDates123")
     return (<div
             className={selectedPopup !== SelectedPopup.Close && !isMobile ? "notFullCalendarWidth" : "fullCalendarWidth"}>
             <Calendar
@@ -199,6 +220,8 @@ export const CalendarComponent = () => {
                 formats={{timeGutterFormat: 'HH:mm'}}
                 onSelectEvent={handleSelectEvent}
                 slotPropGetter={getSlotStyle}
+                onNavigate={handleNavigate}
+                onRangeChange={handleRangeChange}
             />
         </div>
 

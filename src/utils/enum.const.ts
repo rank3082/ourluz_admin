@@ -3,7 +3,8 @@ export enum SelectedPage {
     MainPanel = 2,
     EmployeePage = 3,
     MyAvailabilityPage=4,
-    MyShiftPage=5
+    MyShiftPage=5,
+    SendBookPage
 
 }
 

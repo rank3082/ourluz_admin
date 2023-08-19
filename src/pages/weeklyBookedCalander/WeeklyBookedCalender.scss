@@ -1,0 +1,57 @@
+.malradTableContainer{
+  max-width: 90%;
+
+}
+.tablePaddingWrpper{
+  padding-top: 24px;
+  padding-inline-end: 5px;
+  background-color: #ffffff;
+
+}
+.tableWrapper {
+  width: 100%;
+  display: flex;
+  background-color: #FFFFFF;
+  max-height: 70vh;
+  overflow: auto;
+  direction: ltr;
+  padding-bottom: 10px;
+}
+
+.tableWrapper thead {
+  position: sticky;
+}
+
+.tableWrapper::-webkit-scrollbar {
+  width:5px;
+  height: 5px;
+}
+.tableWrapper::-webkit-scrollbar-thumb {
+  background-color: #2874B2;
+}
+.tableWrapper::-webkit-scrollbar-track {
+  background-color: #EDEBEB;
+}
+
+
+.malradThTable {
+  text-align: center;
+  white-space: nowrap;
+  background-color: #FCFCFD;
+  color: #667085;
+  padding: 8px;
+  border-bottom: 1px solid #EEF2F9;
+}
+.filterCategorySelected{
+  display: flex;
+  gap: 10px;
+}
+
+.categoryStyle{
+  font-family: Rubik !important;
+  font-size: 16px;
+  font-weight: 600;
+  padding-bottom: 2px;
+  border-bottom: 2px solid #2874B2;
+
+}

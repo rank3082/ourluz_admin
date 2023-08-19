@@ -1,6 +1,13 @@
 import axios from "axios";
 import {store} from "../app/store";
-import {setCurrentUser, setEventList, setIsAdmin, setRollList, setUserList} from "../store/global.slice";
+import {
+    setCurrentUser,
+    setEventList,
+    setIsAdmin,
+    setRollList,
+    setUserList,
+    setWeeklyEventList
+} from "../store/global.slice";
 import {mainPath} from "./variable.const";
 import {EventModel} from "../models/event.model";
 import {CapacityModel} from "../models/capacity.model";
@@ -114,9 +121,44 @@ export const getAllUsers = async () => {
         });
 };
 
-export const getAllEventsByOrganization = async () => {
+export const getAllEventsByDates = async (startDate:string="2023-06-03",endDate:string="2030-06-29") => {
     console.log(getToken(), "getToken")
-    axios.get(`${mainPath}yoman/events?fromDate=2023-06-03&toDate=2030-06-29`, {
+    console.log(getToken(), "thsi is check")
+    axios.get(`${mainPath}yoman/events?fromDate=${startDate}&toDate=${endDate}`, {
+        headers: {
+            Authorization: `TOKEN ${getToken()}`
+        }
+    })
+        .then(response => {
+            const data = response.data.events;
+            let getEventList: { [key: string]: EventModel } = {}
+            data.forEach((eventObj: any) => {
+                getEventList[eventObj.id] = {
+                    id: eventObj.id,
+                    description: eventObj.description,
+                    start: eventObj.startDate,
+                    end: eventObj.endDate,
+                    location: eventObj.location,
+                    commands: eventObj.commands,
+                    backgroundColor: `${eventObj.backgroundColor}`,
+                    allDay: true,
+                    organizationId: eventObj.organizationId,
+                    capacity:eventObj.capacity,
+                    users:eventObj.users
+                }
+            })
+            store.dispatch(setWeeklyEventList(getEventList))
+        })
+        .catch(error => {
+            console.error(error);
+        });
+};
+
+
+
+export const getAllEventsByOrganization = async (startDate:string="2023-06-03",endDate:string="2030-06-29") => {
+    console.log(getToken(), "getToken")
+    axios.get(`${mainPath}yoman/events?fromDate=${startDate}&toDate=${endDate}`, {
         headers: {
             Authorization: `TOKEN ${getToken()}`
         }

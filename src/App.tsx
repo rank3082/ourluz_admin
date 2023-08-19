@@ -10,6 +10,7 @@ import {SelectedPage} from "./utils/enum.const";
 import {EmployeePage} from "./pages/adminPages/employeePage/EmployeePage";
 import {MyAvailabilityPage} from "./pages/clientPages/myAvailabilityPage/MyAvailabilityPage";
 import {MyShiftPage} from "./pages/clientPages/myShiftPage/MyShiftPage";
+import {WeeklyBookedCalender} from "./pages/weeklyBookedCalander/WeeklyBookedCalender";
 
 function App() {
 const dispatch = useDispatch()
@@ -23,6 +24,7 @@ const dispatch = useDispatch()
             {selectedPage === SelectedPage.EmployeePage && <EmployeePage/>}
             {selectedPage === SelectedPage.MyAvailabilityPage && <MyAvailabilityPage/>}
             {selectedPage === SelectedPage.MyShiftPage && <MyShiftPage/>}
+            {selectedPage === SelectedPage.SendBookPage && <WeeklyBookedCalender/>}
             </>
         }
 

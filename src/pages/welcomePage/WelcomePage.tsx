@@ -2,9 +2,9 @@ import React, {useState} from "react";
 import {text} from "../../utils/dictionary-management";
 import {useAppSelector} from "../../app/hooks";
 import "./WelcomePage.scss"
-import {LoginPage} from "../../pages/loginPage/LoginPage";
-import {SignUp} from "../../pages/adminPages/employeePage/components/signUp/SignUp";
-import {Icon} from "../icon/Icon";
+import {LoginPage} from "../loginPage/LoginPage";
+import {SignUp} from "../adminPages/employeePage/components/signUp/SignUp";
+import {Icon} from "../../components/icon/Icon";
 import ourluzIcon from "../../assets/images/ourluzIcon.png";
 
 export const WelcomePage = () => {
