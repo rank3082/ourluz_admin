@@ -41,7 +41,7 @@ export const WeeklyBookedCalender=()=>{
     }
 
     return <div  className={"tableWrapper"}>
-        <table style={{borderCollapse: 'collapse',direction:"rtl",width:"100%"}}>
+        <table style={{borderCollapse: 'collapse',direction:"rtl",width:"100%",height:"100%"}}>
             <thead style={{position: "sticky", top: 0}}>
             <tr style={{paddingBlock: 24}}>
                 <th className={"malradThTable"}></th>
