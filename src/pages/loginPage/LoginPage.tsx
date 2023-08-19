@@ -14,27 +14,6 @@ export const LoginPage: React.FC = () => {
     const checkIfUserConnected= async (storageUsername:string,storagePassword:string,token:string)=>{
         dispatch(setToken(token))
         console.log("checking",storageUsername,storagePassword)
-        // try {
-        //     const response = await axios.post(
-        //         `${mainPath}api-token-auth/`,
-        //         {
-        //             storageUsername,
-        //             storagePassword,
-        //         },
-        //     );
-        //     console.log(response.data.token,"res");
-        //     if (response?.data?.token){
-        //         dispatch(setToken(response.data.token))
-        //         localStorage.setItem("username", username);
-        //         localStorage.setItem("password", password);
-        //     }else {
-        //         return false
-        //     }
-        //     // Handle the response (e.g., store token in local storage, redirect)
-        // } catch (error) {
-        //     // Handle error (e.g., display error message)
-        //     console.error(error);
-        // }
     }
     useEffect(()=>{
         const storageUsername = localStorage.getItem("username");

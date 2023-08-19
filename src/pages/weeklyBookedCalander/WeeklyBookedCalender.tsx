@@ -1,28 +1,37 @@
-import React, {useEffect, useState} from "react";
-import {getAllEventsByDates, getAllEventsByOrganization} from "../../utils/data-management";
+import React, {useEffect} from "react";
+import {getAllEventsByDates, getAllUsers} from "../../utils/data-management";
 import "./WeeklyBookedCalender.scss"
 import {useAppSelector} from "../../app/hooks";
 import moment from "moment";
 import {WeeklyBookedRow} from "./components/weeklyBookedRow/WeeklyBookedRow";
-import {retry} from "@reduxjs/toolkit/query";
+import { useParams } from 'react-router-dom';
+import {setToken} from "../../store/authentication.slice";
+import {useDispatch} from "react-redux";
+
 export const WeeklyBookedCalender=()=>{
+    const dispatch= useDispatch()
+    const {weeklyEventList} = useAppSelector(state => state.global);
+    const { to, from } = useParams();
+    const checkIfUserConnected= async (storageUsername:string,storagePassword:string,token:string)=>{
+        dispatch(setToken(token))
+    }
+
     useEffect( ()=>{
+            const storageUsername = localStorage.getItem("username");
+            const token = localStorage.getItem("token");
+            const storagePassword = localStorage.getItem("password");
+            storageUsername && storagePassword && token && checkIfUserConnected(storageUsername,storagePassword,token)
+
        const fetchWeeklyEvents = async ()=>{
-        const startDate = moment(weekDates.start).format("yyyy-MM-D")
-        const endDate = moment(weekDates.end).format("yyyy-MM-D")
-      await getAllEventsByDates(startDate,endDate).then()
+       await getAllEventsByDates(from,to).then()
+       await getAllUsers().then()
        }
-        fetchWeeklyEvents()
+       fetchWeeklyEvents()
     },[])
 
-    const {weeklyEventList,weekDates} = useAppSelector(state => state.global);
-
-    console.log(weeklyEventList,"weeklyEventList")
-    console.log(weekDates,"weekDates")
-
     const columns: string[] = [];
-    const currentDate = moment(weekDates.start);
-    const lastDate = moment(weekDates.end);
+    const currentDate = moment(from);
+    const lastDate = moment(to);
 
     while (currentDate.isSameOrBefore(lastDate, "day")) {
         const formattedDate = currentDate.format("MM-DD");
@@ -30,9 +39,7 @@ export const WeeklyBookedCalender=()=>{
         columns.push(`${formattedDate} ${dayOfWeek}`);
         currentDate.add(1, "day");
     }
-    console.log(columns,"columns")
 
-    // const columns=["ראשון,שני,שלישי,רביעי,חמישי,שישי,שבת"]
     return <div  className={"tableWrapper"}>
         <table style={{borderCollapse: 'collapse',direction:"rtl",width:"100%"}}>
             <thead style={{position: "sticky", top: 0}}>
@@ -43,7 +50,6 @@ export const WeeklyBookedCalender=()=>{
                         key={index}
                         className={"malradThTable"}>{c}</th>
                 })}
-                {/*<th style={{width: 50, backgroundColor: "#ffffff"}}></th>*/}
             </tr>
             </thead>
 
@@ -52,7 +58,6 @@ export const WeeklyBookedCalender=()=>{
                 return  <WeeklyBookedRow key={index} eventDetails={eventDetails}/>
             })}
             </tbody>
-
         </table>
     </div>
 }

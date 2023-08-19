@@ -125,10 +125,10 @@ export const EventDetails = () => {
                        variant="outlined"
                        dir={isEnglish ? "ltr" : "rtl"}
             />
-            <TextField onChange={(e) => setComments(e.target.value)} required={true} className={"textField"}
+            <TextField onChange={(e) => setComments(e.target.value)} required={false} className={"textField"}
                        id="comments"
                        label={text.comments}
-                       defaultValue={comments}
+                       defaultValue={comments==="NULL"?"":comments}
                        variant="outlined"
                        dir={isEnglish ? "ltr" : "rtl"}
             />

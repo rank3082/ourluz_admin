@@ -124,6 +124,7 @@ export const getAllUsers = async () => {
 export const getAllEventsByDates = async (startDate:string="2023-06-03",endDate:string="2030-06-29") => {
     console.log(getToken(), "getToken")
     console.log(getToken(), "thsi is check")
+    console.log(startDate,endDate,"ase")
     axios.get(`${mainPath}yoman/events?fromDate=${startDate}&toDate=${endDate}`, {
         headers: {
             Authorization: `TOKEN ${getToken()}`
@@ -148,6 +149,8 @@ export const getAllEventsByDates = async (startDate:string="2023-06-03",endDate:
                 }
             })
             store.dispatch(setWeeklyEventList(getEventList))
+            console.log(getEventList,"asee")
+            return getEventList
         })
         .catch(error => {
             console.error(error);

@@ -22,17 +22,16 @@ import {EventModel} from "../../models/event.model";
 import {checkIfUserIsAvailabilityToEvent, getStatusEventForClient} from "../../utils/general";
 import {Icon} from "../../components/icon/Icon";
 import {setToken} from "../../store/authentication.slice";
-// import {PdfPage} from "../../components/pdfComponent/PdfPage";
 import {Views} from "react-big-calendar";
-import jsPDF from "jspdf";
 import {PdfPage} from "../../components/pdfComponent/PdfPage";
-import {BasicDocument} from "../../components/pdfComponent/basicDoc";
-// import {RollManager} from "../../modals/rollManager/RollManager";
+import moment from "moment/moment";
 
 export const MainPanel = () => {
     const dispatch = useDispatch()
 
-    const {selectedEvent,selectedPopup,isMobile,isAdmin,currentUser} = useAppSelector(state => state.global);
+    const {selectedEvent,selectedPopup,isMobile,isAdmin,currentUser,weekDates} = useAppSelector(state => state.global);
+    const startDate = moment(weekDates.start).format("yyyy-MM-D")
+    const endDate = moment(weekDates.end).format("yyyy-MM-D")
     useEffect(() => {
         if (selectedPopup === SelectedPopup.Close){
             getAllEventsByOrganization().then()
@@ -99,7 +98,6 @@ export const MainPanel = () => {
     //     doc.save('table.pdf');
     // }
 
-
     return <div className="mainPanelContainer">
         <Header/>
         <Menu>
@@ -145,7 +143,8 @@ export const MainPanel = () => {
                 </Button>}
                 {isAdmin &&  currentView === Views.WEEK && <Button
                     className={"addEventButtonNotSelected"}
-                    onClick={()=>dispatch(setSelectedPage(SelectedPage.SendBookPage))}>
+                    onClick={()=>window.open(`/weeklyBooking/from/${startDate}/to/${endDate}`)}>
+                    {/*onClick={()=>dispatch(setSelectedPage(SelectedPage.SendBookPage))}>*/}
                    שלח שיבוץ
                 </Button>}
                 {isAdmin && currentView === Views.WEEK &&
