@@ -139,7 +139,7 @@ export const getAllEventsByDates = async (startDate:string="2023-06-03",endDate:
                     start: eventObj.startDate,
                     end: eventObj.endDate,
                     location: eventObj.location,
-                    commands: eventObj.commands,
+                    comments: eventObj.comments,
                     backgroundColor: `${eventObj.backgroundColor}`,
                     allDay: true,
                     organizationId: eventObj.organizationId,

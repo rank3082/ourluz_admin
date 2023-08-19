@@ -44,7 +44,7 @@ export const EventDetails = () => {
 
     const [description, setDescription] = useState<string>(initEvent.description)
     const [location, setLocation] = useState<string>(initEvent.location)
-    const [comments, setCommands] = useState<string>(initEvent.comments)
+    const [comments, setComments] = useState<string>(initEvent.comments)
     const [startTime, setStartTime] = useState<dayjs.Dayjs | null>(dayjs(initEvent.start))
     const [endTime, setEndTime] = useState<dayjs.Dayjs | null>(dayjs(initEvent.end))
     const [color, setColor] = useState(initEvent.backgroundColor)
@@ -125,7 +125,7 @@ export const EventDetails = () => {
                        variant="outlined"
                        dir={isEnglish ? "ltr" : "rtl"}
             />
-            <TextField onChange={(e) => setCommands(e.target.value)} required={true} className={"textField"}
+            <TextField onChange={(e) => setComments(e.target.value)} required={true} className={"textField"}
                        id="comments"
                        label={text.comments}
                        defaultValue={comments}
