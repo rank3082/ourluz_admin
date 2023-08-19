@@ -173,7 +173,7 @@ export const getAllEventsByOrganization = async (startDate:string="2023-06-03",e
                     start: eventObj.startDate,
                     end: eventObj.endDate,
                     location: eventObj.location,
-                    commands: eventObj.commands,
+                    comments: eventObj.comments,
                     backgroundColor: `${eventObj.backgroundColor}`,
                     allDay: true,
                     organizationId: eventObj.organizationId,
@@ -189,7 +189,7 @@ export const getAllEventsByOrganization = async (startDate:string="2023-06-03",e
 };
 
 export const updateEventById = async (eventId: number, newList: any, eventData: {
-    description: string, startDate: Date, endDate: Date, backgroundColor: string, location: string,commands:string,capacity:CapacityModel[]
+    description: string, startDate: Date, endDate: Date, backgroundColor: string, location: string,comments:string,capacity:CapacityModel[]
 }) => {
     try {
         const response = await axios.put(`${mainPath}yoman/events/${eventId}`, {
@@ -198,7 +198,7 @@ export const updateEventById = async (eventId: number, newList: any, eventData: 
             endDate: eventData.endDate,
             backgroundColor: eventData.backgroundColor,
             location: eventData.location,
-            commands: eventData.commands,
+            comments: eventData.comments,
             capacity:eventData.capacity
         },{
             headers: {
@@ -213,7 +213,7 @@ export const updateEventById = async (eventId: number, newList: any, eventData: 
             endDate: eventData.endDate,
             backgroundColor: eventData.backgroundColor,
             location: eventData.location,
-            commands: eventData.commands,
+            comments: eventData.comments,
             capacity:eventData.capacity
         }
         store.dispatch(setEventList(newList))
@@ -223,7 +223,7 @@ export const updateEventById = async (eventId: number, newList: any, eventData: 
 }
 
 export const createNewEvent = async (newList: any, eventData: {
-    description: string, startDate: Date, endDate: Date, backgroundColor: string, location: string,commands:string,capacity:CapacityModel[]
+    description: string, startDate: Date, endDate: Date, backgroundColor: string, location: string,comments:string,capacity:CapacityModel[]
 }) => {
     try {
         const response = await axios.post(`${mainPath}yoman/events`, {
@@ -232,7 +232,7 @@ export const createNewEvent = async (newList: any, eventData: {
             endDate: eventData.endDate,
             backgroundColor: eventData.backgroundColor,
             location: eventData.location,
-            commands: eventData.commands,
+            comments: eventData.comments,
             capacity:eventData.capacity
         },{
             headers: {

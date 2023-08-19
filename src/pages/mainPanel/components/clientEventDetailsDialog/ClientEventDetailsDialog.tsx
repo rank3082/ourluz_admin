@@ -26,7 +26,7 @@ export const ClientEventDetailsDialog: React.FC<{userEventStatusMemo:UserEventSt
             {text.location} : {selectedEvent?.location}
         </div>
         <div className={"eventDetailsText"}>
-            {text.commands} : {selectedEvent?.commands}
+            {text.comments} : {selectedEvent?.comments}
         </div>
         <div className={"eventDetailsText"}>
             {text.startAtTime} {moment(selectedEvent?.start).format("dddd DD/MM HH:MM")}

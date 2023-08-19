@@ -52,9 +52,9 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
                 שעת התחלה-
             </div>
             <div>{event.start.toString().split("T")[1]}</div>
-            {event.commands && event.commands.length>0 && <div style={{overflowX:"auto"}}>
-                <div style={{fontWeight: 600}}>{text.commands} : </div>
-                <div style={{fontSize:14}}>{event.commands}</div>
+            {event.comments && event.comments.length>0 && <div style={{overflowX:"auto"}}>
+                <div style={{fontWeight: 600}}>{text.comments} : </div>
+                <div style={{fontSize:14}}>{event.comments}</div>
             </div>}
             <div
                 style={{fontWeight: 600}}>{eventUserBooked.length > 0 ? text.employeeList : text.emptyEmployeeList}</div>

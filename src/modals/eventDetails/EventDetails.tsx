@@ -34,7 +34,7 @@ export const EventDetails = () => {
         start: slotSelected ? slotSelected.start : new Date(),
         end: slotSelected ? slotSelected.end : new Date(),
         location: "",
-        commands:"",
+        comments:"",
         backgroundColor: "#2B76E5",
         allDay: true,
         organizationId: 1,
@@ -44,7 +44,7 @@ export const EventDetails = () => {
 
     const [description, setDescription] = useState<string>(initEvent.description)
     const [location, setLocation] = useState<string>(initEvent.location)
-    const [commands, setCommands] = useState<string>(initEvent.commands)
+    const [comments, setCommands] = useState<string>(initEvent.comments)
     const [startTime, setStartTime] = useState<dayjs.Dayjs | null>(dayjs(initEvent.start))
     const [endTime, setEndTime] = useState<dayjs.Dayjs | null>(dayjs(initEvent.end))
     const [color, setColor] = useState(initEvent.backgroundColor)
@@ -70,7 +70,7 @@ export const EventDetails = () => {
                 endDate: endTime?.toDate() as Date,
                 backgroundColor:color,
                 location: location,
-                commands :commands,
+                comments :comments,
                 capacity:capacity
             }).then()
         } else {
@@ -80,7 +80,7 @@ export const EventDetails = () => {
                 endDate: endTime?.toDate() as Date,
                 backgroundColor:color,
                 location: location,
-                commands: commands,
+                comments: comments,
                 capacity:capacity
             }).then()
         }
@@ -126,9 +126,9 @@ export const EventDetails = () => {
                        dir={isEnglish ? "ltr" : "rtl"}
             />
             <TextField onChange={(e) => setCommands(e.target.value)} required={true} className={"textField"}
-                       id="commands"
-                       label={text.commands}
-                       defaultValue={commands}
+                       id="comments"
+                       label={text.comments}
+                       defaultValue={comments}
                        variant="outlined"
                        dir={isEnglish ? "ltr" : "rtl"}
             />
