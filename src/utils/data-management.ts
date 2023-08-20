@@ -42,7 +42,7 @@ export const deleteUser = async (userId: number) => {
 }
 
 export const updateUserById = async (userDetails: {
-    firstName: string, lastName: string, email: string, mobile: string, roleIds: number[],id:number
+    firstName: string, lastName: string, email: string, mobile: string, roleIds: number[],id:number,permanentEmployee?:number
 })=>{
    const allUsers = getAllUsersRedux()
     try {
@@ -52,6 +52,7 @@ export const updateUserById = async (userDetails: {
             email: userDetails.email,
             mobile: userDetails.mobile,
             roleIds: userDetails.roleIds,
+            permanentEmployee:userDetails.permanentEmployee
         },{
             headers: {
                 Authorization: `TOKEN ${getToken()}`
@@ -84,6 +85,7 @@ export const createNewUser = async (newUserDetails: {
             email: newUserDetails.email,
             mobile:newUserDetails.mobile,
             roleIds:newUserDetails.roleIds,
+            permanentEmployee:0
         },{
             headers: {
                 Authorization: `TOKEN ${getToken()}`

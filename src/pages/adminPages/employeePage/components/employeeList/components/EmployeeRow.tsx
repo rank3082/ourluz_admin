@@ -27,18 +27,14 @@ const dispatch=useDispatch()
                 if (index !== -1){
                     currentUsersEventList.splice(index, 1);
                 }
-                console.log({id: user.id, booked: true, roleId: rollId},"currentUsersEventList3")
                 currentUsersEventList.push({id: user.id, booked: true, roleId: rollId})
                 editBookedUserRoll(parseInt(eventId),user.id,rollId).then()
-                console.log(currentUsersEventList,"currentUsersEventList2")
             } else {
-                console.log(index,"currentUsersEventList5")
                 if (index !== -1) {
                     currentUsersEventList.splice(index, 1);
                     unBookedUser(parseInt(eventId),user.id).then()
                 }
             }
-            console.log(currentUsersEventList,"currentUsersEventList4")
             dispatch(setEventList({...eventList, [eventId]: {...eventList[eventId], users: currentUsersEventList}}))
             setSelectedEventFromList({...eventList[eventId], users: currentUsersEventList})
         }

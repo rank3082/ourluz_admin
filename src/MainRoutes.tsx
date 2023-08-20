@@ -17,5 +17,6 @@ export const MainRoutes: React.FC = () => {
                 </Routes>
         </Router>
     );
+    //`/weeklyBooking?from=${startDate}&to=${endDate}`
 };
 
