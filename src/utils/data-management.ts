@@ -61,7 +61,7 @@ export const updateUserById = async (userDetails: {
 
         const newUserList = allUsers.map((u,index)=>{
             if (u.id === userDetails.id){
-                return {...u,firstName:userDetails.firstName,lastName:userDetails.lastName,email:userDetails.email,mobile:userDetails.mobile,roleIds:userDetails.roleIds}
+                return {...u,firstName:userDetails.firstName,lastName:userDetails.lastName,email:userDetails.email,mobile:userDetails.mobile,roleIds:userDetails.roleIds,permanentEmployee:userDetails.permanentEmployee}
             }else {
                 return u
             }
