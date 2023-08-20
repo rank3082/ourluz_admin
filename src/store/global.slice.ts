@@ -17,7 +17,9 @@ const initialState: GlobalSliceModel = {
     userList:[],
     isAdmin:false,
     currentUser:undefined,
-    slotSelected:undefined
+    slotSelected:undefined,
+    weekDates:{start:undefined,end:undefined},
+    weeklyEventList:{}
 };
 export const globalSlice = createSlice({
     name: "global", initialState: initialState, reducers: {
@@ -52,6 +54,12 @@ export const globalSlice = createSlice({
             state.currentUser = action.payload;
         },setSlotSelected: (state, action: PayloadAction<{start:Date,end:Date} |undefined>) => {
             state.slotSelected = action.payload;
+        }
+        ,setWeekDates: (state, action: PayloadAction<{start:string|Date|undefined,end:string|Date|undefined}>) => {
+            state.weekDates = action.payload;
+        },
+        setWeeklyEventList: (state, action: PayloadAction<{ [key: string]: EventModel }>) => {
+            state.weeklyEventList = action.payload;
         },
     },
 });
@@ -67,7 +75,9 @@ export const {
     setUserList,
     setIsAdmin,
     setCurrentUser,
-    setSlotSelected
+    setSlotSelected,
+    setWeekDates,
+    setWeeklyEventList
 } = globalSlice.actions;
 
 export default globalSlice.reducer;

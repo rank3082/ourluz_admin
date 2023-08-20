@@ -15,5 +15,7 @@ export interface GlobalSliceModel {
   userList:UserModel[],
   isAdmin:boolean,
   currentUser:UserModel|undefined,
-  slotSelected:{start:Date,end:Date}|undefined
+  slotSelected:{start:Date,end:Date}|undefined,
+  weekDates:{ start:string|Date|undefined; end: string|Date|undefined },
+  weeklyEventList: { [key:string]: EventModel }
 }

@@ -33,6 +33,7 @@ export function isMobileFunction(): boolean {
 export const getRollName = (rollId: number | null) => {
     return getRollList().find((a) => a.id === rollId)?.description
 }
+
 // export const getRollIcon = (rollId: number | null): keyof iconNames => {
 //     switch (rollId){
 //         case 1:{
@@ -118,3 +119,4 @@ export   const getStatusEventForClient=(eventUsers:{id:number,booked:boolean,rol
     // console.log(status,"status")
     // return getColorByStatus(status)
 }
+

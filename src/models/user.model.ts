@@ -7,4 +7,5 @@ export interface UserModel {
     lastName: string,
     mobile:string,
     isAdmin?:boolean
+    permanentEmployee?:number
 }

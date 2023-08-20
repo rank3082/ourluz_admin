@@ -1,6 +1,13 @@
 import axios from "axios";
 import {store} from "../app/store";
-import {setCurrentUser, setEventList, setIsAdmin, setRollList, setUserList} from "../store/global.slice";
+import {
+    setCurrentUser,
+    setEventList,
+    setIsAdmin,
+    setRollList,
+    setUserList,
+    setWeeklyEventList
+} from "../store/global.slice";
 import {mainPath} from "./variable.const";
 import {EventModel} from "../models/event.model";
 import {CapacityModel} from "../models/capacity.model";
@@ -35,7 +42,7 @@ export const deleteUser = async (userId: number) => {
 }
 
 export const updateUserById = async (userDetails: {
-    firstName: string, lastName: string, email: string, mobile: string, roleIds: number[],id:number
+    firstName: string, lastName: string, email: string, mobile: string, roleIds: number[],id:number,permanentEmployee?:number
 })=>{
    const allUsers = getAllUsersRedux()
     try {
@@ -45,6 +52,7 @@ export const updateUserById = async (userDetails: {
             email: userDetails.email,
             mobile: userDetails.mobile,
             roleIds: userDetails.roleIds,
+            permanentEmployee:userDetails.permanentEmployee
         },{
             headers: {
                 Authorization: `TOKEN ${getToken()}`
@@ -53,7 +61,7 @@ export const updateUserById = async (userDetails: {
 
         const newUserList = allUsers.map((u,index)=>{
             if (u.id === userDetails.id){
-                return {...u,firstName:userDetails.firstName,lastName:userDetails.lastName,email:userDetails.email,mobile:userDetails.mobile,roleIds:userDetails.roleIds}
+                return {...u,firstName:userDetails.firstName,lastName:userDetails.lastName,email:userDetails.email,mobile:userDetails.mobile,roleIds:userDetails.roleIds,permanentEmployee:userDetails.permanentEmployee}
             }else {
                 return u
             }
@@ -77,6 +85,7 @@ export const createNewUser = async (newUserDetails: {
             email: newUserDetails.email,
             mobile:newUserDetails.mobile,
             roleIds:newUserDetails.roleIds,
+            permanentEmployee:0
         },{
             headers: {
                 Authorization: `TOKEN ${getToken()}`
@@ -114,9 +123,47 @@ export const getAllUsers = async () => {
         });
 };
 
-export const getAllEventsByOrganization = async () => {
+export const getAllEventsByDates = async (startDate:string="2023-06-03",endDate:string="2030-06-29") => {
     console.log(getToken(), "getToken")
-    axios.get(`${mainPath}yoman/events?fromDate=2023-06-03&toDate=2030-06-29`, {
+    console.log(getToken(), "thsi is check")
+    console.log(startDate,endDate,"ase")
+    axios.get(`${mainPath}yoman/events?fromDate=${startDate}&toDate=${endDate}`, {
+        headers: {
+            Authorization: `TOKEN ${getToken()}`
+        }
+    })
+        .then(response => {
+            const data = response.data.events;
+            let getEventList: { [key: string]: EventModel } = {}
+            data.forEach((eventObj: any) => {
+                getEventList[eventObj.id] = {
+                    id: eventObj.id,
+                    description: eventObj.description,
+                    start: eventObj.startDate,
+                    end: eventObj.endDate,
+                    location: eventObj.location,
+                    comments: eventObj.comments,
+                    backgroundColor: `${eventObj.backgroundColor}`,
+                    allDay: true,
+                    organizationId: eventObj.organizationId,
+                    capacity:eventObj.capacity,
+                    users:eventObj.users
+                }
+            })
+            store.dispatch(setWeeklyEventList(getEventList))
+            console.log(getEventList,"asee")
+            return getEventList
+        })
+        .catch(error => {
+            console.error(error);
+        });
+};
+
+
+
+export const getAllEventsByOrganization = async (startDate:string="2023-06-03",endDate:string="2030-06-29") => {
+    console.log(getToken(), "getToken")
+    axios.get(`${mainPath}yoman/events?fromDate=${startDate}&toDate=${endDate}`, {
         headers: {
             Authorization: `TOKEN ${getToken()}`
         }
