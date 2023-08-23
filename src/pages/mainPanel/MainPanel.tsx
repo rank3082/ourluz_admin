@@ -15,23 +15,22 @@ import {
     getAllEventsByOrganization,
     getAllRolesByOrganization,
     getAllUsers,
-    isUserIsManager
+    isUserIsManager, sendLinkAsSms
 } from "../../utils/data-management";
 import {ClientEventDetailsDialog} from "./components/clientEventDetailsDialog/ClientEventDetailsDialog";
 import {EventModel} from "../../models/event.model";
-import {checkIfUserIsAvailabilityToEvent, getStatusEventForClient} from "../../utils/general";
+import { getStatusEventForClient} from "../../utils/general";
 import {Icon} from "../../components/icon/Icon";
 import {setToken} from "../../store/authentication.slice";
 import {Views} from "react-big-calendar";
-import {PdfPage} from "../../components/pdfComponent/PdfPage";
-import moment from "moment/moment";
+import moment from "moment";
 
 export const MainPanel = () => {
     const dispatch = useDispatch()
 
     const {selectedEvent,selectedPopup,isMobile,isAdmin,currentUser,weekDates} = useAppSelector(state => state.global);
     const startDate = moment(weekDates.start).format("yyyy-MM-D")
-    const endDate = moment(weekDates.end).format("yyyy-MM-D")
+    // const endDate = moment(weekDates.end).format("yyyy-MM-D")
     useEffect(() => {
         if (selectedPopup === SelectedPopup.Close){
             getAllEventsByOrganization().then()
@@ -65,38 +64,11 @@ export const MainPanel = () => {
    }
     const [currentView, setCurrentView] = useState(Views.W);
 
-    //  function PdfPage()  {
-    //     const doc = new jsPDF();
-    //
-    //     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    //     const rows = 5;
-    //     const cols = 7;
-    //     const cellWidth = 40;
-    //     const cellHeight = 20;
-    {/*    const marginTop = 20;*/}
-    {/*    const marginLeft = 10;*/}
 
-    {/*    for (let dayIndex = 0; dayIndex < cols; dayIndex++) {*/}
-    {/*        const day = days[dayIndex];*/}
-    {/*        doc.setFontSize(12);*/}
-    {/*        doc.text(day,marginLeft + dayIndex * cellWidth, marginTop - 5 );*/}
-
-    {/*        for (let rowIndex = 0; rowIndex < rows; rowIndex++) {*/}
-    {/*            const x = marginLeft + dayIndex * cellWidth;*/}
-    {/*            const y = marginTop + rowIndex * cellHeight;*/}
-
-    {/*            doc.setDrawColor(0);*/}
-    {/*            doc.setFillColor(255, 255, 255);*/}
-    //             doc.rect(x, y, cellWidth, cellHeight, 'F');
-    //
-    {/*            doc.setFontSize(10);*/}
-    //             doc.setTextColor(0);
-    //             doc.text(`Day ${dayIndex + 1}, Slot ${rowIndex + 1}`,x + 5, y + cellHeight / 2 + 2);
-    //         }
-    //     }
-    //
-    //     doc.save('table.pdf');
-    // }
+    const sendEmailToAvailableUsers= async ()=>{
+        await sendLinkAsSms(startDate)
+        console.log("hi")
+    }
 
     return <div className="mainPanelContainer">
         <Header/>
@@ -143,13 +115,18 @@ export const MainPanel = () => {
                 </Button>}
                 {isAdmin &&  currentView === Views.WEEK && <Button
                     className={"addEventButtonNotSelected"}
-                    onClick={()=>window.open(`/weeklyBooking/from/${startDate}/to/${endDate}`)}>
-                    {/*onClick={()=>dispatch(setSelectedPage(SelectedPage.SendBookPage))}>*/}
-                   שלח שיבוץ
+                    // onClick={()=>window.open(`/weeklyBooking/from/${startDate}/to/${endDate}`)}>
+                    onClick={()=> {
+                        // dispatch()
+                        dispatch(setSelectedPage(SelectedPage.SendBookPage))
+                    }}>
+                  צפה בשיבוץ
                 </Button>}
-                {isAdmin && currentView === Views.WEEK &&
-                    <PdfPage/>
-                }
+                {isAdmin &&  currentView === Views.WEEK && <Button
+                    className={"addEventButtonNotSelected"}
+                    onClick={()=>sendEmailToAvailableUsers()}>
+                  שלח שיבוץ
+                </Button>}
                 {/*{isAdmin && currentView === Views.WEEK &&*/}
                 {/*    <BasicDocument/>*/}
                 {/*}*/}

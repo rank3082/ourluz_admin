@@ -376,3 +376,21 @@ export const removeAvailabilityFromEvent = async (eventId: number) => {
         console.log(e, "error3")
     }
 }
+
+
+
+export const sendLinkAsSms = async (fromDate: string) => {
+    try {
+
+        const response = await axios.post(`${mainPath}yoman/publish/?fromDate=${fromDate}`, {
+
+        },{
+            headers: {
+                Authorization: `TOKEN ${getToken()}`
+            }
+        });
+        console.log(response,"response123")
+    } catch (e) {
+        console.log(e, "error3")
+    }
+}
