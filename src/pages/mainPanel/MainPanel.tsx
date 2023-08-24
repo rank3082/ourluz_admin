@@ -67,7 +67,6 @@ export const MainPanel = () => {
 
     const sendEmailToAvailableUsers= async ()=>{
         await sendLinkAsSms(startDate)
-        console.log("hi")
     }
 
     return <div className="mainPanelContainer">
