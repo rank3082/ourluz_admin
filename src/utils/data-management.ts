@@ -42,7 +42,7 @@ export const deleteUser = async (userId: number) => {
 }
 
 export const updateUserById = async (userDetails: {
-    firstName: string, lastName: string, email: string, mobile: string, roleIds: number[],id:number,permanentEmployee?:number
+    firstName: string, lastName: string, email: string, mobile: string, roleIds: number[],id:number,permanentEmployee?:number,subscribeToReminderMessage?:number
 })=>{
    const allUsers = getAllUsersRedux()
     try {
@@ -52,7 +52,8 @@ export const updateUserById = async (userDetails: {
             email: userDetails.email,
             mobile: userDetails.mobile,
             roleIds: userDetails.roleIds,
-            permanentEmployee:userDetails.permanentEmployee
+            permanentEmployee:userDetails.permanentEmployee,
+            subscribeToReminderMessage:userDetails.subscribeToReminderMessage
         },{
             headers: {
                 Authorization: `TOKEN ${getToken()}`
@@ -61,7 +62,7 @@ export const updateUserById = async (userDetails: {
 
         const newUserList = allUsers.map((u,index)=>{
             if (u.id === userDetails.id){
-                return {...u,firstName:userDetails.firstName,lastName:userDetails.lastName,email:userDetails.email,mobile:userDetails.mobile,roleIds:userDetails.roleIds,permanentEmployee:userDetails.permanentEmployee}
+                return {...u,firstName:userDetails.firstName,lastName:userDetails.lastName,email:userDetails.email,mobile:userDetails.mobile,roleIds:userDetails.roleIds,permanentEmployee:userDetails.permanentEmployee,subscribeToReminderMessage:userDetails.subscribeToReminderMessage}
             }else {
                 return u
             }
@@ -85,7 +86,8 @@ export const createNewUser = async (newUserDetails: {
             email: newUserDetails.email,
             mobile:newUserDetails.mobile,
             roleIds:newUserDetails.roleIds,
-            permanentEmployee:0
+            permanentEmployee:0,
+            subscribeToReminderMessage:0
         },{
             headers: {
                 Authorization: `TOKEN ${getToken()}`
@@ -392,5 +394,74 @@ export const sendLinkAsSms = async (fromDate: string) => {
         console.log(response,"response123")
     } catch (e) {
         console.log(e, "error3")
+    }
+}
+
+
+export const forgetPasswordSendVerifyCode = async (userName: string) => {
+    try {
+        const response = await axios.post(`${mainPath}yoman/users/${userName}/forgotPassword`, {
+        },{
+            headers: {
+                // Authorization: `TOKEN ${getToken()}`
+            }
+        });
+        return response
+    } catch (e) {
+        return false
+        console.log(e, "error3")
+    }
+}
+
+export const checkVerifyCode = async (pinCode: string,userName:string) => {
+    try {
+        const response = await axios.post(`${mainPath}yoman/users/${userName}/verifyDigits`, {
+            "digits": parseInt(pinCode)
+        },{
+            headers: {
+                // Authorization: `TOKEN ${getToken()}`
+            }
+        });
+        console.log(response,"response1234")
+        // if (response?.error){
+        //     return false
+        // }
+        return response;
+    } catch (e) {
+        console.log(e, "error3")
+        return false
+    }
+}
+export const changePassword = async (token: string,newPassword:string) => {
+    try {
+        const response = await axios.post(`${mainPath}yoman/users/changePassword`, {
+            newPassword: newPassword
+        },{
+            headers: {
+                Authorization: `Berear ${token}`
+            }
+        });
+        console.log(response,"response1234")
+        return response;
+    } catch (e) {
+        console.log(e, "error3")
+        return false
+    }
+}
+
+
+export const sendLinkForNewUser = async (userId:number) => {
+    try {
+        const response = await axios.post(`${mainPath}yoman/users/${userId?.toString()}/invite`, {
+        },{
+            headers: {
+                Authorization: `TOKEN ${getToken()}`
+            }
+        });
+        console.log(response,"response1234")
+        return response;
+    } catch (e) {
+        console.log(e, "error3")
+        return false
     }
 }

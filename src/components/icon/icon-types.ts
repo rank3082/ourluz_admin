@@ -64,6 +64,7 @@ import { ReactComponent as Driver } from "../../assets/icons/driver.svg";
 import { ReactComponent as ComputerMan } from "../../assets/icons/computerMan.svg";
 import { ReactComponent as RegularEmployee } from "../../assets/icons/regularEmployee.svg";
 import { ReactComponent as Manager } from "../../assets/icons/manager.svg";
+import { ReactComponent as ErrorIcon } from "../../assets/icons/error.svg";
 
 class Icons {
   readonly arrow_up: ReactSVGComponent = ArrowUp;
@@ -133,6 +134,7 @@ class Icons {
   readonly computerMan: ReactSVGComponent = ComputerMan;
   readonly regularEmployee: ReactSVGComponent = RegularEmployee;
   readonly manager: ReactSVGComponent = Manager;
+  readonly errorIcon: ReactSVGComponent = ErrorIcon;
 }
 
 export const icons = new Icons();

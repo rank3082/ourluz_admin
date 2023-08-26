@@ -8,4 +8,5 @@ export interface UserModel {
     mobile:string,
     isAdmin?:boolean
     permanentEmployee?:number
+    subscribeToReminderMessage?:number
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {MainPanel} from "./pages/mainPanel/MainPanel";
 import {useDispatch} from "react-redux";
@@ -13,6 +13,25 @@ import {MyShiftPage} from "./pages/clientPages/myShiftPage/MyShiftPage";
 import {WeeklyBookedCalender} from "./pages/weeklyBookedCalander/WeeklyBookedCalender";
 
 function App() {
+    useEffect(() => {
+        let deferredPrompt: Event | null = null;
+
+        const handleBeforeInstallPrompt = (e: Event) => {
+            // Prevent the default prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later
+            deferredPrompt = e;
+            // Display your custom install UI, e.g., show a button
+            // that triggers the `prompt()` method
+        };
+
+        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+        return () => {
+            window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        };
+    }, []);
+
 const dispatch = useDispatch()
     dispatch(setIsMobile(isMobileFunction()))
     const {token} = useAppSelector(state => state.authentication)

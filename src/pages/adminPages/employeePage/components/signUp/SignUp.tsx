@@ -5,7 +5,7 @@ import {text} from "../../../../../utils/dictionary-management";
 import {useAppSelector} from "../../../../../app/hooks";
 import {CacheProvider} from "@emotion/react";
 import {cacheRtl} from "../../../../../utils/general";
-import {createNewUser, updateUserById} from "../../../../../utils/data-management";
+import {createNewUser, sendLinkForNewUser, updateUserById} from "../../../../../utils/data-management";
 import {SelectRoles} from "./components/selectRoles/SelectRoles";
 import {UserModel} from "../../../../../models/user.model";
 
@@ -24,7 +24,7 @@ export const SignUp: React.FC<{ isEditMode?: boolean, selectedUser?: UserModel, 
     const [phoneNumber, setPhoneNumber] = useState(isEditMode ? (selectedUser as UserModel).mobile : "")
     const [selectedRoles, setSelectedRoles] = useState<number[]>(isEditMode ? (selectedUser as UserModel).roleIds : []);
     const [permanentEmployee, setPermanentEmployee] = useState<number>(isEditMode ? (selectedUser as UserModel).permanentEmployee as number??0 : 0);
-    console.log(permanentEmployee,"permanentEmployee")
+    const [subscribeToReminderMessage, setSubscribeToReminderMessage] = useState<number>(isEditMode ? (selectedUser as UserModel).subscribeToReminderMessage as number??0 : 0);
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (isEditMode) {
@@ -35,7 +35,8 @@ export const SignUp: React.FC<{ isEditMode?: boolean, selectedUser?: UserModel, 
                 mobile: phoneNumber,
                 roleIds: selectedRoles,
                 id: (selectedUser as UserModel).id,
-                permanentEmployee: permanentEmployee
+                permanentEmployee: permanentEmployee,
+                subscribeToReminderMessage: subscribeToReminderMessage
             }).then(() => {
                 closeDialog()
             })
@@ -54,7 +55,16 @@ export const SignUp: React.FC<{ isEditMode?: boolean, selectedUser?: UserModel, 
             })
         }
     }
-
+    const sendLinkToSpecificUser= async ()=>{
+        selectedUser && await sendLinkForNewUser(selectedUser?.id).then((res)=>{
+            if (res && res.data.userId){
+                setTheLinkWasSend(true)
+            }
+        })
+        // selectedUser?.id
+        //yoman/users/:userId/invite
+    }
+const[ theLinkWasSend,setTheLinkWasSend]=useState(false)
     return <div className={"signUpContainer"}>
         <form className={"signUpForm"} onSubmit={handleSubmit}>
             <CacheProvider value={cacheRtl}>
@@ -120,12 +130,30 @@ export const SignUp: React.FC<{ isEditMode?: boolean, selectedUser?: UserModel, 
                         />
                         <span>הגדר כעובד קבוע</span>
                     </div>
+                    <div
+                        className="select-dropdown-item"
+                        onClick={() => setSubscribeToReminderMessage(subscribeToReminderMessage===0?1:0)}
+                        style={{direction: isEnglish ? "ltr" : "rtl"}}
+                    >
+                        <input
+                            type="checkbox"
+                            checked={subscribeToReminderMessage===1}
+                            readOnly
+                        />
+                        <span>הפסק התרעות עבור עובד זה</span>
+                    </div>
                 </div>
 
             </CacheProvider>
             <div className={"signUpBottomWrapper"}>
                 <Button className={"signUpButton"} type="submit"
                         variant="contained">{isEditMode ? text.updateDetails : text.signUp}</Button>
+
+                {isAdmin && !theLinkWasSend && <Button style={{marginTop:20}} color={"inherit"} className={"signUpButton"} type="button"
+                        variant="contained"
+                onClick={sendLinkToSpecificUser}
+                >שלח לינק ליצירת סיסמא חדשה</Button>}
+                {isAdmin && theLinkWasSend && <div style={{color:"var(--primary)",fontWeight:700,fontSize:16,justifyContent:"center",display:"flex",marginTop:10}}>הלינק נשלח לעובד החדש</div>}
             </div>
         </form>
     </div>
