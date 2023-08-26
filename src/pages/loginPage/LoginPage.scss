@@ -50,3 +50,14 @@ background-color: var(--primary);
     }
   }
 }}
+.forgetPassword{
+  color: var(--white);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.errorIcon{
+  width: 50px;
+  height: 50px;
+  --icon-color: var(--alert);
+}

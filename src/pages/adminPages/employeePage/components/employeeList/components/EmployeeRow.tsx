@@ -17,8 +17,6 @@ const dispatch=useDispatch()
    }
 
     const updateUserBooking = (isActive:boolean, user: UserModel,rollId:number) => {
-        console.log(user, "checked2")
-        console.log(eventId, "checked3")
         if (eventId && currentUsersEventList) {
             console.log(currentUsersEventList,"currentUsersEventList")
             const index = currentUsersEventList.findIndex(item => item.id === user.id);

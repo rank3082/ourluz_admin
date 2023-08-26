@@ -68,10 +68,14 @@ export const MainPanel = () => {
     const sendEmailToAvailableUsers= async ()=>{
         await sendLinkAsSms(startDate)
     }
+    const storageUsername = localStorage.getItem("username");
 
     return <div className="mainPanelContainer">
         <Header/>
-        <Menu>
+        <div style={{display:"flex",justifyContent:"space-between",paddingInline:"5%",alignItems:"center"}}>
+           <div>
+
+            <Menu >
             <Menu.Button className={"menuContainer"}>
                         <Icon name={"menu"}/>
             </Menu.Button>
@@ -82,6 +86,11 @@ export const MainPanel = () => {
                 </Menu.Item>
             </Menu.Items>
         </Menu>
+           </div>
+
+            <div style={{fontSize:22}}><span style={{fontWeight:700}}>{storageUsername}</span> <span>שלום  </span></div>
+        </div>
+
         {selectedPopup === SelectedPopup.EventDetail && <EventDetails/>}
         {selectedPopup === SelectedPopup.ShiftManager && <ShiftManager/>}
         {/*{selectedPopup === SelectedPopup.ClientEventDetails && <RollManager/>}*/}
