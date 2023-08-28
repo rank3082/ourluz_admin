@@ -102,6 +102,7 @@ export const createNewUser = async (newUserDetails: {
         }
 
     } catch (e) {
+        return e
         console.log(e, "error")
     }
 }
