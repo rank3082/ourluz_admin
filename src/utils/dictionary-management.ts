@@ -20,7 +20,7 @@ export const text = {
     myShift:isEnglish?"my shift":"המשמרות שלי ",
     myAvailability:isEnglish?"my availability":"הזמינות שלי ",
     myDetails:isEnglish?"my details":"הפרטים שלי ",
-    emptyEmployeeList:isEnglish?"there is no employee booked":"לא שובצו עובדים",
+    emptyEmployeeList:isEnglish?"there is no employee booked":"טרם שובצו עובדים",
     selectEventForm:isEnglish?"select event":"בחר אירוע",
     amount:isEnglish?"amount":"כמות",
     signUp:isEnglish?"sign up":"הירשם",

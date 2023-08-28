@@ -1,14 +1,11 @@
-//.isFullBooking .rbc-event{
-//  background-color: #01B698;
-//}
 .rbc-event{
+  padding: 1px;
+  width: 100%;
   background-color: white;
 }
 .calenderContainer{
-  font-size: 14px;
+  font-size: 8px;
   border-radius: 4%;
-  //padding: 2px;
-  border-top: #01B698 ;
   align-items: center;
   text-align: center;
   .descriptionStyle{
@@ -16,6 +13,21 @@
     font-weight: 600;
   }
 }
+
+
+@media only screen and (min-width: 1450px) {
+  .calenderContainer{
+    font-size: 14px;
+  }
+}
+@media only screen and (min-width: 1919px) {
+  .calenderContainer{
+    font-size: 16px;
+  }
+}
+
+
+
 .fullCalendarWidth{
   width: 100%;
 }
@@ -23,14 +35,38 @@
   width: calc(100% - 400px);
 }
 
+.week-calender-wrapper{
+  font-size: 9px;
+  width: 100%;
+}
 .month-calender-wrapper{
+  font-size: 9px;
   height: 600px;
   width: 100%;
 }
-.week-calender-wrapper{
-  padding: 5%;
-  width: 100%;
+.agenda-calender-wrapper{
+  font-size: 14px;
 }
+@media only screen and (min-width: 1450px) {
+  .month-calender-wrapper{
+    font-size: 14px;
+  }
+  .week-calender-wrapper{
+    font-size: 14px;
+  }
+}
+@media only screen and (min-width: 1919px) {
+  .month-calender-wrapper{
+    font-size: 16px;
+  }
+  .week-calender-wrapper{
+    font-size: 16px;
+  }
+}
+
+
+
+
 .week-calender-wrapper .rbc-time-content {
   display: none;
 }
