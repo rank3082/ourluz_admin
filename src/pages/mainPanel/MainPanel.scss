@@ -4,8 +4,19 @@
   flex-direction: column;
 
   .mainPanelBody {
-    padding-inline: 5%;
+    padding-inline: 1%;
   }
+  @media only screen and (min-width: 1450px) {
+    .mainPanelBody{
+      padding-inline: 5%;
+    }
+  }
+  @media only screen and (min-width: 1919px) {
+    .mainPanelBody{
+      padding-inline: 5%;
+    }
+  }
+
 .menuContainer{
   width: 40px;
   display: flex;

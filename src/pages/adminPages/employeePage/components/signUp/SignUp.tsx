@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import "./SignUp.scss"
-import {Button, TextField} from "@mui/material";
+import {Button, Dialog, TextField} from "@mui/material";
 import {text} from "../../../../../utils/dictionary-management";
 import {useAppSelector} from "../../../../../app/hooks";
 import {CacheProvider} from "@emotion/react";
@@ -8,6 +8,11 @@ import {cacheRtl} from "../../../../../utils/general";
 import {createNewUser, sendLinkForNewUser, updateUserById} from "../../../../../utils/data-management";
 import {SelectRoles} from "./components/selectRoles/SelectRoles";
 import {UserModel} from "../../../../../models/user.model";
+import {setSelectedEvent, setSelectedPopup} from "../../../../../store/global.slice";
+import {SelectedPopup} from "../../../../../utils/enum.const";
+import {
+    ClientEventDetailsDialog
+} from "../../../../mainPanel/components/clientEventDetailsDialog/ClientEventDetailsDialog";
 
 export const SignUp: React.FC<{ isEditMode?: boolean, selectedUser?: UserModel, closeDialog?: any, setEmployeeList?: any }> = ({
                                                                                                                                    isEditMode = false,
@@ -25,10 +30,14 @@ export const SignUp: React.FC<{ isEditMode?: boolean, selectedUser?: UserModel, 
     const [selectedRoles, setSelectedRoles] = useState<number[]>(isEditMode ? (selectedUser as UserModel).roleIds : []);
     const [permanentEmployee, setPermanentEmployee] = useState<number>(isEditMode ? (selectedUser as UserModel).permanentEmployee as number??0 : 0);
     const [subscribeToReminderMessage, setSubscribeToReminderMessage] = useState<number>(isEditMode ? (selectedUser as UserModel).subscribeToReminderMessage as number??0 : 0);
+    const [signUpError,setSignUpError]=useState("")
+
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        e.stopPropagation();
         if (isEditMode) {
-            updateUserById({
+           await updateUserById({
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
@@ -41,7 +50,7 @@ export const SignUp: React.FC<{ isEditMode?: boolean, selectedUser?: UserModel, 
                 closeDialog()
             })
         } else {
-            createNewUser({
+            await createNewUser({
                 username: userName,
                 password: password,
                 firstName: firstName,
@@ -49,9 +58,12 @@ export const SignUp: React.FC<{ isEditMode?: boolean, selectedUser?: UserModel, 
                 email: email,
                 mobile: phoneNumber,
                 roleIds: selectedRoles,
-            }).then((r) => {
-                setEmployeeList()
-
+            }).then((r:any) => {
+                if (r && r.response  && r?.response?.data?.error) {
+                    setSignUpError(r.response.data.error)
+                }else {
+                    setEmployeeList()
+                }
             })
         }
     }
@@ -61,10 +73,11 @@ export const SignUp: React.FC<{ isEditMode?: boolean, selectedUser?: UserModel, 
                 setTheLinkWasSend(true)
             }
         })
-        // selectedUser?.id
-        //yoman/users/:userId/invite
     }
+
 const[ theLinkWasSend,setTheLinkWasSend]=useState(false)
+
+
     return <div className={"signUpContainer"}>
         <form className={"signUpForm"} onSubmit={handleSubmit}>
             <CacheProvider value={cacheRtl}>
@@ -156,5 +169,17 @@ const[ theLinkWasSend,setTheLinkWasSend]=useState(false)
                 {isAdmin && theLinkWasSend && <div style={{color:"var(--primary)",fontWeight:700,fontSize:16,justifyContent:"center",display:"flex",marginTop:10}}>הלינק נשלח לעובד החדש</div>}
             </div>
         </form>
+
+
+        <Dialog
+            fullWidth={true}
+            onClose={()=> {
+               setSignUpError("")
+            }}
+            open={signUpError.length>0}
+        >
+            <div style={{textAlign:"center",fontSize:20,color:"var(--alert)",display:"flex",justifyContent:"center",padding:"20%"}}>{signUpError}</div>
+      <Button  style={{alignSelf:"center",width:100,marginBottom:20,backgroundColor:"var(--primary)",color:"var(--white)"}} onClick={()=>setSignUpError("")}>הבנתי</Button>
+        </Dialog>
     </div>
 }

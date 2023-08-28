@@ -39,11 +39,13 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
     const DailyEventComponent: React.FC<{ event: EventModel }> = ({event}) => {
         const eventUserBooked = event.users.filter((u) => u.booked);
        const userListForDisplay = isAdmin? event.users: eventUserBooked;
-        return <div className={"calenderContainer"} style={{
+        return <div  className={"calenderContainer"} style={{
+            whiteSpace: "pre-wrap",
             backgroundColor: isAdmin ? event.backgroundColor : getColorByStatus(getStatusEventForClient(event.users, currentUser)),
-            border: isEventHasFullBooking(event) ? "2px solid var(--light-green)" : "2px solid var(--dark)"
+            border: isEventHasFullBooking(event) ? "0.5px solid var(--light-green)" : "0.5px solid var(--dark)",
+            fontSize:currentView === Views.DAY||currentView === Views.AGENDA ? 14:"none"
         }}>
-            <div className={"descriptionStyle"}>{event.description}</div>
+            <div  className={"descriptionStyle"}>{event.description}</div>
             <div>
                 <span style={{fontWeight: 600}}>{text.location} - </span>
                 <span>{event.location}</span>
@@ -86,50 +88,10 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
     };
     const MonthlyEventComponent: React.FC<{ event: EventModel }> = ({event}) => {
         return <div
-            style={{backgroundColor: isAdmin ? event.backgroundColor : getColorByStatus(getStatusEventForClient(event.users, currentUser))}}>
+            style={{whiteSpace: "pre-wrap",textAlign:"end",height:"100%", width:"100%",backgroundColor: isAdmin ? event.backgroundColor : getColorByStatus(getStatusEventForClient(event.users, currentUser))}}>
             <div>{event.description}</div>
         </div>
     };
-    // const getStatusEventForClient=(event:EventModel)=>{
-    //    let status:UserEventStatus = UserEventStatus.nothing
-    //        // event.users.
-    //
-    //     event.users.filter((user)=>user.id === currentUser?.id).forEach((u)=> {
-    //      if (u.booked){
-    //          status = UserEventStatus.booked
-    //      }  else {
-    //          status = UserEventStatus.available
-    //      }
-    //     })
-    //     // const now = new Date();
-    //     // console.log(new Date(event.start),"event.start")
-    //     // console.log(now,"now.start")
-    //     // @ts-ignore
-    //     // if ((new Date(event.start) > now) && (status !== UserEventStatus.booked)){
-    //     //     status = UserEventStatus.eventDoneWithoutBooked
-    //     //     console.log("after.start")
-    //     // }
-    //     // console.log(status,"status")
-    //     return getColorByStatus(status)
-    // }
-
-    // const getColorByStatus=(status:UserEventStatus)=>{
-    //     switch (status){
-    //         case UserEventStatus.booked:{
-    //             return "green"
-    //         }
-    //         case UserEventStatus.available:{
-    //             return "orange"
-    //         }
-    //         case UserEventStatus.nothing:{
-    //             return "var(--primary)"
-    //         }
-    //         case UserEventStatus.eventDoneWithoutBooked:{
-    //             return "red"
-    //         }
-    //     }
-    //
-    // }
 
     const views = {
         month: {
@@ -216,7 +178,7 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
                 components={views}
                 // defaultView="week"
                 onView={handleViewChange}
-                className={currentView === Views.WEEK || currentView === Views.DAY ? "week-calender-wrapper" : `month-calender-wrapper  `}
+                className={currentView === Views.WEEK || currentView === Views.DAY ? "week-calender-wrapper" :currentView === Views.AGENDA?"agenda-calender-wrapper":  `month-calender-wrapper  `}
                 formats={{timeGutterFormat: 'HH:mm'}}
                 onSelectEvent={handleSelectEvent}
                 slotPropGetter={getSlotStyle}

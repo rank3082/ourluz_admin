@@ -21,17 +21,17 @@ export const ClientEventDetailsDialog: React.FC<{userEventStatusMemo:UserEventSt
         setSelectedAvailabilityEvent(UserEventStatus.nothing)
     }
     return  <div className={"clientEventDetails"}>
-        <div className={"descriptionLabel"}> {selectedEvent?.description}</div>
+        <div className={"descriptionLabel"} style={{fontSize:22}}> {selectedEvent?.description}</div>
         <div className={"eventDetailsText"}>
             {text.location} : {selectedEvent?.location}
         </div>
-        <div className={"eventDetailsText"}>
+        {selectedEvent?.comments && <div className={"eventDetailsText"}>
             {text.comments} : {selectedEvent?.comments}
-        </div>
-        <div className={"eventDetailsText"}>
+        </div>}
+        <div className={"eventDetailsText"} style={{fontSize:16}}>
             {text.startAtTime} {moment(selectedEvent?.start).format("dddd DD/MM HH:MM")}
         </div>
-        <div className={"eventDetailsText"}>
+        <div className={"eventDetailsText"} style={{fontSize:16}}>
             {text.endAtTime} {moment(selectedEvent?.end).format("dddd DD/MM HH:MM")}
         </div>
         {userEventStatusMemo !== UserEventStatus.booked && <div className={"setAvailabilityText"}>{text.availabilityStatus} {selectedAvailabilityEvent?" זמין":" לא זמין"}</div>
