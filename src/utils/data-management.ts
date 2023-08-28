@@ -311,7 +311,6 @@ export const isUserIsManager = async () => {
 
 
 export const editBookedUserRoll = async (eventId: number, userId: number, roleId: number) => {
-    console.log(eventId,userId,roleId,"im here 5")
     try {
         const response = await axios.post(`${mainPath}yoman/bocks/`, {
             eventId: eventId,
@@ -321,13 +320,16 @@ export const editBookedUserRoll = async (eventId: number, userId: number, roleId
             headers: {
                 Authorization: `TOKEN ${getToken()}`
             }
+        }).then((res)=>{
+            console.log(res,"response")
+            return res
         });
-        console.log(response,"response")
-
+return response
         // newList[response.data.id] = {...response.data, start: response.data.startDate, end: response.data.endDate}
         // store.dispatch(setEventList(newList))
     } catch (e) {
         console.log(e, "error3")
+        return e
     }
 }
 export const unBookedUser = async (eventId: number, userId: number) => {

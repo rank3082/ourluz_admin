@@ -60,14 +60,10 @@ export const SignUp: React.FC<{ isEditMode?: boolean, selectedUser?: UserModel, 
                 roleIds: selectedRoles,
             }).then((r:any) => {
                 if (r && r.response  && r?.response?.data?.error) {
-                    console.log("i here")
-                    console.log(r.response.data.error,"r.response.data.error")
                     setSignUpError(r.response.data.error)
                 }else {
                     setEmployeeList()
                 }
-                console.log(r,"r123")
-
             })
         }
     }
@@ -77,14 +73,11 @@ export const SignUp: React.FC<{ isEditMode?: boolean, selectedUser?: UserModel, 
                 setTheLinkWasSend(true)
             }
         })
-        // selectedUser?.id
-        //yoman/users/:userId/invite
     }
 
 const[ theLinkWasSend,setTheLinkWasSend]=useState(false)
 
 
-    console.log(signUpError,"signUpError")
     return <div className={"signUpContainer"}>
         <form className={"signUpForm"} onSubmit={handleSubmit}>
             <CacheProvider value={cacheRtl}>

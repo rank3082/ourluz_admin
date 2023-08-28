@@ -7,23 +7,52 @@ import {Icon} from "../../../../components/icon/Icon";
 import {EventModel} from "../../../../models/event.model";
 import {editBookedUserRoll, unBookedUser} from "../../../../utils/data-management";
 import {useAppSelector} from "../../../../app/hooks";
-import {setEventList} from "../../../../store/global.slice";
+import {setEventList, setSelectedEvent, setSelectedPopup} from "../../../../store/global.slice";
 import {useDispatch} from "react-redux";
+import {Button, Dialog} from "@mui/material";
+import {SelectedPopup} from "../../../../utils/enum.const";
+import {
+    ClientEventDetailsDialog
+} from "../../../../pages/mainPanel/components/clientEventDetailsDialog/ClientEventDetailsDialog";
 export const SelectedUserForShift:React.FC<{setSelectedEventFromList:any,selectedEventFromList:EventModel,rollList:RollModel[],eventUser:{ id: number; booked: boolean; roleId: number|null}, userFromList:UserModel,getRollName:any}>=({setSelectedEventFromList,selectedEventFromList,rollList,eventUser,userFromList,getRollName})=>{
    const [openRollList,setOpenRollList]=useState(false)
     const {eventList} = useAppSelector(state => state.global)
+    const [bookedAlert,setBookAlert]=useState("")
    const dispatch=useDispatch()
-    const updateRoll = (roll:RollModel) =>{
+
+
+
+    // const getUserData = async (u:UserModel,roll:RollModel)=>{
+    //     await editBookedUserRoll(selectedEventFromList.id,u.id,roll.id).then((res)=>{
+    //     }
+    // })
+           // if (res && res.response &&res.response.status === 404 &&  res.response.data && res.response.data.message) {
+           //     setBookAlert(res.response.data.message)
+           //     console.log(res, "bookaa")
+           //     return u
+           // }
+       // }
+       // return u
+    // }
+
+
+    const updateRoll = async (roll:RollModel) =>{
         console.log(selectedEventFromList,"selectedEventFromList")
-        const newSelectedUsers:{id: number, booked: boolean, roleId: number|null}[] = selectedEventFromList.users.map((u)=>{
+        const newSelectedUsers:{id: number, booked: boolean, roleId: number|null}[]|any = selectedEventFromList.users.map( (u)=>{
             if (u.id === eventUser.id){
                 if (u.roleId === roll.id){
                     unBookedUser(selectedEventFromList.id,u.id).then()
+                    return {...u,roleId: u.roleId === roll.id ? null:roll.id,booked:(u.roleId !== roll.id)}
+
                 }else {
-                    editBookedUserRoll(selectedEventFromList.id,u.id,roll.id).then()
+                     editBookedUserRoll(selectedEventFromList.id,u.id,roll.id).then((res:any)=> {
+                        if (res && res.response &&res.response.status === 404 &&  res.response.data && res.response.data.message) {
+                            setBookAlert(res.response.data.message)
+                            console.log(res, "bookaa")
+                        }
+                    })
                 }
                 return {...u,roleId: u.roleId === roll.id ? null:roll.id,booked:(u.roleId !== roll.id)}
-
             }
                return u
         })
@@ -44,6 +73,22 @@ export const SelectedUserForShift:React.FC<{setSelectedEventFromList:any,selecte
                 </div>
             })}
            </div>}
+
+        <Dialog
+            fullWidth={true}
+            onClose={()=> {
+                setBookAlert("")
+                setSelectedEventFromList({...selectedEventFromList,users:eventList[selectedEventFromList.id].users})
+                // dispatch(setEventList({...eventList, [selectedEventFromList.id]: {...selectedEventFromList, users: newSelectedUsers}}))
+            }}
+            open={bookedAlert.length>0}
+        >
+            <div style={{padding:20,color:"var(--alert)",alignSelf:"center",fontSize:20}}>{bookedAlert}</div>
+            <Button  style={{marginBottom:20,width:100,alignSelf:"center",backgroundColor:"var(--primary)",color:"var(--white)"}} onClick={()=> {
+                setBookAlert("")
+                // setSelectedEventFromList({...selectedEventFromList,users:eventList[selectedEventFromList.id].users})
+            }}>הבנתי</Button>
+        </Dialog>
     </div>
 
 }

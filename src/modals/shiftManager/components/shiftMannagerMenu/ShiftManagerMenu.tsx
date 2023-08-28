@@ -13,7 +13,6 @@ const {userList,isEnglish,rollList,eventList} = useAppSelector(state => state.gl
     },[selectedEvent])
 
     const [selectedEventFromList, setSelectedEventFromList] = useState<EventModel>(selectedEvent);
-    console.log(selectedEventFromList,"selllll2")
     const userOfSpecificEvent = useMemo(()=>{
         return selectedEventFromList ?  userList.filter((user) => Object.values(selectedEventFromList?.users).map((userOfEvent) => {
             return userOfEvent.id
@@ -49,7 +48,6 @@ const {userList,isEnglish,rollList,eventList} = useAppSelector(state => state.gl
                 {rollList.map((roll, index) => {
                     const rollByUser = getBookedUsersByRoll(selectedEventFromList, roll.id);
                     return <tr key={index}>
-                        {/*add key*/}
                         {selectedEventFromList?.capacity.filter((c) => roll.id === c.roleId).map((c, indexC) => {
                             return <React.Fragment key={`${index}a${indexC}`}>
                                 <td key={`${index}a${indexC}1`} style={{color: c.count === rollByUser ? "green" : c.count < rollByUser? "orange":"red",width:"25%"}} >{rollByUser}</td>
