@@ -21,23 +21,7 @@ export const SelectedUserForShift:React.FC<{setSelectedEventFromList:any,selecte
    const dispatch=useDispatch()
 
 
-
-    // const getUserData = async (u:UserModel,roll:RollModel)=>{
-    //     await editBookedUserRoll(selectedEventFromList.id,u.id,roll.id).then((res)=>{
-    //     }
-    // })
-           // if (res && res.response &&res.response.status === 404 &&  res.response.data && res.response.data.message) {
-           //     setBookAlert(res.response.data.message)
-           //     console.log(res, "bookaa")
-           //     return u
-           // }
-       // }
-       // return u
-    // }
-
-
     const updateRoll = async (roll:RollModel) =>{
-        console.log(selectedEventFromList,"selectedEventFromList")
         const newSelectedUsers:{id: number, booked: boolean, roleId: number|null}[]|any = selectedEventFromList.users.map( (u)=>{
             if (u.id === eventUser.id){
                 if (u.roleId === roll.id){
@@ -48,7 +32,6 @@ export const SelectedUserForShift:React.FC<{setSelectedEventFromList:any,selecte
                      editBookedUserRoll(selectedEventFromList.id,u.id,roll.id).then((res:any)=> {
                         if (res && res.response &&res.response.status === 404 &&  res.response.data && res.response.data.message) {
                             setBookAlert(res.response.data.message)
-                            console.log(res, "bookaa")
                         }
                     })
                 }
@@ -78,15 +61,12 @@ export const SelectedUserForShift:React.FC<{setSelectedEventFromList:any,selecte
             fullWidth={true}
             onClose={()=> {
                 setBookAlert("")
-                setSelectedEventFromList({...selectedEventFromList,users:eventList[selectedEventFromList.id].users})
-                // dispatch(setEventList({...eventList, [selectedEventFromList.id]: {...selectedEventFromList, users: newSelectedUsers}}))
             }}
             open={bookedAlert.length>0}
         >
             <div style={{padding:20,color:"var(--alert)",alignSelf:"center",fontSize:20}}>{bookedAlert}</div>
             <Button  style={{marginBottom:20,width:100,alignSelf:"center",backgroundColor:"var(--primary)",color:"var(--white)"}} onClick={()=> {
                 setBookAlert("")
-                // setSelectedEventFromList({...selectedEventFromList,users:eventList[selectedEventFromList.id].users})
             }}>הבנתי</Button>
         </Dialog>
     </div>
