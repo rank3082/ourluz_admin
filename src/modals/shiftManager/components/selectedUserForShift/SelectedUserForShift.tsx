@@ -14,60 +14,102 @@ import {SelectedPopup} from "../../../../utils/enum.const";
 import {
     ClientEventDetailsDialog
 } from "../../../../pages/mainPanel/components/clientEventDetailsDialog/ClientEventDetailsDialog";
-export const SelectedUserForShift:React.FC<{setSelectedEventFromList:any,selectedEventFromList:EventModel,rollList:RollModel[],eventUser:{ id: number; booked: boolean; roleId: number|null}, userFromList:UserModel,getRollName:any}>=({setSelectedEventFromList,selectedEventFromList,rollList,eventUser,userFromList,getRollName})=>{
-   const [openRollList,setOpenRollList]=useState(false)
+
+export const SelectedUserForShift: React.FC<{ setSelectedEventFromList: any, selectedEventFromList: EventModel, rollList: RollModel[], eventUser: { id: number; booked: boolean; roleId: number | null }, userFromList: UserModel, getRollName: any }> = ({
+                                                                                                                                                                                                                                                              setSelectedEventFromList,
+                                                                                                                                                                                                                                                              selectedEventFromList,
+                                                                                                                                                                                                                                                              rollList,
+                                                                                                                                                                                                                                                              eventUser,
+                                                                                                                                                                                                                                                              userFromList,
+                                                                                                                                                                                                                                                              getRollName
+                                                                                                                                                                                                                                                          }) => {
+    const [openRollList, setOpenRollList] = useState(false)
     const {eventList} = useAppSelector(state => state.global)
-    const [bookedAlert,setBookAlert]=useState("")
-   const dispatch=useDispatch()
+    const [bookedAlert, setBookAlert] = useState("")
+    const dispatch = useDispatch()
 
 
-    const updateRoll = async (roll:RollModel) =>{
-        const newSelectedUsers:{id: number, booked: boolean, roleId: number|null}[]|any = selectedEventFromList.users.map( (u)=>{
-            if (u.id === eventUser.id){
-                if (u.roleId === roll.id){
-                    unBookedUser(selectedEventFromList.id,u.id).then()
-                    return {...u,roleId: u.roleId === roll.id ? null:roll.id,booked:(u.roleId !== roll.id)}
+    const updateRoll = async (roll: RollModel) => {
+        const newSelectedUsers: { id: number, booked: boolean, roleId: number | null }[] | any = selectedEventFromList.users.map((u) => {
+            if (u.id === eventUser.id) {
+                if (u.roleId === roll.id) {
+                    unBookedUser(selectedEventFromList.id, u.id).then()
+                    return {...u, roleId: null, booked: false}
 
-                }else {
-                     editBookedUserRoll(selectedEventFromList.id,u.id,roll.id).then((res:any)=> {
-                        if (res && res.response &&res.response.status === 404 &&  res.response.data && res.response.data.message) {
+                } else {
+                    editBookedUserRoll(selectedEventFromList.id, u.id, roll.id).then((res: any) => {
+                        if (res && res.response && res.response.status === 404 && res.response.data && res.response.data.message) {
                             setBookAlert(res.response.data.message)
                         }
                     })
+                    return bookedAlert.length > 0 ? {...u, roleId: null, booked: false} : {
+                        ...u,
+                        roleId: roll.id,
+                        booked: true
+                    }
+                    // return ..
                 }
-                return {...u,roleId: u.roleId === roll.id ? null:roll.id,booked:(u.roleId !== roll.id)}
+                // return {...u,roleId: u.roleId === roll.id ? null:roll.id,booked:(u.roleId !== roll.id)}
             }
-               return u
+            return u
         })
-        setSelectedEventFromList({...selectedEventFromList,users:newSelectedUsers})
-        dispatch(setEventList({...eventList, [selectedEventFromList.id]: {...selectedEventFromList, users: newSelectedUsers}}))
-   }
+        setSelectedEventFromList({...selectedEventFromList, users: newSelectedUsers})
+        dispatch(setEventList({
+            ...eventList,
+            [selectedEventFromList.id]: {...selectedEventFromList, users: newSelectedUsers}
+        }))
+    }
+
+
+    const getRemoveList = () => {
+        setBookAlert("")
+        const removeUserList = selectedEventFromList.users.map((u) => {
+            if (u.id === eventUser.id) {
+                return {...u, booked: false, roleId: null}
+            } else return u
+        })
+
+        setSelectedEventFromList({...selectedEventFromList, users: removeUserList})
+        dispatch(setEventList({
+            ...eventList,
+            [selectedEventFromList.id]: {...selectedEventFromList, users: removeUserList}
+        }))
+    }
     return <div>
-        <div onClick={()=>setOpenRollList(!openRollList)} className={`eventUserList  ${eventUser.booked ?"bookedUser":"unBookedUser"}`}>
-            <div className={"arrowDropDown"}><Icon name={openRollList?"dropdown_chevron_down":"dropdown_chevron_up"}/></div>
+        <div onClick={() => setOpenRollList(!openRollList)}
+             className={`eventUserList  ${eventUser.booked ? "bookedUser" : "unBookedUser"}`}>
+            <div className={"arrowDropDown"}><Icon
+                name={openRollList ? "dropdown_chevron_down" : "dropdown_chevron_up"}/></div>
             <div>{userFromList.firstName} {userFromList.lastName} {eventUser.booked && "-"} {eventUser.booked && getRollName(eventUser?.roleId)}</div>
 
         </div>
 
         {openRollList && <div>
-            {rollList.filter((r)=>userFromList.roleIds.includes(r.id)).map((roll,index)=>{
-                return <div onClick={()=>updateRoll(roll)} key={index} >
+            {rollList.filter((r) => userFromList.roleIds.includes(r.id)).map((roll, index) => {
+                return <div onClick={() => updateRoll(roll)} key={index}>
                     <RowOfRoll roll={roll} selectedRoll={eventUser.roleId}/>
                 </div>
             })}
-           </div>}
+        </div>}
 
         <Dialog
             fullWidth={true}
-            onClose={()=> {
-                setBookAlert("")
+            onClose={() => {
+                getRemoveList()
             }}
-            open={bookedAlert.length>0}
+            open={bookedAlert.length > 0}
         >
-            <div style={{padding:20,color:"var(--alert)",alignSelf:"center",fontSize:20}}>{bookedAlert}</div>
-            <Button  style={{marginBottom:20,width:100,alignSelf:"center",backgroundColor:"var(--primary)",color:"var(--white)"}} onClick={()=> {
-                setBookAlert("")
-            }}>הבנתי</Button>
+            <div style={{padding: 20, color: "var(--alert)", alignSelf: "center", fontSize: 20}}>{bookedAlert}</div>
+            <Button style={{
+                marginBottom: 20,
+                width: 100,
+                alignSelf: "center",
+                backgroundColor: "var(--primary)",
+                color: "var(--white)"
+            }}
+                    onClick={() => {
+                        getRemoveList()
+                    }}>הבנתי</Button>
         </Dialog>
     </div>
 
