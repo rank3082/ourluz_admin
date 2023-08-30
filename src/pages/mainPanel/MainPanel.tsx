@@ -30,7 +30,6 @@ export const MainPanel = () => {
 
     const {selectedEvent,selectedPopup,isMobile,isAdmin,currentUser,weekDates} = useAppSelector(state => state.global);
     const startDate = moment(weekDates.start).format("yyyy-MM-D")
-    // const endDate = moment(weekDates.end).format("yyyy-MM-D")
     useEffect(() => {
         if (selectedPopup === SelectedPopup.Close){
             getAllEventsByOrganization().then()
@@ -47,12 +46,9 @@ export const MainPanel = () => {
         dispatch(setSelectedPopup(popupManage))
         }
     }
-    console.log(isAdmin,"isAddmin")
-    console.log(Views,"Views")
 
     const userEventStatusMemo:UserEventStatus = useMemo(()=>{
         return getStatusEventForClient((selectedEvent as EventModel)?.users??[],currentUser)
-        // return checkIfUserIsAvailabilityToEvent(currentUser,(selectedEvent as EventModel)?.users??[])??false
     },[selectedPopup])
 
    const disconnect=()=>{
@@ -93,7 +89,6 @@ export const MainPanel = () => {
 
         {selectedPopup === SelectedPopup.EventDetail && <EventDetails/>}
         {selectedPopup === SelectedPopup.ShiftManager && <ShiftManager/>}
-        {/*{selectedPopup === SelectedPopup.ClientEventDetails && <RollManager/>}*/}
         <div className={"mainPanelBody"}>
             <div style={{justifyContent:!isMobile ?"start":"center" }} className={"addEventButtonWrapper"}>
                 {isAdmin && <Button
@@ -123,9 +118,7 @@ export const MainPanel = () => {
                 </Button>}
                 {isAdmin &&  currentView === Views.WEEK && <Button
                     className={"addEventButtonNotSelected"}
-                    // onClick={()=>window.open(`/weeklyBooking/from/${startDate}/to/${endDate}`)}>
                     onClick={()=> {
-                        // dispatch()
                         dispatch(setSelectedPage(SelectedPage.SendBookPage))
                     }}>
                   צפה בשיבוץ
@@ -135,17 +128,6 @@ export const MainPanel = () => {
                     onClick={()=>sendEmailToAvailableUsers()}>
                   שלח שיבוץ
                 </Button>}
-                {/*{isAdmin && currentView === Views.WEEK &&*/}
-                {/*    <BasicDocument/>*/}
-                {/*}*/}
-
-{/*// setCurrentView={setCurrentView}*/}
-                 {/*<PdfPage />*/}
-                {/*{!isAdmin &&  <Button*/}
-                {/*    className={"addEventButtonNotSelected"}*/}
-                {/*    onClick={()=>dispatch(setSelectedPage(SelectedPage.EmployeePage))}>*/}
-                {/*    {text.myDetails}*/}
-                {/*</Button>}*/}
                     </div>
             <CalendarComponent currentView={currentView} setCurrentView={setCurrentView}/>
         </div>

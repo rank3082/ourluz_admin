@@ -22,7 +22,6 @@ export const WeeklyBookedCalender = () => {
     const checkIfUserConnected = async (storageUsername: string, storagePassword: string, token: string) => {
         dispatch(setToken(token))
     }
-    console.log(weeklyEventList, "weeklyEventList")
     useEffect(() => {
         const storageUsername = localStorage.getItem("username");
         const token = localStorage.getItem("token");

@@ -58,7 +58,6 @@ export const updateUserById = async (userDetails: {
             headers: {
                 Authorization: `TOKEN ${getToken()}`
             }});
-        console.log(response)
 
         const newUserList = allUsers.map((u,index)=>{
             if (u.id === userDetails.id){
@@ -76,7 +75,6 @@ export const updateUserById = async (userDetails: {
 export const createNewUser = async (newUserDetails: {
     username: string, password: string, firstName: string, lastName: string, email: string,mobile:string,roleIds:number[]
 }) => {
-    console.log(newUserDetails,"newUserDetails")
     try {
         const response = await axios.post(`${mainPath}yoman/users/`, {
             username: newUserDetails.username,
@@ -97,7 +95,6 @@ export const createNewUser = async (newUserDetails: {
         const allUsers:UserModel[] = getAllUsersRedux()
         if (newUser){
         const newUserList:UserModel[] = [...allUsers, newUser];
-            console.log(newUserList,"newUserList")
             store.dispatch(setUserList(newUserList))
         }
 
@@ -110,7 +107,6 @@ export const createNewUser = async (newUserDetails: {
 
 
 export const getAllUsers = async () => {
-    console.log(getToken(), "getToken")
     axios.get(`${mainPath}yoman/users/`, {
         headers: {
             Authorization: `TOKEN ${getToken()}`
@@ -118,7 +114,6 @@ export const getAllUsers = async () => {
     })
         .then(response => {
             const data = response.data.users;
-            console.log(data,"resssss")
             store.dispatch(setUserList(data))
         })
         .catch(error => {
@@ -127,9 +122,6 @@ export const getAllUsers = async () => {
 };
 
 export const getAllEventsByDates = async (startDate:string="2023-06-03",endDate:string="2030-06-29") => {
-    console.log(getToken(), "getToken")
-    console.log(getToken(), "thsi is check")
-    console.log(startDate,endDate,"ase")
     axios.get(`${mainPath}yoman/events?fromDate=${startDate}&toDate=${endDate}`, {
         headers: {
             Authorization: `TOKEN ${getToken()}`
@@ -154,7 +146,6 @@ export const getAllEventsByDates = async (startDate:string="2023-06-03",endDate:
                 }
             })
             store.dispatch(setWeeklyEventList(getEventList))
-            console.log(getEventList,"asee")
             return getEventList
         })
         .catch(error => {
@@ -165,7 +156,6 @@ export const getAllEventsByDates = async (startDate:string="2023-06-03",endDate:
 
 
 export const getAllEventsByOrganization = async (startDate:string="2023-06-03",endDate:string="2030-06-29") => {
-    console.log(getToken(), "getToken")
     axios.get(`${mainPath}yoman/events?fromDate=${startDate}&toDate=${endDate}`, {
         headers: {
             Authorization: `TOKEN ${getToken()}`
@@ -200,7 +190,7 @@ export const updateEventById = async (eventId: number, newList: any, eventData: 
     description: string, startDate: Date, endDate: Date, backgroundColor: string, location: string,comments:string,capacity:CapacityModel[]
 }) => {
     try {
-        const response = await axios.put(`${mainPath}yoman/events/${eventId}`, {
+         await axios.put(`${mainPath}yoman/events/${eventId}`, {
             description: eventData.description,
             startDate: eventData.startDate,
             endDate: eventData.endDate,
@@ -212,7 +202,6 @@ export const updateEventById = async (eventId: number, newList: any, eventData: 
             headers: {
                 Authorization: `TOKEN ${getToken()}`
             }});
-        console.log(response)
 
         newList[eventId] = {
             ...newList[eventId],
@@ -273,7 +262,6 @@ export const deleteEvent = async (newList: any, eventId: number) => {
 
 
 export const getAllRolesByOrganization = async () => {
-    console.log(getToken(), "getToken")
     axios.get(`${mainPath}yoman/roles`, {
         headers: {
             Authorization: `TOKEN ${getToken()}`
@@ -282,9 +270,6 @@ export const getAllRolesByOrganization = async () => {
         .then(response => {
             const data = response.data.roles;
             let rollList: RollModel[] = data
-            // data.forEach((rollObj: any) => {
-            //
-            // })
             store.dispatch(setRollList(rollList))
         })
         .catch(error => {
@@ -321,12 +306,9 @@ export const editBookedUserRoll = async (eventId: number, userId: number, roleId
                 Authorization: `TOKEN ${getToken()}`
             }
         }).then((res)=>{
-            console.log(res,"response")
             return res
         });
 return response
-        // newList[response.data.id] = {...response.data, start: response.data.startDate, end: response.data.endDate}
-        // store.dispatch(setEventList(newList))
     } catch (e) {
         console.log(e, "error3")
         return e
@@ -334,7 +316,7 @@ return response
 }
 export const unBookedUser = async (eventId: number, userId: number) => {
     try {
-        const response = await axios.patch(`${mainPath}yoman/bocks/`, {
+        await axios.patch(`${mainPath}yoman/bocks/`, {
             eventId: eventId,
             userId: userId,
         },{
@@ -342,9 +324,6 @@ export const unBookedUser = async (eventId: number, userId: number) => {
                 Authorization: `TOKEN ${getToken()}`
             }
         });
-        console.log(response,"response")
-        // newList[response.data.id] = {...response.data, start: response.data.startDate, end: response.data.endDate}
-        // store.dispatch(setEventList(newList))
     } catch (e) {
         console.log(e, "error")
     }
@@ -353,14 +332,13 @@ export const unBookedUser = async (eventId: number, userId: number) => {
 
 export const setAvailabilityToEvent = async (eventId: number) => {
     try {
-        const response = await axios.post(`${mainPath}yoman/users/currentUser`, {
+        await axios.post(`${mainPath}yoman/users/currentUser`, {
             eventId: eventId
         },{
             headers: {
                 Authorization: `TOKEN ${getToken()}`
             }
         });
-        console.log(response,"response123")
     } catch (e) {
         console.log(e, "error3")
     }
@@ -368,7 +346,7 @@ export const setAvailabilityToEvent = async (eventId: number) => {
 
 export const removeAvailabilityFromEvent = async (eventId: number) => {
     try {
-        const response = await axios.delete(`${mainPath}yoman/users/currentUser`, {
+        await axios.delete(`${mainPath}yoman/users/currentUser`, {
             headers: {
                 Authorization: `TOKEN ${getToken()}`
             },
@@ -376,7 +354,6 @@ export const removeAvailabilityFromEvent = async (eventId: number) => {
                 eventId: eventId
             }
         });
-        console.log(response,"response123")
     } catch (e) {
         console.log(e, "error3")
     }
@@ -387,14 +364,13 @@ export const removeAvailabilityFromEvent = async (eventId: number) => {
 export const sendLinkAsSms = async (fromDate: string) => {
     try {
 
-        const response = await axios.post(`${mainPath}yoman/publish/?fromDate=${fromDate}`, {
+        await axios.post(`${mainPath}yoman/publish/?fromDate=${fromDate}`, {
 
         },{
             headers: {
                 Authorization: `TOKEN ${getToken()}`
             }
         });
-        console.log(response,"response123")
     } catch (e) {
         console.log(e, "error3")
     }
@@ -406,7 +382,6 @@ export const forgetPasswordSendVerifyCode = async (userName: string) => {
         const response = await axios.post(`${mainPath}yoman/users/${userName}/forgotPassword`, {
         },{
             headers: {
-                // Authorization: `TOKEN ${getToken()}`
             }
         });
         return response
@@ -422,13 +397,8 @@ export const checkVerifyCode = async (pinCode: string,userName:string) => {
             "digits": parseInt(pinCode)
         },{
             headers: {
-                // Authorization: `TOKEN ${getToken()}`
             }
         });
-        console.log(response,"response1234")
-        // if (response?.error){
-        //     return false
-        // }
         return response;
     } catch (e) {
         console.log(e, "error3")
@@ -444,11 +414,10 @@ export const changePassword = async (token: string,newPassword:string) => {
                 Authorization: `Berear ${token}`
             }
         });
-        console.log(response,"response1234")
         return response;
     } catch (e) {
         console.log(e, "error3")
-        return false
+        return e
     }
 }
 
@@ -461,10 +430,8 @@ export const sendLinkForNewUser = async (userId:number) => {
                 Authorization: `TOKEN ${getToken()}`
             }
         });
-        console.log(response,"response1234")
         return response;
     } catch (e) {
-        console.log(e, "error3")
         return false
     }
 }

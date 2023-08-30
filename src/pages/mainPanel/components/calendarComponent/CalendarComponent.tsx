@@ -38,7 +38,12 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
     const localTime = momentLocalizer(moment);
     const DailyEventComponent: React.FC<{ event: EventModel }> = ({event}) => {
         const eventUserBooked = event.users.filter((u) => u.booked);
-       const userListForDisplay = isAdmin? event.users: eventUserBooked;
+       const userListForDisplay = isAdmin? [...event.users].sort((a,b)=>{
+           if (a.booked === b.booked) {
+               return 0;
+           }
+           return a.booked ? -1 : 1;
+       }): eventUserBooked;
         return <div  className={"calenderContainer"} style={{
             whiteSpace: "pre-wrap",
             backgroundColor: isAdmin ? event.backgroundColor : getColorByStatus(getStatusEventForClient(event.users, currentUser)),
@@ -63,7 +68,7 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
             {userListForDisplay.map((user,index) => {
                 return <div style={{
                     display: "flex",
-                    justifyContent: "space-between",
+                    justifyContent: "center",
                     gap: 7,
                     alignItems: "center",
                     textAlign: "center"
@@ -110,7 +115,6 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
 
 
     const handleSelectEvent = (event: EventModel) => {
-        console.log(event, "event123")
         if (currentUser?.isAdmin) {
             dispatch(setSelectedPopup(SelectedPopup.EventDetail))
         } else {
@@ -119,7 +123,6 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
         dispatch(setSelectedEvent(event))
     }
 
-    console.log(eventList, "eventList")
 
 
     const handleSelectSlot = (slotDetails: any) => {
@@ -151,8 +154,6 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
                 const startOfWeek = moment(date).startOf("week").toDate();
                 const endOfWeek = moment(date).endOf("week").toDate();
                 dispatch(setWeekDates({ start: startOfWeek, end: endOfWeek }));
-            console.log("startOfWeek:", startOfWeek);
-            console.log("endOfWeek:", endOfWeek);
             } else {
                 dispatch(setWeekDates({start:undefined,end:undefined}));
             }
@@ -165,8 +166,6 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
             dispatch(setWeekDates({ start: startOfWeek, end: endOfWeek}));
         }
     };
-    // console.log(moment(weekDates?.start).format("yyyy-MM-D"),"weekDates123")
-    // console.log(moment(weekDates?.end).format("yyyy-MM-D"),"weekDates123")
     return (<div
             className={selectedPopup !== SelectedPopup.Close && !isMobile ? "notFullCalendarWidth" : "fullCalendarWidth"}>
             <Calendar

@@ -51,28 +51,9 @@ const [invalidCode,setInvalidCode]=useState(false)
            else {
                setInvalidCode(true)
            }
-           console.log(res,"res887765")
        })
     }
-    // console.log(token,"token")
-    // const [newPassword, setNewPassword] = useState('');
-    // const [repeatPassword, setRepeatPassword] = useState('');
-    // const [errorMassage,setErrorMassage]=useState(false)
-    // const handleSubmit = async (event: React.FormEvent) => {
-    //     event.preventDefault();
-    //
-    //     if (newPassword === repeatPassword && localToken) {
-    //         await changePassword(localToken,newPassword).then((res)=>{
-    //             console.log(res,"res1345566")
-    //             setForgetPassword(false)
-    //             // if (res && res?.data?.authToken){
-    //             //     dispatch(setToken(res?.data?.authToken))
-    //             // }
-    //         })
-    //     } else {
-    //         setErrorMassage(true)
-    //     }
-    // };
+
     const phoneNumberMask=(phoneNumber:string)=>  {
         const lastFourDigits = phoneNumber.slice(-3);
         const maskedDigits = phoneNumber.slice(0, phoneNumber.length - 3).replace(/\d/g, '*');

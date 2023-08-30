@@ -5,18 +5,15 @@ import "./LoginPage.scss"
 import {mainPath} from "../../utils/variable.const";
 import {setToken} from "../../store/authentication.slice";
 import {useDispatch} from "react-redux";
-import {useAppSelector} from "../../app/hooks";
 import {Button, Dialog} from "@mui/material";
 import PinInput from "./components/pinInput/PinInput";
 import {forgetPasswordSendVerifyCode} from "../../utils/data-management";
 
 
 export const LoginPage: React.FC = () => {
-    const [newPassWord,setNewPassword]=useState(false)
 
     const checkIfUserConnected = async (storageUsername: string, storagePassword: string, token: string) => {
         dispatch(setToken(token))
-        console.log("checking", storageUsername, storagePassword)
     }
     useEffect(() => {
         const storageUsername = localStorage.getItem("username");
@@ -25,7 +22,6 @@ export const LoginPage: React.FC = () => {
         storageUsername && storagePassword && token && checkIfUserConnected(storageUsername, storagePassword, token)
     }, [])
     const dispatch = useDispatch()
-    const {isEnglish} = useAppSelector(state => state.global)
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [forgetPassword, setForgetPassword] = useState(false);
@@ -41,8 +37,6 @@ const [errorSubmit,setErrorSubmit]=useState(false
 )
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(username, "username")
-        console.log(password, "password")
         try {
             const response = await axios.post(`${mainPath}api-token-auth/`,
 
@@ -55,16 +49,11 @@ const [errorSubmit,setErrorSubmit]=useState(false
                 localStorage.setItem("password", password);
                 localStorage.setItem("token", response.data.token);
             } else {
-                console.log("sgfsdfgsdg")
                 setErrorSubmit(true)
                 return false
             }
-            // Handle the response (e.g., store token in local storage, redirect)
-
-
         } catch (error) {
             setErrorSubmit(true)
-            // Handle error (e.g., display error message)
             console.error(error);
         }
     };
@@ -75,7 +64,6 @@ const pressForgetPassword=async ()=>{
             setPhoneNumber(res.data.mobile)
         }
     })
-    // console.log(isUserExists,"1234567")
 }
     return (<div className={"headerContainer"}>
             <div className={"loginWrapper"}>

@@ -13,14 +13,12 @@ import {ShiftManagerMenu} from "./components/shiftMannagerMenu/ShiftManagerMenu"
 export const ShiftManager = () => {
     const dispatch = useDispatch()
     const {eventList, isEnglish, rollList} = useAppSelector(state => state.global);
-    console.log(eventList, "eventList")
     const closeModal = () => {
         dispatch(setSelectedPopup(SelectedPopup.Close))
     }
     const [inputValue, setInputValue] = useState("");
     const [selectedEventFromList, setSelectedEventFromList] = useState<EventModel | undefined>();
     const eventOptions = Object.values(eventList).map((eventItem) => eventItem)
-    console.log(rollList, "rollList")
 
     const selectedEvent = (eventObj: EventModel) => {
         setSelectedEventFromList(eventObj)

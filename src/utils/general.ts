@@ -108,15 +108,5 @@ export   const getStatusEventForClient=(eventUsers:{id:number,booked:boolean,rol
         }
     })
     return  status
-    // const now = new Date();
-    // console.log(new Date(event.start),"event.start")
-    // console.log(now,"now.start")
-    // @ts-ignore
-    // if ((new Date(event.start) > now) && (status !== UserEventStatus.booked)){
-    //     status = UserEventStatus.eventDoneWithoutBooked
-    //     console.log("after.start")
-    // }
-    // console.log(status,"status")
-    // return getColorByStatus(status)
 }
 

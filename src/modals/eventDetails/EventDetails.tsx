@@ -22,8 +22,6 @@ import {ShiftManagerMenu} from "../shiftManager/components/shiftMannagerMenu/Shi
 export const EventDetails = () => {
     const dispatch = useDispatch()
     const {eventList,rollList, isEnglish, selectedEvent,slotSelected} = useAppSelector(state => state.global)
-    console.log(selectedEvent, "selectedEvent")
-    console.log(rollList, "rollList")
     const initCapacity = rollList.map((r)=>{
         return {roleId:r.id,count:0}
     })
@@ -52,7 +50,6 @@ export const EventDetails = () => {
 
     const [capacity,setCapacity] = useState<CapacityModel[]>(initEvent.capacity)
 
-    console.log(capacity,"capacity")
     const closeModal = () => {
         dispatch(setSelectedPopup(SelectedPopup.Close))
         dispatch(setSelectedEvent(undefined))
@@ -88,8 +85,6 @@ export const EventDetails = () => {
     };
 
     const deleteEventFunction=()=>{
-        console.log(newList,"newList")
-        console.log(initEvent,"initEvent")
         deleteEvent(newList,initEvent.id).then()
         closeModal()
     }
