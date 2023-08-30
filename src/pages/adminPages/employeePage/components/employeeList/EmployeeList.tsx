@@ -22,11 +22,9 @@ export const EmployeeList: React.FC<{setSelectedEventFromList?:any, eventUserLis
     const closeModal = () => {
         setEditPopup(false)
     }
-    console.log(userList, "userList")
     const userListMemo = useMemo(() => {
         return userList
     }, [userList])
-    console.log(eventUserList, "eventUserList")
 
     const getRollIdByUserAndEventId = (user:UserModel)=>{
         if (eventId){

@@ -23,7 +23,6 @@ const dispatch=useDispatch()
 
     const updateUserBooking = async (isActive:boolean, user: UserModel,rollId:number) => {
         if (eventId && currentUsersEventList) {
-            console.log(currentUsersEventList,"currentUsersEventList")
             const index = currentUsersEventList.findIndex(item => item.id === user.id);
 
             if (isActive) {
@@ -33,7 +32,6 @@ const dispatch=useDispatch()
                 currentUsersEventList.push({id: user.id, booked: true, roleId: rollId})
                 try {
                     await editBookedUserRoll(parseInt(eventId),user.id,rollId).then((res)=>{
-                        console.log(res,"book")
                     })
                 }catch (e){
                     console.log(e,"booke")
@@ -42,7 +40,7 @@ const dispatch=useDispatch()
             } else {
                 if (index !== -1) {
                     currentUsersEventList.splice(index, 1);
-                  await  unBookedUser(parseInt(eventId),user.id).then((res)=>console.log(res,"unBook"))
+                  await  unBookedUser(parseInt(eventId),user.id).then()
                 }
             }
             dispatch(setEventList({...eventList, [eventId]: {...eventList[eventId], users: currentUsersEventList}}))
