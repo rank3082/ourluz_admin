@@ -7,6 +7,7 @@ export const text = {
     eventDetails:isEnglish?"Event details":"פרטי האירוע",
     description:isEnglish?"description":"שם האירוע",
     location:isEnglish?"location":"מיקום",
+    hourTime:isEnglish?"start at":"שעת התחלה",
     comments:isEnglish?"comments":"הערות",
     startAt:isEnglish?"start at":"תאריך התחלה",
     endAt:isEnglish?"end at":"תאריך סיום",
@@ -53,4 +54,6 @@ export const text = {
     cancelBooked :isEnglish?"contact Ilan for cancel booking 052-2495649":"לביטול נא ליצור קשר עם אילן במספר 052-2495649 ",
     availabilityStatus :isEnglish?"availability status: ":"סטטוס זמינות: ",
     changeAvailableStatus :isEnglish?"change available status: ":"שנה סטטוס ל: ",
+    thisMonth :isEnglish?"this month":"החודש",
+    thisWeek :isEnglish?"this week":"השבוע",
 };

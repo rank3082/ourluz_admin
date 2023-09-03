@@ -1,6 +1,6 @@
 import './EventDetails.scss'
 import {useDispatch} from "react-redux";
-import {setSelectedEvent, setSelectedPopup, setSlotSelected} from "../../store/global.slice";
+import {setEventList, setSelectedEvent, setSelectedPopup, setSlotSelected} from "../../store/global.slice";
 import React, {useState} from "react";
 import {text} from "../../utils/dictionary-management";
 import "../../styles/side-modals.scss"
@@ -58,30 +58,35 @@ export const EventDetails = () => {
 
 
         const newList = {...eventList}
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (isNewEvent) {
-            createNewEvent(newList,{
-                description: description,
-                startDate:  startTime?.toDate() as Date,
-                endDate: endTime?.toDate() as Date,
-                backgroundColor:color,
-                location: location,
-                comments :comments,
-                capacity:capacity
-            }).then()
-        } else {
-            updateEventById(initEvent.id,newList,{
-                description: description,
-                startDate:  startTime?.toDate() as Date,
-                endDate: endTime?.toDate() as Date,
-                backgroundColor:color,
-                location: location,
-                comments: comments,
-                capacity:capacity
-            }).then()
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        try {
+            event.preventDefault();
+            if (isNewEvent) {
+                await createNewEvent(newList,{
+                    description: description,
+                    startDate:  startTime?.toDate() as Date,
+                    endDate: endTime?.toDate() as Date,
+                    backgroundColor:color,
+                    location: location,
+                    comments :comments,
+                    capacity:capacity
+                }).then()
+            } else {
+                await updateEventById(initEvent.id,newList,{
+                    description: description,
+                    startDate:  startTime?.toDate() as Date,
+                    endDate: endTime?.toDate() as Date,
+                    backgroundColor:color,
+                    location: location,
+                    comments: comments,
+                    capacity:capacity
+                }).then()
+            }
+            closeModal()
+        }catch (e){
+            console.log(e,"e")
         }
-        closeModal()
+
     };
 
     const deleteEventFunction=()=>{

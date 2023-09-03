@@ -17,7 +17,6 @@ import {Icon} from "../../../../components/icon/Icon";
 export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = ({currentView, setCurrentView}) => {
     const {isAdmin, selectedPopup, eventList, currentUser, isMobile} = useAppSelector(state => state.global);
     const dispatch = useDispatch()
-
     const getRollIcon = (rollId: number | null) => {
         switch (rollId) {
             case 1: {
@@ -35,8 +34,9 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
         }
     }
 
-    const localTime = momentLocalizer(moment);
+    const localTime  = momentLocalizer(moment);
     const DailyEventComponent: React.FC<{ event: EventModel }> = ({event}) => {
+
         const eventUserBooked = event.users.filter((u) => u.booked);
        const userListForDisplay = isAdmin? [...event.users].sort((a,b)=>{
            if (a.booked === b.booked) {
@@ -55,10 +55,10 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
                 <span style={{fontWeight: 600}}>{text.location} - </span>
                 <span>{event.location}</span>
             </div>
-            <div style={{fontWeight: 600}}>
-                שעת התחלה-
+            <div>
+                <span style={{fontWeight: 600}}>{text.hourTime} - </span>
+                <span>{event.start.toString().split("T")[1]}</span>
             </div>
-            <div>{event.start.toString().split("T")[1]}</div>
             {event.comments && event.comments.length>0 && <div style={{overflowX:"auto"}}>
                 <div style={{fontWeight: 600}}>{text.comments} : </div>
                 <div style={{fontSize:14}}>{event.comments}</div>
@@ -76,17 +76,17 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
                 key={index}
                 >
                     <div style={{
-                        fontSize: user.booked ? 18 : 14,
+                        fontSize:isAdmin?user.booked ? 18 : 13: user.booked ? 10 : 10,
                         fontWeight: user.booked ? 700 : 400
-                    }}>{getUserById(user.id)?.firstName} {getUserById(user.id)?.lastName}</div>
-                    <div style={{
+                    }}>{getUserById(user.id)?.firstName} {isAdmin?getUserById(user.id)?.lastName:"."+getUserById(user.id)?.lastName[0]}</div>
+                    {isAdmin && <div style={{
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
                         backgroundColor: "white",
                         borderRadius: 50,
                         padding: 2
-                    }} className={"iconWrapperOfRoll"}> {getRollIcon(user.roleId)}</div>
+                    }} className={"iconWrapperOfRoll"}> {getRollIcon(user.roleId)}</div>}
                 </div>
             })}
         </div>
@@ -175,7 +175,7 @@ export const CalendarComponent:React.FC<{currentView:any,setCurrentView:any}> = 
                 events={Object.values(eventList)}
                 localizer={localTime}
                 components={views}
-                // defaultView="week"
+                defaultView="week"
                 onView={handleViewChange}
                 className={currentView === Views.WEEK || currentView === Views.DAY ? "week-calender-wrapper" :currentView === Views.AGENDA?"agenda-calender-wrapper":  `month-calender-wrapper  `}
                 formats={{timeGutterFormat: 'HH:mm'}}
