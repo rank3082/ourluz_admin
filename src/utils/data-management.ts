@@ -213,7 +213,7 @@ export const updateEventById = async (eventId: number, newList: any, eventData: 
             comments: eventData.comments,
             capacity:eventData.capacity
         }
-        store.dispatch(setEventList(newList))
+        return  newList
     } catch (e) {
         console.log(e, "error")
     }
@@ -236,9 +236,11 @@ export const createNewEvent = async (newList: any, eventData: {
                 Authorization: `TOKEN ${getToken()}`
             }
         });
-        newList[response.data.id] = {...response.data, start: response.data.startDate, end: response.data.endDate}
-        store.dispatch(setEventList(newList))
+        newList[response.data.id] = {...response.data , start: response.data.startDate, end: response.data.endDate}
+        // store.dispatch(setEventList(newList))
+        return newList;
     } catch (e) {
+        return e;
         console.log(e, "error")
     }
 }

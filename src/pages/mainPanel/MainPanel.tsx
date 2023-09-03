@@ -84,7 +84,7 @@ export const MainPanel = () => {
         </Menu>
            </div>
 
-            <div style={{fontSize:22}}><span style={{fontWeight:700}}>{storageUsername}</span> <span>שלום  </span></div>
+            <div style={{fontSize:22}}><span  className={"userNameStyle"}>{storageUsername}</span> <span>שלום  </span></div>
         </div>
 
         {selectedPopup === SelectedPopup.EventDetail && <EventDetails/>}

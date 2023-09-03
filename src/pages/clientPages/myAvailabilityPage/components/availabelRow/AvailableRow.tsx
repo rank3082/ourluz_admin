@@ -20,7 +20,7 @@ export const AvailableRow: React.FC<{ eventDetails: EventModel ,isAvailable:bool
     const [selectedAvailabilityEvent, setSelectedAvailabilityEvent] = useState(isAvailable)
     return <div className={"availableRowContainer"}>
         <div className={"availableRowWrapper"}>
-            <div style={{fontSize:22,fontWeight:600}}>
+            <div style={{fontSize:18,fontWeight:600}}>
                 {eventDetails.description}
             </div>
             <div className={"iconsWrapper"}>
@@ -42,17 +42,17 @@ export const AvailableRow: React.FC<{ eventDetails: EventModel ,isAvailable:bool
         </div>
         {openDropDown && <div className={"moreEventDetails"}>
             <div style={{fontSize:20}}>
-                {text.location} : {eventDetails.location}
+                <span style={{fontWeight:600}}>{text.location} : </span>{eventDetails.location}
             </div >
             <div style={{fontSize:20}}>
-                {text.startAtTime} {moment(eventDetails.start).format("dddd DD/MM HH:MM")}
+                <span style={{fontWeight:600}}>{text.startAtTime}</span> {moment(eventDetails.start).format("dddd DD/MM HH:MM")}
             </div>
             <div style={{fontSize:20}}>
-                {text.endAtTime} {moment(eventDetails.end).format("dddd DD/MM HH:MM")}
+                <span style={{fontWeight:600}}>{text.endAtTime}</span> {moment(eventDetails.end).format("dddd DD/MM HH:MM")}
             </div>
-            <div style={{fontSize:20}}>
-                {text.comments} : {eventDetails.comments}
-            </div>
+            {eventDetails.comments && <div style={{fontSize:20}}>
+                <span style={{fontWeight:600}}>{text.comments} : </span>{eventDetails.comments}
+            </div>}
         </div>}
     </div>
 }

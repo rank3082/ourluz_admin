@@ -2,11 +2,11 @@ import "./MyShiftPage.scss"
 import React from "react";
 import {HeaderPage} from "../components/headerPage/HeaderPage";
 import {useAppSelector} from "../../../app/hooks";
-import {AvailableRow} from "../myAvailabilityPage/components/availabelRow/AvailableRow";
 import {ShiftRow} from "./components/ShiftRow";
 import {text} from "../../../utils/dictionary-management";
+import {SelectedDatesBar} from "../components/selectedDatesBar/SelectedDatesBar";
 export const MyShiftPage=()=>{
-    const {eventList,currentUser} = useAppSelector(state => state.global)
+    const {currentUser,weeklyEventList} = useAppSelector(state => state.global)
 
     const checkIfUserIsBookedToEvent=(userList:{id:number,booked:boolean,roleId:number | null}[])=>{
         let isBooked = false
@@ -19,14 +19,16 @@ export const MyShiftPage=()=>{
     }
     let counter =0
     return <div>
-        <HeaderPage/>
-        {Object.keys(eventList).map((eventKey,index)=>{
-            const isBooked = checkIfUserIsBookedToEvent(eventList[eventKey]?.users??false)
+        <HeaderPage headerName={text.myShift}/>
+        <SelectedDatesBar/>
+
+        {Object.keys(weeklyEventList).map((eventKey,index)=>{
+            const isBooked = checkIfUserIsBookedToEvent(weeklyEventList[eventKey]?.users??false)
            if (isBooked){
                counter++
            }
             return isBooked &&
-                <ShiftRow eventDetails={eventList[eventKey]}/>
+                <ShiftRow eventDetails={weeklyEventList[eventKey]}/>
         })}
         {counter === 0 && <div className={"thereIsNotBookedEvent"}>{text.thereIsNotBookedEvent}</div>}
     </div>

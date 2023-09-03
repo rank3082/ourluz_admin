@@ -17,8 +17,7 @@ root.render(
       <Provider store={store}>
           <React.StrictMode>
               <MainRoutes />
-          </React.StrictMode>,
-        {/*<App />*/}
+          </React.StrictMode>
       </Provider>
   </React.StrictMode>
 );
