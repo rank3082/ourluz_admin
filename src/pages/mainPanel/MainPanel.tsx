@@ -39,6 +39,9 @@ export const MainPanel = () => {
         }
     }, [selectedPopup])
 
+    useEffect( ()=>{
+         isUserIsManager().then()
+    },[])
     const UpdatePopupManager = (popupManage : SelectedPopup) =>{
         if (selectedPopup === popupManage){
             dispatch(setSelectedPopup(SelectedPopup.Close ))
@@ -53,8 +56,6 @@ export const MainPanel = () => {
 
    const disconnect=()=>{
         localStorage.setItem("token","")
-        localStorage.setItem("username","")
-        localStorage.setItem("password","")
         dispatch(setToken(undefined))
 
    }
@@ -64,13 +65,14 @@ export const MainPanel = () => {
     const sendEmailToAvailableUsers= async ()=>{
         await sendLinkAsSms(startDate)
     }
-    const storageUsername = localStorage.getItem("username");
+
+    const userFullName =  currentUser?.firstName && currentUser.lastName ? `${currentUser.firstName}  ${currentUser.lastName}`:"";
 
     return <div className="mainPanelContainer">
         <Header/>
+        <div className={"companyName"}>4SPORT</div>
         <div style={{display:"flex",justifyContent:"space-between",paddingInline:"5%",alignItems:"center"}}>
            <div>
-
             <Menu >
             <Menu.Button className={"menuContainer"}>
                         <Icon name={"menu"}/>
@@ -84,7 +86,7 @@ export const MainPanel = () => {
         </Menu>
            </div>
 
-            <div style={{fontSize:22}}><span  className={"userNameStyle"}>{storageUsername}</span> <span>שלום  </span></div>
+            <div style={{fontSize:22}}><span>שלום  </span> <span  className={"userNameStyle"}>{userFullName}</span> </div>
         </div>
 
         {selectedPopup === SelectedPopup.EventDetail && <EventDetails/>}

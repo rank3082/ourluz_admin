@@ -27,7 +27,7 @@ export const text = {
     signUp:isEnglish?"sign up":"הירשם",
     updateDetails:isEnglish?"update details":"עדכן פרטים",
     logIn:isEnglish?"log in":"התחבר",
-    userName:isEnglish?"username":"כינוי",
+    userName:isEnglish?"username":"שם משתמש",
     password:isEnglish?"password":"סיסמא",
     firstName:isEnglish?"first name":"שם פרטי",
     lastName:isEnglish?"last name":"שם משפחה",
