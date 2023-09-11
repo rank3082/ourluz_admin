@@ -19,14 +19,12 @@ export const WeeklyBookedCalender = () => {
         from = moment(weekDates.start).format("yyyy-MM-D")
         to = moment(weekDates.end).format("yyyy-MM-D")
     }
-    const checkIfUserConnected = async (storageUsername: string, storagePassword: string, token: string) => {
+    const checkIfUserConnected = async ( token: string) => {
         dispatch(setToken(token))
     }
     useEffect(() => {
-        const storageUsername = localStorage.getItem("username");
         const token = localStorage.getItem("token");
-        const storagePassword = localStorage.getItem("password");
-        storageUsername && storagePassword && token && checkIfUserConnected(storageUsername, storagePassword, token)
+        token && token !== "" && checkIfUserConnected(token)
 
         const fetchWeeklyEvents = async () => {
             await getAllEventsByDates(from, to).then()

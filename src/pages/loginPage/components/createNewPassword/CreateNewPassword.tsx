@@ -5,12 +5,15 @@ import React, {useState} from "react";
 import {changePassword} from "../../../../utils/data-management";
 import {useAppSelector} from "../../../../app/hooks";
 import {CacheProvider} from "@emotion/react";
+import {setToken} from "../../../../store/authentication.slice";
+import {useDispatch} from "react-redux";
 
 export const CreateNewPassword: React.FC<{ localToken: undefined | string, setForgetPassword: any, setPassword: any }> = ({
                                                                                                                               localToken,
                                                                                                                               setForgetPassword,
                                                                                                                               setPassword
                                                                                                                           }) => {
+    const dispatch = useDispatch()
     const {isEnglish} = useAppSelector(state => state.global)
     const [errorChangePass, setErrorChangePass] = useState("")
     const [repeatPassword, setRepeatPassword] = useState('');
@@ -19,7 +22,7 @@ export const CreateNewPassword: React.FC<{ localToken: undefined | string, setFo
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        if (newPassword === repeatPassword && localToken) {
+        if (newPassword === repeatPassword && localToken && localToken!=="") {
             if (newPassword.length < 8 || newPassword.length > 16) {
                 setErrorMassage("הסיסמא צריכה להכיל בין 8-16 תווים")
             } else {
@@ -27,6 +30,9 @@ export const CreateNewPassword: React.FC<{ localToken: undefined | string, setFo
                     if (r && r.response && r?.response?.data?.error) {
                         setErrorChangePass(r.response.data.error)
                     } else {
+                        dispatch(setToken(localToken))
+                        localStorage.setItem("token",localToken);
+
                         setForgetPassword(false)
                         setPassword("")
                     }

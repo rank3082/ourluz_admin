@@ -7,19 +7,17 @@ import {setToken} from "../../store/authentication.slice";
 import {useDispatch} from "react-redux";
 import {Button, Dialog} from "@mui/material";
 import PinInput from "./components/pinInput/PinInput";
-import {forgetPasswordSendVerifyCode} from "../../utils/data-management";
+import {forgetPasswordSendVerifyCode, isUserIsManager} from "../../utils/data-management";
 
 
 export const LoginPage: React.FC = () => {
 
-    const checkIfUserConnected = async (storageUsername: string, storagePassword: string, token: string) => {
+    const checkIfUserConnected = async ( token: string) => {
         dispatch(setToken(token))
     }
     useEffect(() => {
-        const storageUsername = localStorage.getItem("username");
         const token = localStorage.getItem("token");
-        const storagePassword = localStorage.getItem("password");
-        storageUsername && storagePassword && token && checkIfUserConnected(storageUsername, storagePassword, token)
+        token && token !== "" && checkIfUserConnected(token)
     }, [])
     const dispatch = useDispatch()
     const [username, setUsername] = useState("");
@@ -44,9 +42,7 @@ const [errorSubmit,setErrorSubmit]=useState(false
                     username, password,
                 },);
             if (response?.data?.token) {
-                dispatch(setToken(response.data.token))
-                localStorage.setItem("username", username);
-                localStorage.setItem("password", password);
+                await dispatch(setToken(response.data.token))
                 localStorage.setItem("token", response.data.token);
             } else {
                 setErrorSubmit(true)

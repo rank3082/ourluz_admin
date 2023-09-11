@@ -1,20 +1,10 @@
 import React, {useState, useRef} from 'react';
 import './PinInput.scss';
-import {Box, Button, TextField} from "@mui/material";
-import {changePassword, checkVerifyCode} from "../../../../utils/data-management";
-import {setToken} from "../../../../store/authentication.slice";
-import {useAppSelector} from "../../../../app/hooks";
-import {useDispatch} from "react-redux";
-import {text} from "../../../../utils/dictionary-management";
-import {cacheRtl} from "../../../../utils/general";
-import {CacheProvider} from "@emotion/react";
+import { Button} from "@mui/material";
+import { checkVerifyCode} from "../../../../utils/data-management";
 import {CreateNewPassword} from "../createNewPassword/CreateNewPassword";
-import {retry} from "@reduxjs/toolkit/query";
 
 const PinInput: React.FC<{ userName: string,setForgetPassword:any,setPassword:any, phoneNumber:string}> = ({userName,setForgetPassword,setPassword,phoneNumber}) => {
-// const {token} = useAppSelector(state => state.authentication)
-// const {isEnglish} = useAppSelector(state => state.global)
-    // const dispatch = useDispatch()
     const [pins, setPins] = useState(['', '', '', '']);
 
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
