@@ -31,9 +31,9 @@ export const CreateNewPassword: React.FC<{ localToken: undefined | string, setFo
                         setErrorChangePass(r.response.data.error)
                         console.log(r?.response,"r?.response?")
                     } else {
-                        if (r?.response?.data?.authToken){
-                        dispatch(setToken(r?.response?.data?.authToken))
-                        localStorage.setItem("token",r?.response?.data?.authToken);
+                        if (r?.data?.authToken){
+                        dispatch(setToken(r?.data?.authToken))
+                        localStorage.setItem("token",r?.data?.authToken);
                         }
                         setForgetPassword(false)
                         setPassword("")
