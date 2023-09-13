@@ -81,7 +81,11 @@ const pressForgetPassword=async ()=>{
                     setForgetPassword(true)
                     username.length>0 && await pressForgetPassword()
                 }} className={"forgetPassword"}
-                >שכחתי את הסיסמא</div>
+                >
+                    שכחתי את הסיסמא</div>
+                <div style={{display:"flex",justifyContent:"center",alignItems:"center",bottom:"5%",position:"absolute"}}>
+                    version 1.1.3
+                </div>
                 {forgetPassword && username.length>0 && <div>
                     <Dialog
                         maxWidth={false}
@@ -123,7 +127,9 @@ const pressForgetPassword=async ()=>{
                         </div>
                     </Dialog>
                 </div>}
+
             </div>
+
         </div>
 
     );
