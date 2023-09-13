@@ -29,10 +29,12 @@ export const CreateNewPassword: React.FC<{ localToken: undefined | string, setFo
                 await changePassword(localToken, newPassword).then((r: any) => {
                     if (r && r.response && r?.response?.data?.error) {
                         setErrorChangePass(r.response.data.error)
+                        console.log(r?.response,"r?.response?")
                     } else {
-                        dispatch(setToken(localToken))
-                        localStorage.setItem("token",localToken);
-
+                        if (r?.response?.data?.authToken){
+                        dispatch(setToken(r?.response?.data?.authToken))
+                        localStorage.setItem("token",r?.response?.data?.authToken);
+                        }
                         setForgetPassword(false)
                         setPassword("")
                     }
