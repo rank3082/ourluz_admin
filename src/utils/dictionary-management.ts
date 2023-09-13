@@ -1,6 +1,7 @@
 import {store} from "../app/store";
 const isEnglish = store.getState().global.isEnglish;
 export const text = {
+    version:"1.1.2",
     WelcomeText:isEnglish?"Welcome To Our Luz":"ברוכים הבאים ללו״ז שלנו",
     ManageYourSchedule:isEnglish?"The place to manage the schedule":"המקום לנהל בו את הלו״ז",
     AddEventBtn:isEnglish?"Add event +":"הוסף אירוע +",
