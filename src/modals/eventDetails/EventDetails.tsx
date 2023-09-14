@@ -1,6 +1,6 @@
 import './EventDetails.scss'
 import {useDispatch} from "react-redux";
-import {setEventList, setSelectedEvent, setSelectedPopup, setSlotSelected} from "../../store/global.slice";
+import { setSelectedEvent, setSelectedPopup, setSlotSelected} from "../../store/global.slice";
 import React, {useState} from "react";
 import {text} from "../../utils/dictionary-management";
 import "../../styles/side-modals.scss"
@@ -19,6 +19,7 @@ import {SubTitle} from "../components/subTitle/SubTitle";
 import {InputNumber} from "./components/inputNumber/InputNumber";
 import {CapacityModel} from "../../models/capacity.model";
 import {ShiftManagerMenu} from "../shiftManager/components/shiftMannagerMenu/ShiftManagerMenu";
+import moment from "moment";
 export const EventDetails = () => {
     const dispatch = useDispatch()
     const {eventList,rollList, isEnglish, selectedEvent,slotSelected} = useAppSelector(state => state.global)
@@ -43,8 +44,8 @@ export const EventDetails = () => {
     const [description, setDescription] = useState<string>(initEvent.description)
     const [location, setLocation] = useState<string>(initEvent.location)
     const [comments, setComments] = useState<string>(initEvent.comments)
-    const [startTime, setStartTime] = useState<dayjs.Dayjs | null>(dayjs(initEvent.start))
-    const [endTime, setEndTime] = useState<dayjs.Dayjs | null>(dayjs(initEvent.end))
+    const [startTime, setStartTime] = useState<dayjs.Dayjs | null>(dayjs(moment.utc(initEvent.start).toDate()))
+    const [endTime, setEndTime] = useState<dayjs.Dayjs | null>(dayjs(moment.utc(initEvent.end).toDate()))
     const [color, setColor] = useState(initEvent.backgroundColor)
     const [checkBoxValue, setCheckBoxValue] = useState(initEvent.allDay)
 
@@ -59,13 +60,15 @@ export const EventDetails = () => {
 
         const newList = {...eventList}
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        console.log(startTime,"startTime")
+        console.log(moment.utc(startTime?.toDate() as Date).toDate(),"startTime2")
         try {
             event.preventDefault();
             if (isNewEvent) {
                 await createNewEvent(newList,{
                     description: description,
-                    startDate:  startTime?.toDate() as Date,
-                    endDate: endTime?.toDate() as Date,
+                    startDate:  moment.utc(startTime?.toDate() as Date).toDate(),
+                    endDate: moment.utc(endTime?.toDate() as Date).toDate(),
                     backgroundColor:color,
                     location: location,
                     comments :comments,
@@ -74,8 +77,8 @@ export const EventDetails = () => {
             } else {
                 await updateEventById(initEvent.id,newList,{
                     description: description,
-                    startDate:  startTime?.toDate() as Date,
-                    endDate: endTime?.toDate() as Date,
+                    startDate:  moment.utc(startTime?.toDate() as Date).toDate(),
+                    endDate: moment.utc(endTime?.toDate() as Date).toDate(),
                     backgroundColor:color,
                     location: location,
                     comments: comments,
