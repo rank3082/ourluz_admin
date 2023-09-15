@@ -8,8 +8,7 @@ import {useDispatch} from "react-redux";
 import {Button, Dialog} from "@mui/material";
 import PinInput from "./components/pinInput/PinInput";
 import {forgetPasswordSendVerifyCode, isUserIsManager} from "../../utils/data-management";
-import {text} from "../../utils/dictionary-management";
-
+import packageJson from '../../../package.json';
 
 export const LoginPage: React.FC = () => {
 
@@ -85,7 +84,7 @@ const pressForgetPassword=async ()=>{
                 >
                     שכחתי את הסיסמא</div>
                 <div className={"versionNumStyle"}>
-                    Version {text.version}
+                    Version {packageJson.version}
                 </div>
                 {forgetPassword && username.length>0 && <div>
                     <Dialog
