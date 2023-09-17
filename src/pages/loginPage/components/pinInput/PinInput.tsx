@@ -1,10 +1,14 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import './PinInput.scss';
 import { Button} from "@mui/material";
 import { checkVerifyCode} from "../../../../utils/data-management";
 import {CreateNewPassword} from "../createNewPassword/CreateNewPassword";
 
-const PinInput: React.FC<{ userName: string,setForgetPassword:any,setPassword:any, phoneNumber:string}> = ({userName,setForgetPassword,setPassword,phoneNumber}) => {
+const PinInput: React.FC<{ userName: string,setForgetPassword:any,setPassword:any, phoneNumber:string,setPhoneNumber:any}> = ({userName,setForgetPassword,setPassword,phoneNumber,setPhoneNumber}) => {
+    useEffect(()=>{
+        setPhoneNumber("")
+    },[])
+
     const [pins, setPins] = useState(['', '', '', '']);
 
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -37,6 +41,7 @@ const [invalidCode,setInvalidCode]=useState(false)
                setInvalidCode(false)
                setLocalToken(res?.data?.token??"")
                setCreateNewPassword(true)
+               setPhoneNumber("")
            }
            else {
                setInvalidCode(true)
@@ -53,50 +58,6 @@ const [invalidCode,setInvalidCode]=useState(false)
 
     return (<>
         {createNewPassWord ? <CreateNewPassword localToken={localToken} setForgetPassword={setForgetPassword} setPassword={setPassword}/>
-            // <div className={"newPasswordContainer"}>
-            //     <form className={"newPasswordWrapper"} onSubmit={handleSubmit}>
-            //         <CacheProvider value={cacheRtl}>
-            //         <Box display="flex" justifyContent={"center"} alignItems={"center"} flexDirection="column" maxWidth="300px" m="auto">
-            //             <TextField
-            //                 id={"rePassword"}
-            //                 type="password"
-            //                 label="אמת סיסמא"
-            //                 value={repeatPassword}
-            //                 onChange={(e) => {
-            //                     setErrorMassage(false)
-            //                     setRepeatPassword(e.target.value)
-            //                 }}
-            //                 margin="normal"
-            //                 required
-            //                 variant="outlined"
-            //                 dir={isEnglish ? "ltr" : "rtl"}
-            //             />
-            //             <TextField
-            //                 id={"newPassword"}
-            //                 type="password"
-            //                 label="סיסמא חדשה"
-            //                 value={newPassword}
-            //                 onChange={(e) => {
-            //                     setErrorMassage(false)
-            //                     setNewPassword(e.target.value)
-            //                 }}
-            //                 margin="normal"
-            //                 required
-            //                 variant="outlined"
-            //                 dir={isEnglish ? "ltr" : "rtl"}
-            //             />
-            //
-            //             {errorMassage && <div style={{color:"var(--alert)",fontWeight:700}}>סיסמא לא תואמת</div>}
-            //             <Button type="submit" variant="contained" color="primary" style={{ marginTop: '16px' }}>
-            //                 צור סיסמא חדשה
-            //             </Button>
-            //         </Box>
-            //         </CacheProvider>
-            //     </form>
-            //
-            //
-            // </div>
-
             :
         <div style={{width:"100%"}}>
             <div style={{textAlign:"center",fontSize:20}}> {`      ${userName} שלום  `} </div>
@@ -107,7 +68,7 @@ const [invalidCode,setInvalidCode]=useState(false)
                 </div>
             :
                 <div style={{direction:"rtl"}}>
-                    <div> אנא המתן... </div>
+                    <div>מאמת שם משתמש, אנא המתן... </div>
                     <div>מיד תקבל הודעת sms לנייד</div>
                 </div>
             }

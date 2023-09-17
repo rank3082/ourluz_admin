@@ -44,8 +44,8 @@ export const EventDetails = () => {
     const [description, setDescription] = useState<string>(initEvent.description)
     const [location, setLocation] = useState<string>(initEvent.location)
     const [comments, setComments] = useState<string>(initEvent.comments)
-    const [startTime, setStartTime] = useState<dayjs.Dayjs | null>(dayjs(moment.utc(initEvent.start).toDate()))
-    const [endTime, setEndTime] = useState<dayjs.Dayjs | null>(dayjs(moment.utc(initEvent.end).toDate()))
+    const [startTime, setStartTime] = useState<dayjs.Dayjs | null>(dayjs(initEvent.start))
+    const [endTime, setEndTime] = useState<dayjs.Dayjs | null>(dayjs(initEvent.end))
     const [color, setColor] = useState(initEvent.backgroundColor)
     const [checkBoxValue, setCheckBoxValue] = useState(initEvent.allDay)
 
@@ -60,15 +60,13 @@ export const EventDetails = () => {
 
         const newList = {...eventList}
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        console.log(startTime,"startTime")
-        console.log(moment.utc(startTime?.toDate() as Date).toDate(),"startTime2")
         try {
             event.preventDefault();
             if (isNewEvent) {
                 await createNewEvent(newList,{
                     description: description,
-                    startDate:  moment.utc(startTime?.toDate() as Date).toDate(),
-                    endDate: moment.utc(endTime?.toDate() as Date).toDate(),
+                    startDate:  moment(startTime?.toDate() as Date).toDate(),
+                    endDate: moment(endTime?.toDate() as Date).toDate(),
                     backgroundColor:color,
                     location: location,
                     comments :comments,
@@ -77,8 +75,8 @@ export const EventDetails = () => {
             } else {
                 await updateEventById(initEvent.id,newList,{
                     description: description,
-                    startDate:  moment.utc(startTime?.toDate() as Date).toDate(),
-                    endDate: moment.utc(endTime?.toDate() as Date).toDate(),
+                    startDate:  moment(startTime?.toDate() as Date).toDate(),
+                    endDate: moment(endTime?.toDate() as Date).toDate(),
                     backgroundColor:color,
                     location: location,
                     comments: comments,
@@ -137,8 +135,7 @@ export const EventDetails = () => {
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DesktopDateTimePicker onChange={(e: dayjs.Dayjs | null) => setStartTime(e)} className={"textField"}
-                                       label={text.startAt}
-                                       defaultValue={startTime} ampm={false}
+                                       label={text.startAt} defaultValue={startTime} ampm={false}
                                        format={'DD/MM/YYYY HH:mm'}
                 />
                 <DesktopDateTimePicker onChange={(e: dayjs.Dayjs | null) => setEndTime(e)} className={"textField"}

@@ -141,7 +141,10 @@ export const MainPanel = () => {
                 }}
             open={selectedPopup === SelectedPopup.ClientEventDetails}
             >
-                <ClientEventDetailsDialog userEventStatusMemo={userEventStatusMemo}/>
+                <ClientEventDetailsDialog userEventStatusMemo={userEventStatusMemo} onClose={()=> {
+                    dispatch(setSelectedPopup(SelectedPopup.Close))
+                    dispatch(setSelectedEvent(undefined))
+                }}/>
             </Dialog>
     </div>
 }

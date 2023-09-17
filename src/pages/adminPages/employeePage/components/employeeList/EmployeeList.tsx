@@ -23,7 +23,16 @@ export const EmployeeList: React.FC<{setSelectedEventFromList?:any, eventUserLis
         setEditPopup(false)
     }
     const userListMemo = useMemo(() => {
-        return userList
+        const sortedUserList = [...userList].sort((a:UserModel,b:UserModel)=> {
+            const lastNameComparison = a.lastName.localeCompare(b.lastName);
+
+            if (lastNameComparison === 0) {
+                return a.firstName.localeCompare(b.firstName);
+            }
+
+            return lastNameComparison;
+        })
+        return sortedUserList
     }, [userList])
 
     const getRollIdByUserAndEventId = (user:UserModel)=>{
@@ -43,6 +52,7 @@ export const EmployeeList: React.FC<{setSelectedEventFromList?:any, eventUserLis
                 {!isMobile && <div className={"column1"}>roles</div>}
                 <div className={"column1"}>actions</div>
             </div>
+
             {userListMemo.map((user, index) => {
                 return (<EmployeeRow setSelectedEventFromList={setSelectedEventFromList} key={index} isMobile={isMobile} user={user} eventUserList={eventUserList} eventId={eventId} eventList={eventList} EditUser={EditUser} rollBooked={getRollIdByUserAndEventId(user)}/>
                 )
