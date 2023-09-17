@@ -14,6 +14,7 @@ export const InputNumber: React.FC<{ key: number, roll: RollModel, capacity: Cap
                                                                                                                             setCapacityItems
                                                                                                                         }) => {
     const {isEnglish} = useAppSelector(state => state.global)
+    console.log(capacity,"capacity4")
     return <div style={{direction: isEnglish ? "ltr" : "rtl"}} className={"inputNumberWrapper"}>
         <div className={"descriptionLabel"}>{roll.description}</div>
         <TextField onChange={(e) => setCapacityItems(capacity.roleId, e.target.value)} required={true}

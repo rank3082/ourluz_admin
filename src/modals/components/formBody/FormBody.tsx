@@ -27,6 +27,7 @@ export const FormBody: React.FC<{ children: React.ReactNode, closeModal: any, ti
             </div>
             <div className={"bottomButtonsWrapper"}>
                 {!withoutSubmit && <Button className={"submitButton"} type="submit" variant="contained">{text.submit}</Button>}
+                {!withoutSubmit && <Button onClick={closeModal} color={"inherit"} className={"submitButton"} type="button" variant="contained">סגור</Button>}
                 {!isNewEvent && <Button color={"error"} className={"submitButton"} type="button" variant="contained" onClick={deleteEventFunction}>{text.delete}</Button>}
             </div>
 

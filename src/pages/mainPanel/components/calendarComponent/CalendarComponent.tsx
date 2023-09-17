@@ -18,7 +18,7 @@ export const CalendarComponent: React.FC<{ currentView: any, setCurrentView: any
                                                                                            currentView,
                                                                                            setCurrentView
                                                                                        }) => {
-    const {isAdmin, selectedPopup, eventList, currentUser, isMobile} = useAppSelector(state => state.global);
+    const {isAdmin,selectedEvent, selectedPopup, eventList, currentUser, isMobile} = useAppSelector(state => state.global);
     const dispatch = useDispatch()
     const getRollIcon = (rollId: number | null) => {
         switch (rollId) {
@@ -169,7 +169,9 @@ export const CalendarComponent: React.FC<{ currentView: any, setCurrentView: any
             dispatch(setWeekDates({start: startOfWeek, end: endOfWeek}));
         }
     };
-    return (<div
+    return (<div style={{height:"100%"}}>
+            {selectedPopup === SelectedPopup.EventDetail && <div style={{width:"100%",height:"100%",background:"transparent",position:"absolute",zIndex:100}}></div>}
+            <div
             className={selectedPopup !== SelectedPopup.Close && !isMobile ? "notFullCalendarWidth" : "fullCalendarWidth"}>
             <Calendar
                 selectable
@@ -188,6 +190,8 @@ export const CalendarComponent: React.FC<{ currentView: any, setCurrentView: any
                 onRangeChange={handleRangeChange}
             />
         </div>
+        </div>
+
 
     )
 }
