@@ -14,8 +14,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: AKIAYYBWEZ2FSTYI4ZF6
-          aws-secret-access-key: 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
+          aws-access-key-id: AKIAYYBWEZ2FSNR75EP3
+          aws-secret-access-key: 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
           aws-region: eu-central-1
 
       - name: Clone repository
