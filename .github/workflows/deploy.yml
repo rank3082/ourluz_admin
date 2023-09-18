@@ -11,7 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -19,8 +18,18 @@ jobs:
           aws-secret-access-key: e9ZsOgY2yGl2YXgbdA+OUgF93o3HEiX1WPZZ4ziv
           aws-region: eu-central-1
 
-      - name: Build React App
-        run: npm install && npm run build 
+      - name: Clone repository
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.17.0
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.17.0
+      - name: Install dependencies
+        run: npm install   
+      - name: Generate build
+        run: npm run build
+      - name: Share artifact inside workflow
+        uses: actions/upload-artifact@v1
       - name: Deploy app build to S3 bucket
         run: aws s3 sync build s3://yoman.4sport-live.com
       - name: disable index.html cache
