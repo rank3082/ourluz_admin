@@ -10,7 +10,7 @@ import PinInput from "./components/pinInput/PinInput";
 import {forgetPasswordSendVerifyCode, isUserIsManager} from "../../utils/data-management";
 import packageJson from '../../../package.json';
 
-export const LoginPage: React.FC = () => {
+export const LoginPage: React.FC<{cameFromWeeklyBooked?:boolean,closeLoginPage?:any}> = ({cameFromWeeklyBooked=false,closeLoginPage}) => {
 
     const checkIfUserConnected = async ( token: string) => {
         dispatch(setToken(token))
@@ -44,6 +44,7 @@ const [errorSubmit,setErrorSubmit]=useState(false
             if (response?.data?.token) {
                 await dispatch(setToken(response.data.token))
                 localStorage.setItem("token", response.data.token);
+                cameFromWeeklyBooked && closeLoginPage()
             } else {
                 setErrorSubmit(true)
                 return false

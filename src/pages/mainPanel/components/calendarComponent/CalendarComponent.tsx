@@ -18,7 +18,7 @@ export const CalendarComponent: React.FC<{ currentView: any, setCurrentView: any
                                                                                            currentView,
                                                                                            setCurrentView
                                                                                        }) => {
-    const {isAdmin,selectedEvent, selectedPopup, eventList, currentUser, isMobile} = useAppSelector(state => state.global);
+    const {isAdmin, selectedPopup, eventList, currentUser, isMobile} = useAppSelector(state => state.global);
     const dispatch = useDispatch()
     const getRollIcon = (rollId: number | null) => {
         switch (rollId) {
@@ -59,7 +59,7 @@ export const CalendarComponent: React.FC<{ currentView: any, setCurrentView: any
             </div>
             <div>
                 <span style={{fontWeight: 600}}>{text.hourTime} - </span>
-                <span>{moment.utc(event.start).format("HH:mm")}</span>
+                <span>{moment(event.start).format("HH:mm")}</span>
             </div>
             {event.comments && event.comments.length > 0 && <div style={{overflowX: "auto"}}>
                 <div style={{fontWeight: 600}}>{text.comments} :</div>
