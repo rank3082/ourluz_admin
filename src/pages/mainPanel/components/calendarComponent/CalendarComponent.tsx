@@ -169,9 +169,7 @@ export const CalendarComponent: React.FC<{ currentView: any, setCurrentView: any
             dispatch(setWeekDates({start: startOfWeek, end: endOfWeek}));
         }
     };
-    return (<div style={{height:"100%"}}>
-            {selectedPopup === SelectedPopup.EventDetail && <div style={{width:"100%",height:"100%",background:"transparent",position:"absolute",zIndex:100}}></div>}
-            <div
+    return (<div
             className={selectedPopup !== SelectedPopup.Close && !isMobile ? "notFullCalendarWidth" : "fullCalendarWidth"}>
             <Calendar
                 selectable
@@ -190,8 +188,5 @@ export const CalendarComponent: React.FC<{ currentView: any, setCurrentView: any
                 onRangeChange={handleRangeChange}
             />
         </div>
-        </div>
-
-
     )
 }

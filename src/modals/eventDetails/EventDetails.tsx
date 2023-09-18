@@ -111,11 +111,10 @@ export const EventDetails = () => {
         }
     }, [selectedEvent])
 
-    const capacityMemo=useMemo(()=>{return capacity},[selectedEvent])
+    // const capacityMemo=useMemo(()=>{return capacity},[selectedEvent])
 
-    const [outsideRef] = useOutsideAlerter(() => closeModal());
 
-    return <div ref={outsideRef as React.RefObject<HTMLDivElement>} className="side-modal">
+    return <div  className="side-modal">
         <FormBody
             title={text.eventDetails}
             closeModal={closeModal}
@@ -166,7 +165,7 @@ export const EventDetails = () => {
             <SubTitle title={"הגדרת תפקידים"}/>
 
 
-            <RollListEditor capacity={capacityMemo} setCapacity={setCapacity}/>
+            <RollListEditor capacity={capacity} setCapacity={setCapacity}/>
 
 
             <SubTitle title={"הגדרת תצוגה"}/>

@@ -4,20 +4,17 @@ import {CapacityModel} from "../../../../models/capacity.model";
 import {InputNumber} from "../inputNumber/InputNumber";
 import {useAppSelector} from "../../../../app/hooks";
 export const RollListEditor:React.FC<{capacity:CapacityModel[],setCapacity:any}>=({capacity,setCapacity})=>{
-    const {rollList, selectedEvent} = useAppSelector(state => state.global)
-    console.log(selectedEvent,"selectedEvent")
-    console.log(capacity,"capacity")
-
+    const {rollList} = useAppSelector(state => state.global)
 
     const updateCapacityArray = (rollId:number, newCount:number) => {
-        const updatedCapacityItem = [...capacity].map((c) =>
+        const updatedCapacityItem = capacity.map((c) =>
             c.roleId === rollId ? { ...c, count: newCount } : c
         );
         setCapacity(updatedCapacityItem);
     };
 
     const currentCapacityMemo= (rollId:number):CapacityModel|undefined =>{
-       return  [...capacity].find((c)=>c.roleId === rollId)
+       return  capacity.find((c)=>c.roleId === rollId)
     }
     return <>
         {rollList.map((roll,index)=>{
