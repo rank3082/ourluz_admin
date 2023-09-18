@@ -13,6 +13,8 @@ import {EventModel} from "../models/event.model";
 import {CapacityModel} from "../models/capacity.model";
 import {RollModel} from "../models/roll.model";
 import {UserModel} from "../models/user.model";
+import {log} from "util";
+import moment from "moment";
 
 const getToken = () => {
     return store.getState().authentication.token
@@ -192,8 +194,8 @@ export const updateEventById = async (eventId: number, newList: any, eventData: 
     try {
          await axios.put(`${mainPath}yoman/events/${eventId}`, {
             description: eventData.description,
-            startDate: eventData.startDate,
-            endDate: eventData.endDate,
+            startDate: moment(eventData.startDate).format("yyyy-MM-DDTHH:mm:ss"),
+            endDate: moment(eventData.endDate).format("yyyy-MM-DDTHH:mm:ss"),
             backgroundColor: eventData.backgroundColor,
             location: eventData.location,
             comments: eventData.comments,
@@ -206,8 +208,8 @@ export const updateEventById = async (eventId: number, newList: any, eventData: 
         newList[eventId] = {
             ...newList[eventId],
             description: eventData.description,
-            startDate: eventData.startDate,
-            endDate: eventData.endDate,
+            startDate: moment(eventData.startDate).format("yyyy-MM-DDTHH:mm:ss"),
+            endDate: moment(eventData.endDate).format("yyyy-MM-DDTHH:mm:ss"),
             backgroundColor: eventData.backgroundColor,
             location: eventData.location,
             comments: eventData.comments,
@@ -225,8 +227,8 @@ export const createNewEvent = async (newList: any, eventData: {
     try {
         const response = await axios.post(`${mainPath}yoman/events`, {
             description: eventData.description,
-            startDate: eventData.startDate,
-            endDate: eventData.endDate,
+            startDate: moment(eventData.startDate).format("yyyy-MM-DDTHH:mm:ss"),
+            endDate: moment(eventData.endDate).format("yyyy-MM-DDTHH:mm:ss"),
             backgroundColor: eventData.backgroundColor,
             location: eventData.location,
             comments: eventData.comments,
@@ -237,7 +239,6 @@ export const createNewEvent = async (newList: any, eventData: {
             }
         });
         newList[response.data.id] = {...response.data , start: response.data.startDate, end: response.data.endDate}
-        // store.dispatch(setEventList(newList))
         return newList;
     } catch (e) {
         return e;
@@ -388,8 +389,8 @@ export const forgetPasswordSendVerifyCode = async (userName: string) => {
         });
         return response
     } catch (e) {
-        return false
         console.log(e, "error3")
+        return false
     }
 }
 

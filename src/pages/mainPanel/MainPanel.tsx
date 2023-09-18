@@ -9,17 +9,18 @@ import {useDispatch} from "react-redux";
 import {Button, Dialog} from "@mui/material";
 import {EventDetails} from "../../modals/eventDetails/EventDetails";
 import {ShiftManager} from "../../modals/shiftManager/ShiftManager";
-import { Menu } from '@headlessui/react'
+import {Menu} from '@headlessui/react'
 import {SelectedPage, SelectedPopup, UserEventStatus} from "../../utils/enum.const";
 import {
     getAllEventsByOrganization,
     getAllRolesByOrganization,
     getAllUsers,
-    isUserIsManager, sendLinkAsSms
+    isUserIsManager,
+    sendLinkAsSms
 } from "../../utils/data-management";
 import {ClientEventDetailsDialog} from "./components/clientEventDetailsDialog/ClientEventDetailsDialog";
 import {EventModel} from "../../models/event.model";
-import { getStatusEventForClient} from "../../utils/general";
+import {getStatusEventForClient} from "../../utils/general";
 import {Icon} from "../../components/icon/Icon";
 import {setToken} from "../../store/authentication.slice";
 import {Views} from "react-big-calendar";
@@ -141,7 +142,10 @@ export const MainPanel = () => {
                 }}
             open={selectedPopup === SelectedPopup.ClientEventDetails}
             >
-                <ClientEventDetailsDialog userEventStatusMemo={userEventStatusMemo}/>
+                <ClientEventDetailsDialog userEventStatusMemo={userEventStatusMemo} onClose={()=> {
+                    dispatch(setSelectedPopup(SelectedPopup.Close))
+                    dispatch(setSelectedEvent(undefined))
+                }}/>
             </Dialog>
     </div>
 }

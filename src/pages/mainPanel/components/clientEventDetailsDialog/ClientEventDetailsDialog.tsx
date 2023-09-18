@@ -8,7 +8,7 @@ import {removeAvailabilityFromEvent, setAvailabilityToEvent} from "../../../../u
 import {EventModel} from "../../../../models/event.model";
 import {UserEventStatus} from "../../../../utils/enum.const";
 
-export const ClientEventDetailsDialog: React.FC<{userEventStatusMemo:UserEventStatus}> = ({userEventStatusMemo}) => {
+export const ClientEventDetailsDialog: React.FC<{userEventStatusMemo:UserEventStatus,onClose:any}> = ({userEventStatusMemo,onClose}) => {
     const {selectedEvent} = useAppSelector(state => state.global)
     const [selectedAvailabilityEvent, setSelectedAvailabilityEvent] = useState(userEventStatusMemo)
 
@@ -21,6 +21,9 @@ export const ClientEventDetailsDialog: React.FC<{userEventStatusMemo:UserEventSt
         setSelectedAvailabilityEvent(UserEventStatus.nothing)
     }
     return  <div className={"clientEventDetails"}>
+        <div className={"closeClientEventDetails"} onClick={onClose}>
+        <Icon name={"close_x"}/>
+        </div>
         <div className={"descriptionLabel"} style={{fontSize:22}}> {selectedEvent?.description}</div>
         <div className={"eventDetailsText"}>
             {text.location} : {selectedEvent?.location}

@@ -56,6 +56,10 @@ const [errorSubmit,setErrorSubmit]=useState(false
 const [phoneNumber,setPhoneNumber]=useState("")
 const pressForgetPassword=async ()=>{
     await forgetPasswordSendVerifyCode(username).then((res)=>{
+        if (!res){
+            setPhoneNumber("")
+            setUsername("")
+        }
         if(res && res.data.mobile){
             setPhoneNumber(res.data.mobile)
         }
@@ -95,7 +99,7 @@ const pressForgetPassword=async ()=>{
 
                         <div className={"employeeDialogContainer"}>
                             <div style={{display:"flex",alignItems:"center",textAlign:"center",justifyContent:"center",marginTop:"5%"}}>
-                            <PinInput userName={username}  setForgetPassword={setForgetPassword} setPassword={setPassword} phoneNumber={phoneNumber}/>
+                            <PinInput userName={username}  setForgetPassword={setForgetPassword} setPassword={setPassword} phoneNumber={phoneNumber} setPhoneNumber={setPhoneNumber} />
                             </div>
                         </div>
                     </Dialog>
@@ -108,7 +112,7 @@ const pressForgetPassword=async ()=>{
                     >
 
                         <div className={"employeeDialogContainer"} style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",textAlign:"center"}}>
-                            <div>אנא רשום שם משתמש</div>
+                            <div>שם משתמש שהוזן אינו תקין </div>
                       <Button onClick={()=>setForgetPassword(false)}>הבנתי</Button>
                         </div>
                     </Dialog>
