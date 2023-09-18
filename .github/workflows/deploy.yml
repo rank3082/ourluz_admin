@@ -28,6 +28,8 @@ jobs:
         run: npm install   
       - name: Generate build
         run: npm run build
+        env:
+         CI: false
       - name: Share artifact inside workflow
         uses: actions/upload-artifact@v1
       - name: Deploy app build to S3 bucket
