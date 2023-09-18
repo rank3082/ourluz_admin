@@ -13,7 +13,6 @@ import {EventModel} from "../models/event.model";
 import {CapacityModel} from "../models/capacity.model";
 import {RollModel} from "../models/roll.model";
 import {UserModel} from "../models/user.model";
-import {log} from "util";
 import moment from "moment";
 
 const getToken = () => {
@@ -280,21 +279,25 @@ export const getAllRolesByOrganization = async () => {
         });
 };
 
-export const isUserIsManager = async () => {
-    axios.get(`${mainPath}yoman/users/currentUser`, {
-        headers: {
-            Authorization: `TOKEN ${getToken()}`
-        }
-    })
-        .then(response => {
-            const isAdmin = response.data?.isAdmin??false;
-            const currentUser:UserModel|undefined = response.data??undefined;
-            store.dispatch(setIsAdmin(isAdmin))
-            store.dispatch(setCurrentUser(currentUser))
+export const isUserIsManager = async (token?:string) => {
+    try {
+        await axios.get(`${mainPath}yoman/users/currentUser`, {
+            headers: {
+                Authorization: `TOKEN ${token ?? getToken()}`
+            }
         })
-        .catch(error => {
-            console.error(error);
-        });
+            .then(response => {
+                const isAdmin = response.data?.isAdmin ?? false;
+                const currentUser: UserModel | undefined = response.data ?? undefined;
+                store.dispatch(setIsAdmin(isAdmin))
+                store.dispatch(setCurrentUser(currentUser))
+            })
+        return true
+    }
+    catch (e){
+        console.log(e, "error35")
+        return false
+    }
 };
 
 

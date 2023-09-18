@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import {getAllEventsByDates, getAllUsers} from "../../utils/data-management";
+import React, {useEffect, useState} from "react";
+import {getAllEventsByDates, getAllUsers, isUserIsManager} from "../../utils/data-management";
 import "./WeeklyBookedCalender.scss"
 import {useAppSelector} from "../../app/hooks";
 import moment from "moment";
@@ -10,11 +10,36 @@ import {useDispatch} from "react-redux";
 import {Button} from "@mui/material";
 import {setSelectedPage} from "../../store/global.slice";
 import {SelectedPage} from "../../utils/enum.const";
+import {LoginPage} from "../loginPage/LoginPage";
 
 export const WeeklyBookedCalender = () => {
     const dispatch = useDispatch()
     const {weeklyEventList, isAdmin, weekDates} = useAppSelector(state => state.global);
+    const {token} = useAppSelector(state => state.authentication);
     let {to, from} = useParams();
+    const [openLoginPage,setLoginPage]=useState(false)
+
+    useEffect( () => {
+        async function checkIfTokenIsValid(){
+            const token = localStorage.getItem("token");
+            if (token && token !== "" ) {
+                await checkIfUserConnected(token)
+                await isUserIsManager(token).then((res)=> {
+                    if (!res){
+                        setLoginPage(true)
+                    }
+
+                    console.log(res, "res2222")
+                })
+            }else {
+                setLoginPage(true)
+            }
+        }
+        checkIfTokenIsValid().then()
+
+    }, [token])
+
+
     if (weekDates?.start && weekDates?.end) {
         from = moment(weekDates.start).format("yyyy-MM-D")
         to = moment(weekDates.end).format("yyyy-MM-D")
@@ -31,7 +56,7 @@ export const WeeklyBookedCalender = () => {
             await getAllUsers().then()
         }
         fetchWeeklyEvents()
-    }, [])
+    }, [token])
 
     const columns: string[] = [];
     const currentDate = moment(from);
@@ -43,7 +68,9 @@ export const WeeklyBookedCalender = () => {
         columns.push(`${formattedDate} ${dayOfWeek}`);
         currentDate.add(1, "day");
     }
-    return <div>
+    return <>
+        {openLoginPage ? <LoginPage cameFromWeeklyBooked closeLoginPage={()=>setLoginPage(false)}/> :
+    <div>
         {isAdmin && <Button
             className={"addEventButtonNotSelected"}
             // onClick={()=>window.open(`/weeklyBooking/from/${startDate}/to/${endDate}`)}>
@@ -85,6 +112,6 @@ export const WeeklyBookedCalender = () => {
                 </tbody>
             </table>
         </div>
-    </div>
-
+    </div>}
+    </>
 }
