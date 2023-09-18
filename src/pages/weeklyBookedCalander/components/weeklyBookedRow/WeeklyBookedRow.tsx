@@ -5,7 +5,6 @@ import moment from "moment";
 import {WeeklyBookedTd} from "../weeklyBookedTd/WeeklyBookedTd";
 
 export const WeeklyBookedRow:React.FC<{eventDetails:EventModel}>=({eventDetails})=>{
-    console.log(eventDetails,"eventDetails")
     const startTime = moment.utc(eventDetails.start).format("HH:mm");
 const endTime = moment.utc(eventDetails.end).format("HH:mm");
     return <tr style={{

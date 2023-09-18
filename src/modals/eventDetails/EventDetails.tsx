@@ -1,7 +1,7 @@
 import './EventDetails.scss'
 import {useDispatch} from "react-redux";
 import {setSelectedEvent, setSelectedPopup, setSlotSelected} from "../../store/global.slice";
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {text} from "../../utils/dictionary-management";
 import "../../styles/side-modals.scss"
 import {DesktopDateTimePicker} from '@mui/x-date-pickers/DesktopDateTimePicker';
@@ -20,7 +20,6 @@ import {CapacityModel} from "../../models/capacity.model";
 import {ShiftManagerMenu} from "../shiftManager/components/shiftMannagerMenu/ShiftManagerMenu";
 import moment from "moment";
 import {RollListEditor} from "./components/rollListEditor/RollListEditor";
-import {useOutsideAlerter} from "../../hooks";
 
 export const EventDetails = () => {
     const dispatch = useDispatch()

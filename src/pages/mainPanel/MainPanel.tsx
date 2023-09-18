@@ -30,7 +30,7 @@ export const MainPanel = () => {
     const dispatch = useDispatch()
 
     const {selectedEvent,selectedPopup,isMobile,isAdmin,currentUser,weekDates} = useAppSelector(state => state.global);
-    const startDate = moment.utc(weekDates.start).format("yyyy-MM-D")
+    const startDate = moment(weekDates.start).format("yyyy-MM-D")
     useEffect(() => {
         if (selectedPopup === SelectedPopup.Close){
             getAllEventsByOrganization().then()
