@@ -1,0 +1,27 @@
+# This is a basic workflow to help you get started with Actions
+
+name: deploy-yoman
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+ 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: AKIAYYBWEZ2FSTYI4ZF6
+          aws-secret-access-key: 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
+          aws-region: eu-central-1
+
+      - name: Build React App
+        run: npm install && npm run build 
+      - name: Deploy app build to S3 bucket
+        run: aws s3 sync build s3://yoman.4sport-live.com
+      - name: disable index.html cache
+        run: aws s3 cp s3://yoman.4sport-live.com/index.html s3://yoman.4sport-live.com/index.html --metadata-directive REPLACE --cache-control max-age=0 --content-type "text/html"
